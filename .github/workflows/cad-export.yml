@@ -1,0 +1,39 @@
+name: Export experimental R1B case STLs
+on:
+  push:
+    paths:
+      - "hardware/case/gauge-r1.scad"
+      - "hardware/case/adapter-r1.scad"
+      - ".github/workflows/cad-export.yml"
+  workflow_dispatch:
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq openscad
+      - name: Render separate STL parts and verify non-empty geometry
+        run: |
+          mkdir -p build/cases
+          openscad -o build/cases/gauge-body.stl -D 'part="body"' hardware/case/gauge-r1.scad
+          openscad -o build/cases/gauge-rear-cap.stl -D 'part="rear"' hardware/case/gauge-r1.scad
+          openscad -o build/cases/gauge-spacer.stl -D 'part="spacer"' hardware/case/gauge-r1.scad
+          openscad -o build/cases/adapter-base.stl -D 'part="base"' hardware/case/adapter-r1.scad
+          openscad -o build/cases/adapter-lid.stl -D 'part="lid"' hardware/case/adapter-r1.scad
+          python3 - <<'PY'
+          from pathlib import Path
+          files=list(Path("build/cases").glob("*.stl"))
+          assert len(files)==5,files
+          for f in files:
+              assert f.stat().st_size>1000,(f,f.stat().st_size)
+              print(f, f.stat().st_size)
+          PY
+      - name: Upload experimental case parts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BK-MIKAS-R1B-experimental-STLs
+          path: build/cases/*.stl
+          retention-days: 30
