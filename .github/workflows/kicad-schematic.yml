@@ -8,14 +8,13 @@ on:
 jobs:
   schematic:
     runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/kicad/kicad:9.0
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Install KiCad CLI
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq kicad
-          kicad-cli version
+      - name: KiCad CLI version (9.x)
+        run: kicad-cli version
       - name: Export SVG and PDF
         run: |
           mkdir -p build/kicad/svg
