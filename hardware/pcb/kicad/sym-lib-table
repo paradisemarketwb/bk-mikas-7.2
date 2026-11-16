@@ -1,0 +1,1 @@
+(sym_lib_table (lib (name "BK_MIKAS") (type "KiCad") (uri "${KIPRJMOD}/BK_MIKAS.kicad_sym") (options "") (descr "Original BK-MIKAS schematic symbols")))
