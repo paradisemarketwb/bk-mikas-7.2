@@ -1,15 +1,19 @@
-name: Docs and UI assets
+name: Docs, CAD and modular UI checks
 on:
   push:
     paths:
       - "assets/**"
       - "ui/**"
+      - "tools/generate_layout.py"
+      - "firmware/components/ui_layout/**"
       - "hardware/case/**"
       - ".github/workflows/assets-tests.yml"
   pull_request:
     paths:
       - "assets/**"
       - "ui/**"
+      - "tools/generate_layout.py"
+      - "firmware/components/ui_layout/**"
       - "hardware/case/**"
       - ".github/workflows/assets-tests.yml"
 jobs:
@@ -17,22 +21,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check SVG XML and browser demo JavaScript
+      - name: Validate color diagrams and JavaScript
         run: |
           mkdir -p build
           python3 - <<'PY'
           from pathlib import Path
-          import xml.etree.ElementTree as ET
           import re
+          import xml.etree.ElementTree as ET
           for path in Path('assets').glob('*.svg'):
               ET.parse(path)
-              print("SVG OK", path)
-          html=Path('ui/index.html').read_text()
-          assert '<title>' in html and 'БК Микас' in html
-          scripts=re.findall(r'<script>([\s\S]*?)</script>',html)
-          assert len(scripts)==1
-          Path('build/ui.js').write_text(scripts[0])
-          print("HTML OK")
+              print("SVG OK:",path)
+          for html_path in [Path('ui/index.html'),Path('ui/modular-demo.html')]:
+              content=html_path.read_text(encoding='utf-8')
+              assert '<title>' in content
+              scripts=re.findall(r'<script>([\s\S]*?)</script>',content)
+              assert len(scripts)==1,(html_path,len(scripts))
+              Path('build',html_path.stem+'.js').write_text(scripts[0],encoding='utf-8')
+              print("HTML OK:",html_path)
           PY
-          node --check build/ui.js
-          echo 'UI JavaScript syntax OK'
+          node --check build/index.js
+          node --check build/modular-demo.js
+          node --check ui/screens.generated.js
+      - name: Verify declarative screen generator and generated artifacts
+        run: |
+          python3 tools/generate_layout.py
+          git diff --exit-code -- ui/screens.generated.js firmware/components/ui_layout/generated/ui_layout_defaults.h
+          cat > build/check_generated.c <<'C'
+          #include "firmware/components/ui_layout/generated/ui_layout_defaults.h"
+          #include <string.h>
+          int main(void) {
+              return bk_default_screens_len < 4 ||
+                 strcmp(bk_default_screens[0].id, "coolant") != 0;
+          }
+          C
+          cc -std=c11 -Wall -Wextra -Werror -pedantic -I . build/check_generated.c -o build/check_generated
+          ./build/check_generated
