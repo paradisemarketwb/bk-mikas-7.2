@@ -1,0 +1,38 @@
+name: Docs and UI assets
+on:
+  push:
+    paths:
+      - "assets/**"
+      - "ui/**"
+      - "hardware/case/**"
+      - ".github/workflows/assets-tests.yml"
+  pull_request:
+    paths:
+      - "assets/**"
+      - "ui/**"
+      - "hardware/case/**"
+      - ".github/workflows/assets-tests.yml"
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check SVG XML and browser demo JavaScript
+        run: |
+          mkdir -p build
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          import re
+          for path in Path('assets').glob('*.svg'):
+              ET.parse(path)
+              print("SVG OK", path)
+          html=Path('ui/index.html').read_text()
+          assert '<title>' in html and 'БК Микас' in html
+          scripts=re.findall(r'<script>([\s\S]*?)</script>',html)
+          assert len(scripts)==1
+          Path('build/ui.js').write_text(scripts[0])
+          print("HTML OK")
+          PY
+          node --check build/ui.js
+          echo 'UI JavaScript syntax OK'
