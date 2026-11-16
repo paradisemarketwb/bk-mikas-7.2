@@ -70,7 +70,7 @@ def analyze(path):
     actual={}
     seen={}
     for net in children(blocks[0],"net"):
-        name=field(net,"name")
+        name=field(net,"name").lstrip("/")  # KiCad adds root sheet prefix to local labels
         pins=set()
         for node in children(net,"node"):
             contact=f"{field(node,'ref')}.{field(node,'pin')}"
