@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "start_screen": "coolant",
+  "screens": [
+    {
+      "id": "coolant",
+      "title": "ДВИГАТЕЛЬ",
+      "layout": "arc3",
+      "accent": "#76d7b1",
+      "enabled": true,
+      "main": "coolant_c",
+      "left": "ecu_voltage_v",
+      "right": "rpm",
+      "caption": "Температура охлаждающей жидкости"
+    },
+    {
+      "id": "tachometer",
+      "title": "ТАХОМЕТР",
+      "layout": "arc3",
+      "accent": "#64c9f6",
+      "enabled": true,
+      "main": "rpm",
+      "left": "ignition_deg",
+      "right": "injection_ms",
+      "caption": "Обороты коленвала"
+    },
+    {
+      "id": "trip",
+      "title": "ПОЕЗДКА",
+      "layout": "arc3",
+      "accent": "#eec078",
+      "enabled": true,
+      "main": "fuel_lph",
+      "left": "rpm",
+      "right": "ecu_voltage_v",
+      "caption": "Расход в л/ч; скорость при наличии источника"
+    },
+    {
+      "id": "sensors",
+      "title": "ДАТЧИКИ",
+      "layout": "arc3",
+      "accent": "#ba9df5",
+      "enabled": true,
+      "main": "air_mass_kgh",
+      "left": "throttle_pct",
+      "right": "injection_ms",
+      "caption": "Расход воздуха требует сверки с OpenDiag"
+    },
+    {
+      "id": "diagnostics",
+      "title": "ДИАГНОСТИКА",
+      "layout": "arc3",
+      "accent": "#83d6b4",
+      "enabled": true,
+      "main": "dtc_count",
+      "left": "ecu_voltage_v",
+      "right": "rpm",
+      "caption": "Только просмотр ошибок"
+    }
+  ]
+}
