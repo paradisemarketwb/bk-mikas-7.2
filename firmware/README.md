@@ -12,7 +12,7 @@
 
 `components/mikas_telemetry/include/mikas_telemetry.h` + `mikas_telemetry.c`: без ESP-IDF-зависимостей, не выполняет никаких запросов, только переводит достоверно считанные сырые байты в физические величины. Следующий этап — взять реальные кадры Микас из исходного профиля, проверить границы и дописать транспорт и планировщик.
 
-На ПК с компилятором C: `cc -std=c11 -Wall -Wextra -pedantic firmware/components/mikas_telemetry/mikas_telemetry.c firmware/tests/test_telemetry.c -lm -o /tmp/bk-mikas-test && /tmp/bk-mikas-test`.
+На ПК с компилятором C: `cc -std=c11 -Wall -Wextra -pedantic -I firmware/components/mikas_telemetry/include firmware/components/mikas_telemetry/mikas_telemetry.c firmware/tests/test_telemetry.c -lm -o /tmp/bk-mikas-test && /tmp/bk-mikas-test`.
 
 ## Последовательность создания реальной прошивки
 
