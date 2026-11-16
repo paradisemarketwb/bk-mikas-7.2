@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "metrics": {
+    "coolant_c": {
+      "label": "Температура ОЖ",
+      "unit": "°C",
+      "demo": 88,
+      "precision": 0,
+      "warning_high": 105
+    },
+    "rpm": {
+      "label": "Обороты",
+      "unit": "об/мин",
+      "demo": 2850,
+      "precision": 0,
+      "warning_high": 5800
+    },
+    "ecu_voltage_v": {
+      "label": "Напряжение ЭБУ",
+      "unit": "В",
+      "demo": 13.9,
+      "precision": 1,
+      "warning_low": 12
+    },
+    "fuel_lph": {
+      "label": "Расход топлива",
+      "unit": "л/ч",
+      "demo": 4.1,
+      "precision": 1
+    },
+    "speed_kmh": {
+      "label": "Скорость",
+      "unit": "км/ч",
+      "demo": null,
+      "precision": 0,
+      "requires_source": true
+    },
+    "injection_ms": {
+      "label": "Время впрыска",
+      "unit": "мс",
+      "demo": 4.2,
+      "precision": 1
+    },
+    "air_mass_kgh": {
+      "label": "Расход воздуха",
+      "unit": "кг/ч",
+      "demo": 14.5,
+      "precision": 1,
+      "requires_calibration": true
+    },
+    "throttle_pct": {
+      "label": "Дроссель",
+      "unit": "%",
+      "demo": 14,
+      "precision": 0
+    },
+    "ignition_deg": {
+      "label": "УОЗ",
+      "unit": "°",
+      "demo": 16,
+      "precision": 0
+    },
+    "dtc_count": {
+      "label": "Ошибки ЭБУ",
+      "unit": "",
+      "demo": 0,
+      "precision": 0
+    }
+  }
+}
