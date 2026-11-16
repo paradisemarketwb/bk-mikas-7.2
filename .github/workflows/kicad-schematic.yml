@@ -24,8 +24,11 @@ jobs:
           kicad-cli sch export pdf -o build/kicad/bk-kline-r1b.pdf hardware/pcb/kicad/bk-kline-r1b.kicad_sch
       - name: Run full electrical rules check
         run: |
+          set +e
           kicad-cli sch erc --exit-code-violations -o build/kicad/ERC.txt hardware/pcb/kicad/bk-kline-r1b.kicad_sch
+          code=$?
           cat build/kicad/ERC.txt
+          exit $code
       - name: Export and inspect netlist
         run: |
           kicad-cli sch export netlist -o build/kicad/bk-kline-r1b.net hardware/pcb/kicad/bk-kline-r1b.kicad_sch
