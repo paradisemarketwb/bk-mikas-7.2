@@ -1,0 +1,25 @@
+name: Pure C telemetry tests
+on:
+  push:
+    paths:
+      - "firmware/components/mikas_telemetry/**"
+      - "firmware/tests/**"
+      - ".github/workflows/telemetry-tests.yml"
+  pull_request:
+    paths:
+      - "firmware/components/mikas_telemetry/**"
+      - "firmware/tests/**"
+      - ".github/workflows/telemetry-tests.yml"
+jobs:
+  telemetry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run read-only field decoders
+        run: |
+          mkdir -p build
+          cc -std=c11 -Wall -Wextra -Werror -pedantic \
+            -I firmware/components/mikas_telemetry/include \
+            firmware/components/mikas_telemetry/mikas_telemetry.c \
+            firmware/tests/test_telemetry.c -lm -o build/telemetry-test
+          ./build/telemetry-test
