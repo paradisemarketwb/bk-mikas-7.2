@@ -1,0 +1,2 @@
+monitor codec, read-only boundary, field validity: OK
+mikas_telemetry: OK

@@ -1,0 +1,26 @@
+ESP-IDF 5.5.1 / ESP32-S3 / LVGL9.6.0
+LVGL commit80ca777e37a2b176770726a02e07a6fb79ef0b39
+Docker espressif/idf:v5.5.1
+sha256:dfa2d076c796769c07c155eba6c672b9f395aec943b2ba3701b73379b5f9e884
+
+Dependency registry unreachable in this environment; official LVGL checked out
+at exact pinned commit and supplied using EXTRA_COMPONENT_DIRS=/lvgl,
+IDF_COMPONENT_MANAGER=0. No substitute library.
+
+Initial default build: PASS, application size0xb88b0 bytes.
+Enabled Wi-Fi/K-Line build initially failed DRAM link by53976 bytes.
+Cause: LVGL static262144-byte builtin heap plus Wi-Fi.
+Correction: use C library allocator with IDF PSRAM malloc, explicit internal
+RGB bounce/draw allocations preserved. Final results appended below.
+
+No physical device, display, radio, ECU or vehicle validation performed.
+
+Enabled Wi-Fi + K-Line final-source build: PASS
+Size:0x14ed30 bytes;3MiB app partition,56% free.
+SHA256:a1e5d1c9b15c577f6beff340eee1f53aef16b51f333d8af0c1fdeff4d0b37ce7
+
+Final safe-default build: PASS
+K-Line OFF, Wi-Fi OFF, primary and secondary consoles OFF, USB Serial/JTAG OFF.
+Allocator: C library + IDF PSRAM. Size:0xb76b0 bytes;3MiB app partition,76% free.
+SHA256:cc61c7168f6cab57aefc99f5398da8d79a9b96620b65197d0600890e70ff0af4
+Four LVGL deprecated object-flag API warnings; no compile/link errors.
