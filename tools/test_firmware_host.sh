@@ -20,3 +20,8 @@ if [[ -n "${CJSON_DIR:-}" ]]; then
   -lm -o build/tests/profile-history
  build/tests/profile-history build/tests/default-profile.json
 fi
+cc -std=c11 -Wall -Wextra -Werror -pedantic -fsanitize=address,undefined \
+ -I firmware/components/mikas/include -I firmware/components/kline/include \
+ firmware/components/mikas/mikas.c firmware/components/mikas/mikas_link.c tests/test_mikas_stream.c \
+ -o build/tests/mikas-stream
+build/tests/mikas-stream

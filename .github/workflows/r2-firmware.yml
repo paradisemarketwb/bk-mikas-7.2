@@ -32,14 +32,16 @@ jobs:
     container: espressif/idf:v5.5.1
     strategy:
       matrix:
-        mode: [safe, live]
+        mode: [safe, live, usb-kkl]
     steps:
       - uses: actions/checkout@v4
       - shell: bash
         run: |
           . /opt/esp/idf/export.sh
           cd firmware
-          if [ "${{ matrix.mode }}" = live ]; then
+          if [ "${{ matrix.mode }}" = usb-kkl ]; then
+            idf.py -D SDKCONFIG_DEFAULTS='sdkconfig.defaults;sdkconfig.usb-kkl.defaults' set-target esp32s3
+          elif [ "${{ matrix.mode }}" = live ]; then
             printf 'CONFIG_BK_ENABLE_KLINE=y\n' > /tmp/live.defaults
             idf.py -D SDKCONFIG_DEFAULTS='sdkconfig.defaults;/tmp/live.defaults' set-target esp32s3
           else

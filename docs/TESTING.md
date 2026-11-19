@@ -46,8 +46,9 @@ Chromium можно задать BK_CHROMIUM. Снимки помечены ка
 
 ## ESP-IDF
 
-GitHub Actions собирает safe и live с ESP-IDF5.5.1/LVGL9.6.0 из manifest.
-Safe: K-Line выключен; live: включён. Wi-Fi включён в обоих вариантах.
+GitHub Actions собирает safe, live и usb-kkl с ESP-IDF5.5.1/LVGL9.6.0 из manifest.
+Safe: K-Line выключен; live: UART включён; usb-kkl: включён FTDI USB Host.
+Wi-Fi включён во всех вариантах.
 Компоненты получаются через реестр, поэтому дополнительно проверяется layout
 управляемых зависимостей. Инструкция локальной сборки — [firmware/R2.md](firmware/R2.md).
 

@@ -90,6 +90,10 @@ static esp_err_t data_get(httpd_req_t *r) {
   if (!root)
     return ESP_ERR_NO_MEM;
   cJSON_AddBoolToObject(root, "connected", s.connected);
+  cJSON_AddBoolToObject(root, "adapter_ready",
+                        api.adapter_ready && api.adapter_ready());
+  cJSON_AddStringToObject(root, "transport",
+                          api.transport_name ? api.transport_name : "unknown");
   cJSON_AddNumberToObject(root, "clients", bk_wifi_clients());
   cJSON_AddStringToObject(root, "version", esp_app_get_description()->version);
   cJSON_AddBoolToObject(root, "maintenance", atomic_load(&updating));
@@ -102,7 +106,9 @@ static esp_err_t data_get(httpd_req_t *r) {
     cJSON *m = cJSON_CreateObject();
     cJSON_AddStringToObject(m, "key", keys[i]);
     cJSON_AddNumberToObject(m, "state", v.state);
-    cJSON_AddStringToObject(m,"source",v.source==TEL_SOURCE_MIKAS?"mikas-monitor-0b":"none");
+    cJSON_AddStringToObject(m, "source",
+                            v.source == TEL_SOURCE_MIKAS ? "mikas-monitor-0b"
+                                                         : "none");
     if (v.state == TEL_VALID)
       cJSON_AddNumberToObject(m, "value", v.value);
     else
