@@ -1,0 +1,8 @@
+{
+  "module": "Waveshare ESP32-S3-Touch-LCD-2.1 original; NOT 2.1B",
+  "source": "https://files.waveshare.com/wiki/ESP32-S3-Touch-LCD-2.1/ESP32-S3-Touch-LCD-2.1_structure.zip",
+  "drawing_date": "2024-07-11",
+  "retrieved_utc": "2026-11-19",
+  "dimensions_mm": {"lens_diameter":75,"lens_tolerance":0.15,"active_diameter":53.88,"pcb_width":66,"assembly_depth":9.5,"mount_circle_diameter":65,"upper_mount_x":29.5,"lower_mount_x":18},
+  "note": "Mount Y coordinates calculated from 65mm pitch circle. Confirm M2 thread engagement depth on hardware; no physical fit claimed."
+}

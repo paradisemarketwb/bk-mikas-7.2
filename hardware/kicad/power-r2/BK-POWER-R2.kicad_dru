@@ -1,0 +1,2 @@
+(version 1)
+(rule "Raw automotive transient clearance" (condition "A.NetName == '/ACC_RAW' || B.NetName == '/ACC_RAW'") (constraint clearance (min 0.8mm)))

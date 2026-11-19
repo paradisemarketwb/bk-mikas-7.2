@@ -4,11 +4,7 @@
  * Opts: --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf --size 20 --bpp 4 --format lvgl --range 0x20-0x7F,0xA0-0xFF,0x400-0x45F --no-compress -o /tmp/bk_font_ru_20.c
  ******************************************************************************/
 
-#ifdef LV_LVGL_H_INCLUDE_SIMPLE
 #include "lvgl.h"
-#else
-#include "lvgl/lvgl.h"
-#endif
 
 #ifndef BK_FONT_RU_20
 #define BK_FONT_RU_20 1

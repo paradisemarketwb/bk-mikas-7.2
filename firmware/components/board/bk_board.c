@@ -1,5 +1,6 @@
 #include "bk_board.h"
 #include "driver/gpio.h"
+#include "driver/ledc.h"
 #include "driver/i2c_master.h"
 #include "driver/spi_master.h"
 #include "esp_heap_caps.h"
@@ -19,6 +20,13 @@ static lv_display_t *display;
 static void *draw_buffer;
 static uint8_t outputs=0x07; /* LCD reset high, touch reset high, CS high; buzzer low. */
 static const char *TAG="bk_board";
+static bool pwm_ready;
+esp_err_t bk_board_set_brightness(uint8_t percent){
+ if(!pwm_ready)return ESP_ERR_INVALID_STATE;
+ if(percent>100)return ESP_ERR_INVALID_ARG;
+ esp_err_t e=ledc_set_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_0,(uint32_t)percent*1023/100);
+ return e==ESP_OK?ledc_update_duty(LEDC_LOW_SPEED_MODE,LEDC_CHANNEL_0):e;
+}
 static esp_err_t write_reg(i2c_master_dev_handle_t dev,uint8_t reg,uint8_t value){uint8_t b[]={reg,value};return i2c_master_transmit(dev,b,2,30);}
 static esp_err_t read_reg(i2c_master_dev_handle_t dev,uint8_t reg,void *data,size_t length){return i2c_master_transmit_receive(dev,&reg,1,data,length,20);}
 static esp_err_t exio(unsigned bit,bool high){
@@ -56,7 +64,7 @@ static void touch_read(lv_indev_t *indev,lv_indev_data_t *data){
  data->point.x=x;data->point.y=y;data->state=LV_INDEV_STATE_PRESSED;
 }
 static void cleanup(void){
- gpio_set_level(6,0);
+ if(pwm_ready)bk_board_set_brightness(0);else gpio_set_level(6,0);
  if(display){lv_display_delete(display);display=NULL;}
  if(draw_buffer){heap_caps_free(draw_buffer);draw_buffer=NULL;}
  if(panel){esp_lcd_panel_del(panel);panel=NULL;}
@@ -113,7 +121,11 @@ esp_err_t bk_board_start(void){
  lv_indev_t *input=lv_indev_create();if(!input){e=ESP_ERR_NO_MEM;goto fail;}
  lv_indev_set_type(input,LV_INDEV_TYPE_POINTER);lv_indev_set_read_cb(input,touch_read);
  lv_indev_set_display(input,display);
- gpio_set_level(6,1);
+ ledc_timer_config_t timer={.speed_mode=LEDC_LOW_SPEED_MODE,.duty_resolution=LEDC_TIMER_10_BIT,.timer_num=LEDC_TIMER_0,.freq_hz=20000,.clk_cfg=LEDC_AUTO_CLK};
+ e=ledc_timer_config(&timer);if(e)goto fail;
+ ledc_channel_config_t channel={.gpio_num=6,.speed_mode=LEDC_LOW_SPEED_MODE,.channel=LEDC_CHANNEL_0,.timer_sel=LEDC_TIMER_0,.duty=0};
+ e=ledc_channel_config(&channel);if(e)goto fail;
+ pwm_ready=true;e=bk_board_set_brightness(75);if(e)goto fail;
  ESP_LOGI(TAG,"Waveshare LCD 480x480 RGB565 16MHz + CST820 initialized; hardware validation pending");
  return ESP_OK;
 fail:

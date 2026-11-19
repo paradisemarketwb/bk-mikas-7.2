@@ -7,5 +7,5 @@ config BK_ENABLE_KLINE
         Select UART switch to external header; remove JP1 before flashing.
 config BK_ENABLE_WIFI
     bool "Enable password-protected local SoftAP"
-    default n
+    default y
 endmenu

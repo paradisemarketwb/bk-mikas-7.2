@@ -1,15 +1,16 @@
-# Прошивка R2
+# Действующая прошивка R2
 
-ESP-IDF 5.5.1, ESP32-S3, LVGL 9.6.0. [Сборка и поведение](../docs/firmware/R2.md),
-[результаты проверок](../docs/R2_STATUS.md), [LVGL Simulator](../simulator/README.md).
+ESP-IDF5.5.1 / LVGL9.6.0 / ESP32-S3. [Инструкция Windows10](../docs/firmware/R2.md),
+[телефон и OTA](../docs/getting-started/PHONE.md), [статус](../docs/R2_STATUS.md).
 
-`main/` объединяет независимые worker K-Line, снимки телеметрии и UI.
-`components/mikas/` — monitor0B codec; `kline/` — UART с обязательным echo;
-`telemetry/` — статусы/возраст/формулы; `settings/` — NVS;
-`wifi/` — WPA2 AP и read-only HTTP; `board/` — Waveshare LCD/CST820;
-`ui_core/`, `ui_widgets/`, `ui_screens/` — общий LVGL код компьютера и ESP32.
+- `mikas` и `kline`: собственный monitor0B,9600,8N1, framing/echo, только чтение.
+- `telemetry` и `history`: проверенные формулы, источник/возраст, ограниченные журналы.
+- `ui_config`, `ui_widgets`, `ui_core`, `ui_screens`: переносимые декларативные экраны.
+- `board`: аппаратные драйверы Waveshare ST7701/TCA9554/CST820, RGB/PSRAM и PWM.
+- `settings`: общий JSON/validator/defaults и ESP-хранилище NVS.
+- `wifi`: WPA2 AP, HTTP авторизация, веб-конструктор, импорт/экспорт и OTA.
+- `main`: задачи, очереди, snapshots, безопасное отключение K-Line при обновлении.
 
-K-Line/Wi-Fi по умолчанию отключены в menuconfig. Аппаратная безопасность GPIO19,
-питания и UART должна быть проверена до включения физического обмена.
-OTA и пользовательский редактор конфигураций в прошивке пока отсутствуют.
-`ui_layout/` и старое браузерное демо — прежний прототип, не LVGL simulator.
+Wi-Fi включён по умолчанию, K-Line — только после аппаратного стенда.
+Старые схемы/layout-generator/browserdemo находятся в archive/r1b.
+Сборка и симулятор не доказывают физическую работу в автомобиле.

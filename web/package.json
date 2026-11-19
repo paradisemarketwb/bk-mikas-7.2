@@ -1,0 +1,1 @@
+{"name":"bk-hunter-web-tests","private":true,"version":"1.0.0","scripts":{"check":"node ../tools/check_web.cjs","test":"node ../tests/test_phone.cjs"},"devDependencies":{"playwright":"1.62.1"}}

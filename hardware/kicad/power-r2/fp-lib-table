@@ -1,0 +1,1 @@
+(fp_lib_table (lib (name BK_POWER) (type KiCad) (uri ${KIPRJMOD}/BK_POWER.pretty) (options "") (descr "TI DRR0012E")))
