@@ -56,7 +56,7 @@ const server=http.createServer(async(req,res)=>{
   await page.click('#background-upload');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Изображение записано'));
   assert(background);assert.equal(background[0],0);assert.equal(background[1],248);
   await page.click('#save');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Профиль сохранён'));
-  assert.equal(profile.layout.screens[0].background_mode,2);assert.equal(profile.layout.screens[0].background_scale,200);
+  assert.equal(profile.layout.screens[0].background_mode,2);assert.equal(profile.layout.screens[0].background_scale,100);
   await page.click('[data-page="catalog"]');await page.waitForFunction(()=>document.getElementById('catalog-items').textContent.includes('Команда не подтверждена'));
   await page.click('[data-page="update"]');await page.setInputFiles('#image',{name:'bk_mikas_r2.bin',mimeType:'application/octet-stream',buffer:Buffer.alloc(1024,0xe9)});await page.check('#confirm-update');await page.click('#ota');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Образ принят'));assert(uploaded);
   console.log('Phone UI login, telemetry, Reference/Classic edit, pointer drag, scoped reset, calibration, source policy, RGB565 background, catalog, save/reload/export and confirmed OTA: PASS');

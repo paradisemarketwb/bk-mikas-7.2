@@ -18,6 +18,7 @@
 #include "freertos/task.h"
 #include "mikas.h"
 #include "nvs_flash.h"
+#include "src/misc/cache/instance/lv_image_cache.h"
 #include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -282,8 +283,10 @@ static void brightness(uint8_t value, void *context) {
 }
 static void ui_task(void *arg) {
   (void)arg;
-  bk_settings_t *cfg = malloc(sizeof(*cfg));
-  save_request_t *save = malloc(sizeof(*save));
+  bk_settings_t *cfg =
+      heap_caps_malloc(sizeof(*cfg), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+  save_request_t *save =
+      heap_caps_malloc(sizeof(*save), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
   if (!cfg || !save) {
     free(cfg);
     free(save);
@@ -305,7 +308,8 @@ static void ui_task(void *arg) {
 #if CONFIG_BK_ENABLE_WIFI
   bk_ui_set_wifi(bk_wifi_ssid(), bk_wifi_password(), "http://192.168.4.1/");
 #endif
-  bk_data_model_t *model = malloc(sizeof(*model));
+  bk_data_model_t *model =
+      heap_caps_malloc(sizeof(*model), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
   if (!model) {
     ESP_LOGE(TAG, "Data registry allocation failed");
     vTaskDelete(NULL);
@@ -399,7 +403,8 @@ static void ui_task(void *arg) {
       bk_ui_config_t c;
       bk_ui_get_config(&c);
       save->value = *cfg;
-      save->value.screen = c.screen;
+      if (bk_layout_view_to_screen(c.screen) >= 0)
+        save->value.screen = c.screen;
       save->value.dark = c.dark;
       save->value.brightness = c.brightness;
       for (unsigned i = 0; i < 5; i++)
@@ -454,6 +459,14 @@ void app_main(void) {
   e = bk_settings_load(&current_config);
   if (e)
     ESP_LOGW(TAG, "Invalid profile; factory layout loaded");
+  /* System pages are transient; power-on always opens an enabled instrument. */
+  if (bk_layout_view_to_screen(current_config.screen) < 0) {
+    for (unsigned i = 0; i < current_config.layout.screen_count; i++)
+      if (current_config.layout.screens[i].enabled) {
+        current_config.screen = bk_layout_screen_to_view(i);
+        break;
+      }
+  }
   esp_err_t display = bk_board_start();
 #if CONFIG_BK_ENABLE_KLINE
   if (xTaskCreate(ecu_task, "mikas", 6144, NULL, 6, NULL) != pdPASS)

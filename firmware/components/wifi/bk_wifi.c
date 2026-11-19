@@ -277,6 +277,22 @@ static esp_err_t data_get(httpd_req_t *r) {
     cJSON_AddItemToArray(a, m);
   }
   free(profile);
+  static bk_signal_activity_t oxygen_activity;
+  bk_sample_t oxygen = bk_store_get(&s, TEL_LAMBDA1, now);
+  if (oxygen.state == TEL_VALID && oxygen.raw_valid)
+    bk_signal_activity_update(&oxygen_activity, oxygen.raw, oxygen.at_ms);
+  bk_activity_result_t activity =
+      bk_signal_activity_get(&oxygen_activity, now, 15000, 1.0, 128);
+  cJSON *signal = cJSON_AddObjectToObject(root, "lambda_activity");
+  cJSON_AddNumberToObject(signal, "state",
+                          s.connected ? activity.state : BK_ACTIVITY_NO_SIGNAL);
+  cJSON_AddNumberToObject(signal, "samples", activity.samples);
+  cJSON_AddNumberToObject(signal, "changes", activity.changes);
+  if (activity.samples) {
+    cJSON_AddNumberToObject(signal, "minimum_raw", activity.minimum);
+    cJSON_AddNumberToObject(signal, "maximum_raw", activity.maximum);
+  }
+  cJSON_AddNumberToObject(signal, "last_ms", activity.last_ms);
   cJSON_AddBoolToObject(root, "faults_valid",
                         s.connected && s.faults_valid &&
                             now - s.faults_at_ms <= 15000);

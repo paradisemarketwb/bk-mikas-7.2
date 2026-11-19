@@ -31,6 +31,7 @@ jobs:
     runs-on: ubuntu-24.04
     container: espressif/idf:v5.5.1
     strategy:
+      fail-fast: false
       matrix:
         mode: [safe, live, usb-kkl]
     steps:
