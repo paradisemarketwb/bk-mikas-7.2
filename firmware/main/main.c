@@ -1,4 +1,6 @@
+#include "bk_background.h"
 #include "bk_board.h"
+#include "bk_data_model.h"
 #include "bk_history.h"
 #include "bk_journal.h"
 #include "bk_kline.h"
@@ -6,6 +8,7 @@
 #include "bk_telemetry.h"
 #include "bk_ui.h"
 #include "bk_wifi.h"
+#include "esp_heap_caps.h"
 #include "esp_log.h"
 #include "esp_random.h"
 #include "esp_timer.h"
@@ -27,6 +30,72 @@ static uint32_t config_revision = 1;
 static SemaphoreHandle_t store_lock, history_lock, config_lock;
 static QueueHandle_t settings_queue;
 static atomic_bool maintenance;
+static bk_background_t assets;
+static bool assets_available;
+static SemaphoreHandle_t assets_lock;
+static atomic_uint assets_revision;
+#if CONFIG_BK_ENABLE_WIFI
+static bool background_ready(void) { return assets_available; }
+static esp_err_t background_load(unsigned slot, bk_background_info_t *info,
+                                 void *pixels, size_t capacity) {
+  if (!assets_available)
+    return ESP_ERR_NOT_FOUND;
+  xSemaphoreTake(assets_lock, portMAX_DELAY);
+  bk_background_status_t result =
+      bk_background_load(&assets, slot, info, pixels, capacity);
+  xSemaphoreGive(assets_lock);
+  return result == BK_BACKGROUND_OK ? ESP_OK : ESP_ERR_NOT_FOUND;
+}
+static esp_err_t background_store(unsigned slot, uint16_t width,
+                                  uint16_t height, const void *pixels,
+                                  size_t length) {
+  if (!assets_available)
+    return ESP_ERR_NOT_FOUND;
+  if (atomic_load(&maintenance))
+    return ESP_ERR_INVALID_STATE;
+  xSemaphoreTake(assets_lock, portMAX_DELAY);
+  bk_background_status_t status =
+      bk_background_store(&assets, slot, width, height, pixels, length);
+  xSemaphoreGive(assets_lock);
+  if (status == BK_BACKGROUND_OK)
+    atomic_fetch_add(&assets_revision, 1);
+  return status == BK_BACKGROUND_OK ? ESP_OK : ESP_FAIL;
+}
+#endif
+static void backgrounds_load_ui(void) {
+  static lv_image_dsc_t descriptors[BK_BACKGROUND_SLOTS];
+  static void *pixels[BK_BACKGROUND_SLOTS];
+  if (!assets_available)
+    return;
+  xSemaphoreTake(assets_lock, portMAX_DELAY);
+  for (unsigned i = 0; i < BK_BACKGROUND_SLOTS; i++) {
+    void *next = heap_caps_malloc(BK_BACKGROUND_MAX_PIXELS_BYTES,
+                                  MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+    if (!next)
+      continue;
+    bk_background_info_t info;
+    bk_background_status_t result = bk_background_load(
+        &assets, i, &info, next, BK_BACKGROUND_MAX_PIXELS_BYTES);
+    if (result != BK_BACKGROUND_OK) {
+      free(next);
+      continue;
+    }
+    bk_ui_set_background_image(i, NULL);
+    lv_image_cache_drop(&descriptors[i]);
+    free(pixels[i]);
+    pixels[i] = next;
+    descriptors[i] = (lv_image_dsc_t){.header = {.magic = LV_IMAGE_HEADER_MAGIC,
+                                                 .cf = LV_COLOR_FORMAT_RGB565,
+                                                 .w = info.width,
+                                                 .h = info.height,
+                                                 .stride = info.width * 2},
+                                      .data_size = info.bytes,
+                                      .data = next};
+    bk_ui_set_background_image(i, &descriptors[i]);
+  }
+  xSemaphoreGive(assets_lock);
+}
+
 typedef struct {
   uint32_t revision;
   bk_settings_t value;
@@ -227,6 +296,8 @@ static void ui_task(void *arg) {
   bk_ui_create(lv_screen_active());
   bk_ui_set_brightness_callback(brightness, NULL);
   bk_ui_set_dtc_lookup(bk_dtc_description);
+  unsigned seen_assets = atomic_load(&assets_revision);
+  backgrounds_load_ui();
   bk_ui_set_sample(BK_SPEED, 0, BK_VALUE_UNSUPPORTED);
   bk_ui_set_sample(BK_RANGE, 0, BK_VALUE_UNSUPPORTED);
   bk_ui_set_sample(BK_DISTANCE, 0, BK_VALUE_UNSUPPORTED);
@@ -234,14 +305,26 @@ static void ui_task(void *arg) {
 #if CONFIG_BK_ENABLE_WIFI
   bk_ui_set_wifi(bk_wifi_ssid(), bk_wifi_password(), "http://192.168.4.1/");
 #endif
-  static const bk_metric_t map[TEL_METRIC_COUNT] = {
-      BK_RPM,          BK_COOLANT,  BK_VOLTAGE,     BK_THROTTLE,
-      BK_METRIC_COUNT, BK_IGNITION, BK_MAF,         BK_FUEL_LPH,
-      BK_INJECTION,    BK_LAMBDA,   BK_METRIC_COUNT};
+  bk_data_model_t *model = malloc(sizeof(*model));
+  if (!model) {
+    ESP_LOGE(TAG, "Data registry allocation failed");
+    vTaskDelete(NULL);
+    return;
+  }
+  bk_data_model_init(model);
+#if CONFIG_BK_PROFILE_UI
+  uint64_t profile_at = now_ms(), handler_us = 0, handler_max_us = 0;
+  unsigned handler_count = 0;
+#endif
   for (;;) {
     uint64_t now = now_ms();
     lv_tick_inc(now - last);
     last = now;
+    unsigned asset_version = atomic_load(&assets_revision);
+    if (asset_version != seen_assets) {
+      backgrounds_load_ui();
+      seen_assets = asset_version;
+    }
     bool applied = false;
     xSemaphoreTake(config_lock, portMAX_DELAY);
     if (seen != config_revision) {
@@ -258,25 +341,15 @@ static void ui_task(void *arg) {
         c.selected[i] = cfg->selected[i];
       bk_ui_set_config(&c);
       bk_ui_set_layout(&cfg->layout);
-      if (now - started < 100)
-        bk_ui_boot_start(cfg->screen);
       dirty = false;
     }
     bk_snapshot_t s;
     snapshot(&s);
     bk_ui_set_connected(s.connected);
-    for (unsigned i = 0; i < TEL_METRIC_COUNT; i++)
-      if (map[i] != BK_METRIC_COUNT) {
-        bk_sample_t v = bk_store_get(&s, i, now);
-        bk_value_state_t state = BK_VALUE_UNKNOWN;
-        if (v.state == TEL_VALID)
-          state = BK_VALUE_VALID;
-        else if (v.state == TEL_STALE)
-          state = BK_VALUE_STALE;
-        else if (v.state == TEL_NEEDS_DATA)
-          state = BK_VALUE_INSUFFICIENT;
-        bk_ui_set_sample(map[i], v.value, state);
-      }
+    bk_data_model_update(model, &s, cfg, now);
+    for (unsigned i = 0; i < BK_METRIC_COUNT; i++)
+      if (i != BK_DTC_COUNT && i != BK_TRIP_SECONDS)
+        bk_ui_set_sample(i, model->values[i].value, model->values[i].state);
     bool dtc_valid =
         s.connected && s.faults_valid && now - s.faults_at_ms <= 15000;
     uint8_t codes[127];
@@ -297,7 +370,31 @@ static void ui_task(void *arg) {
 #endif
       bk_ui_set_wifi_status(status);
     }
+#if CONFIG_BK_PROFILE_UI
+    int64_t handler_start = esp_timer_get_time();
+#endif
     lv_timer_handler();
+#if CONFIG_BK_PROFILE_UI
+    uint64_t elapsed = esp_timer_get_time() - handler_start;
+    handler_us += elapsed;
+    if (elapsed > handler_max_us)
+      handler_max_us = elapsed;
+    handler_count++;
+    if (now - profile_at >= 10000) {
+      ESP_LOGI(TAG,
+               "UI LVGL handler avg=%llu us max=%llu us samples=%u "
+               "internal_free=%u psram_free=%u stack_min=%u",
+               (unsigned long long)(handler_us / handler_count),
+               (unsigned long long)handler_max_us, handler_count,
+               (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+               (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM),
+               (unsigned)uxTaskGetStackHighWaterMark(NULL));
+      profile_at = now;
+      handler_us = 0;
+      handler_max_us = 0;
+      handler_count = 0;
+    }
+#endif
     if (now - started > 1000) {
       bk_ui_config_t c;
       bk_ui_get_config(&c);
@@ -332,11 +429,15 @@ static void ui_task(void *arg) {
 }
 void app_main(void) {
   atomic_init(&maintenance, false);
+  atomic_init(&assets_revision, 0);
   esp_err_t e = nvs_flash_init();
   if (e) {
     ESP_LOGE(TAG, "NVS failed; settings preserved for recovery");
     return;
   }
+  assets_lock = xSemaphoreCreateMutex();
+  assets_available =
+      assets_lock && bk_background_esp_open(&assets) == BK_BACKGROUND_OK;
   store_lock = xSemaphoreCreateMutex();
   history_lock = xSemaphoreCreateMutex();
   config_lock = xSemaphoreCreateMutex();
@@ -369,7 +470,10 @@ void app_main(void) {
                                  .history = history_snapshot,
                                  .config_get = config_get,
                                  .config_apply = config_apply,
-                                 .ota_prepare = ota_prepare};
+                                 .ota_prepare = ota_prepare,
+                                 .background_ready = background_ready,
+                                 .background_load = background_load,
+                                 .background_store = background_store};
   e = bk_wifi_start(&hooks);
   if (e)
     ESP_LOGE(TAG, "SoftAP failed: %s", esp_err_to_name(e));

@@ -27,7 +27,13 @@ jobs:
           Copy-Item "$env:VCPKG_INSTALLATION_ROOT/installed/x64-windows/bin/SDL2.dll" build/windows-package/
           Copy-Item simulator/README.md build/windows-package/
           Copy-Item simulator/profiles build/windows-package/ -Recurse
+          New-Item -ItemType Directory -Force build/windows-package/licenses | Out-Null
+          Copy-Item firmware/components/ui_widgets/licenses/DejaVu-copyright.txt build/windows-package/licenses/
+          Copy-Item build/simulator/_deps/lvgl-src/LICENCE.txt build/windows-package/licenses/LVGL.txt
+          Copy-Item build/simulator/_deps/cjson-src/LICENSE build/windows-package/licenses/cJSON.txt
+          Copy-Item "$env:VCPKG_INSTALLATION_ROOT/installed/x64-windows/share/sdl2/copyright" build/windows-package/licenses/SDL2.txt
           & build/simulator/Release/bk_sim.exe --render build/windows-package
+          & build/simulator/Release/bk_sim.exe --reference --render build/windows-package --export build/windows-package/hunter-reference.json
       - uses: actions/upload-artifact@v4
         with:
           name: Hunter-Windows-x64-VS2026-preview

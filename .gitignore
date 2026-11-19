@@ -14,3 +14,8 @@ firmware/sdkconfig.usb-kkl
 firmware/sdkconfig.usb-kkl.old
 
 firmware/build-usb-kkl/
+
+/hunter-profile.json
+/hunter-screenshot.ppm
+/simulator/hunter-profile.json
+/simulator/hunter-screenshot.ppm
