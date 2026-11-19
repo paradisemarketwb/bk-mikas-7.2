@@ -6,6 +6,8 @@
 typedef void (*bk_snapshot_fn)(bk_snapshot_t *out);
 typedef struct {
   bk_snapshot_fn snapshot;
+  const char *transport_name;
+  bool (*adapter_ready)(void);
   void (*history)(bk_history_t *out);
   void (*config_get)(bk_settings_t *out);
   esp_err_t (*config_apply)(const bk_settings_t *value);

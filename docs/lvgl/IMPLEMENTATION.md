@@ -184,3 +184,5 @@ RGB565 framebuffer. `simulator/export_gallery.py` воспроизводит PNG
 подтвердило равенство данных.
 
 ![Дополнительный прибор из JSON](../images/lvgl/custom-load.png)
+
+Подробная граница возможностей конструктора и замены UI: [SCREEN_CUSTOMIZATION.md](SCREEN_CUSTOMIZATION.md).

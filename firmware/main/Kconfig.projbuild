@@ -1,10 +1,20 @@
 menu "BK Mikas R2"
 config BK_ENABLE_KLINE
-    bool "Enable physical K-Line (R2 wiring and JP1 checked)"
+    bool "Enable ECU diagnostics with selected transport"
     default n
     help
-        GPIO19 is TX_ARM, GPIO43/44 UART. Native USB must be disconnected.
-        Select UART switch to external header; remove JP1 before flashing.
+        Enable only after the selected transport's wiring is checked.
+        UART requires the R2 interface; USB-KKL requires an externally powered
+        native USB host connection and the R2 harness fully disconnected.
+choice BK_TRANSPORT
+    prompt "ECU transport"
+    default BK_TRANSPORT_UART
+config BK_TRANSPORT_UART
+    bool "UART GPIO43/44 + L9637D, ARM GPIO19"
+config BK_TRANSPORT_USB_KKL
+    bool "USB Host + FTDI FT232RL KKL (0403:6001)"
+    depends on SOC_USB_OTG_SUPPORTED && !ESP_CONSOLE_USB_CDC && !ESP_CONSOLE_USB_SERIAL_JTAG && !ESP_CONSOLE_SECONDARY_USB_SERIAL_JTAG
+endchoice
 config BK_ENABLE_WIFI
     bool "Enable password-protected local SoftAP"
     default y

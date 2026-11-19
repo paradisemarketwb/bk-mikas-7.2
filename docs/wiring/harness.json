@@ -5,24 +5,115 @@
     "kline": "hardware/kicad/r2/reports/netlist.xml"
   },
   "links": [
-    {"signal":"VS_PROT","from":["power","J2","1"],"to":["kline","J1","1"]},
-    {"signal":"GND","from":["power","J2","2"],"to":["kline","J1","2"]},
-    {"signal":"5V_OUT","from":["power","J2","3"],"to":["kline","J3","1"]},
-    {"signal":"GND","from":["power","J2","4"],"to":["kline","J3","2"]}
+    {
+      "signal": "VS_PROT",
+      "from": [
+        "power",
+        "J2",
+        "1"
+      ],
+      "to": [
+        "kline",
+        "J1",
+        "1"
+      ]
+    },
+    {
+      "signal": "GND",
+      "from": [
+        "power",
+        "J2",
+        "2"
+      ],
+      "to": [
+        "kline",
+        "J1",
+        "2"
+      ]
+    },
+    {
+      "signal": "5V_OUT",
+      "from": [
+        "power",
+        "J2",
+        "3"
+      ],
+      "to": [
+        "kline",
+        "J3",
+        "1"
+      ]
+    },
+    {
+      "signal": "GND",
+      "from": [
+        "power",
+        "J2",
+        "4"
+      ],
+      "to": [
+        "kline",
+        "J3",
+        "2"
+      ]
+    }
   ],
   "external": [
-    {"name":"ACC после зажигания → inline 2A → ACC_RAW","board":"power","ref":"J1","pin":"1"},
-    {"name":"Общая масса автомобиля","board":"power","ref":"J1","pin":"2"},
-    {"name":"USB host VBUS через сервисный пигтейл","board":"power","ref":"J3","pin":"1"},
-    {"name":"USB host GND","board":"power","ref":"J3","pin":"2"},
-    {"name":"Ответвление штатной K-Line, без разрыва шины","board":"kline","ref":"J1","pin":"3"}
+    {
+      "name": "ACC после зажигания → inline 2A → ACC_RAW",
+      "board": "power",
+      "ref": "J1",
+      "pin": "1"
+    },
+    {
+      "name": "Общая масса автомобиля",
+      "board": "power",
+      "ref": "J1",
+      "pin": "2"
+    },
+    {
+      "name": "Необязательный внешний источник5V",
+      "board": "power",
+      "ref": "J3",
+      "pin": "1"
+    },
+    {
+      "name": "GND дополнительного5Vисточника",
+      "board": "power",
+      "ref": "J3",
+      "pin": "2"
+    },
+    {
+      "name": "Ответвление штатной K-Line, без разрыва шины",
+      "board": "kline",
+      "ref": "J1",
+      "pin": "3"
+    }
   ],
   "display": [
-    {"pin":"1","label":"5V / VBUS после ORing"},
-    {"pin":"2","label":"GND"},
-    {"pin":"3","label":"3V3 от дисплея"},
-    {"pin":"4","label":"GPIO43 / TX"},
-    {"pin":"5","label":"GPIO44 / RX"},
-    {"pin":"6","label":"GPIO19 / TX_ARM, native USB запрещён"}
+    {
+      "pin": "1",
+      "label": "5V → WaveshareJ9.2 USB_5V"
+    },
+    {
+      "pin": "2",
+      "label": "GND"
+    },
+    {
+      "pin": "3",
+      "label": "3V3 от дисплея"
+    },
+    {
+      "pin": "4",
+      "label": "GPIO43 / TX"
+    },
+    {
+      "pin": "5",
+      "label": "GPIO44 / RX"
+    },
+    {
+      "pin": "6",
+      "label": "GPIO19 / TX_ARM, native USB запрещён"
+    }
   ]
 }

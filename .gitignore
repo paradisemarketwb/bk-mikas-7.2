@@ -9,3 +9,8 @@ __pycache__/
 *-backups/
 
 web/node_modules/
+
+firmware/sdkconfig.usb-kkl
+firmware/sdkconfig.usb-kkl.old
+
+firmware/build-usb-kkl/

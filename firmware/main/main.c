@@ -131,6 +131,7 @@ static void ecu_task(void *arg) {
   (void)arg;
   uint8_t reply[256];
   size_t n;
+  ESP_LOGI(TAG, "ECU transport: %s", bk_kline_transport_name());
   if (bk_kline_init() != ESP_OK) {
     bk_kline_disarm();
     ESP_LOGE(TAG, "K-Line init failed");
@@ -363,6 +364,8 @@ void app_main(void) {
     ESP_LOGE(TAG, "Storage worker failed");
 #if CONFIG_BK_ENABLE_WIFI
   const bk_wifi_hooks_t hooks = {.snapshot = snapshot,
+                                 .transport_name = bk_kline_transport_name(),
+                                 .adapter_ready = bk_kline_adapter_ready,
                                  .history = history_snapshot,
                                  .config_get = config_get,
                                  .config_apply = config_apply,
