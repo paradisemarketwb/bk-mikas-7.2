@@ -1,0 +1,17 @@
+Reference,Value/MPN,Footprint,Manufacturer part / requirement,Status
+J1,VEHICLE_PROTECTED,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal","Phoenix Contact MKDS 1,5/3-5,08",Verify exact package and sourcing before assembly; no vehicle validation
+JP1,REMOVE_FOR_SERVICE,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,2.54mm 1x02 pin header + removable shunt; service disconnect only,Verify exact package and sourcing before assembly; no vehicle validation
+U1,L9637D,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,L9637D,Verify exact package and sourcing before assembly; no vehicle validation
+U2,SN74LVC1G125QDBVRQ1,Package_TO_SOT_SMD:SOT-23-5,SN74LVC1G125QDBVRQ1,Verify exact package and sourcing before assembly; no vehicle validation
+Q1,2N7002,Package_TO_SOT_SMD:SOT-23,"Nexperia 2N7002,215 (SOT-23 G=1 S=2 D=3)",Verify exact package and sourcing before assembly; no vehicle validation
+R1,100R,Resistor_SMD:R_0805_2012Metric,RC0805FR-07100RL,Verify exact package and sourcing before assembly; no vehicle validation
+R2,1k,Resistor_SMD:R_0805_2012Metric,RC0805FR-071KL,Verify exact package and sourcing before assembly; no vehicle validation
+R3,10k,Resistor_SMD:R_0805_2012Metric,RC0805FR-0710KL,Verify exact package and sourcing before assembly; no vehicle validation
+R4,100k,Resistor_SMD:R_0805_2012Metric,RC0805FR-07100KL,Verify exact package and sourcing before assembly; no vehicle validation
+R5,1k,Resistor_SMD:R_0805_2012Metric,RC0805FR-071KL,Verify exact package and sourcing before assembly; no vehicle validation
+R6,10k,Resistor_SMD:R_0805_2012Metric,RC0805FR-0710KL,Verify exact package and sourcing before assembly; no vehicle validation
+C1,100n 16V,Capacitor_SMD:C_0805_2012Metric,GRM21BR71H104KA01L (100nF X7R 50V 0805),Verify exact package and sourcing before assembly; no vehicle validation
+C2,100n 50V,Capacitor_SMD:C_0805_2012Metric,GRM21BR71H104KA01L (100nF X7R 50V 0805),Verify exact package and sourcing before assembly; no vehicle validation
+C3,100n 16V,Capacitor_SMD:C_0805_2012Metric,GRM21BR71H104KA01L (100nF X7R 50V 0805),Verify exact package and sourcing before assembly; no vehicle validation
+J2,DISPLAY,Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical,JST B6B-XH-A(LF)(SN); mating XHP-6 + SXH-001T-P0.6,Verify exact package and sourcing before assembly; no vehicle validation
+J3,REGULATED_5V,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal","Phoenix Contact MKDS 1,5/2-5,08",Verify exact package and sourcing before assembly; no vehicle validation

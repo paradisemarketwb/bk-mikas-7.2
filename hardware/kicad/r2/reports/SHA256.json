@@ -1,0 +1,14 @@
+{
+  "BK-KLINE-R2.kicad_pcb": "5468cfa077bd13f0da46014564a476c821e878699e4ca5f3842507911ae9bb07",
+  "BK-KLINE-R2.kicad_sch": "38eb45515b8e40a7b6f732c9465ca92e3351b6087c919e25a191e7dd0a0aa565",
+  "fabrication-prototype/BK-KLINE-R2-B_Cu.gbl": "af710d474592e693ff242d8e09a32fb642f56553a9fa75995b2fab1ffcae3554",
+  "fabrication-prototype/BK-KLINE-R2-B_Mask.gbs": "ba50791b2c389b6dd62f784fb7270b4d565b6c3b554b646e0b7c8dafceded4e1",
+  "fabrication-prototype/BK-KLINE-R2-B_Silkscreen.gbo": "1389ff85221a00fdc723e80784b57383a5ae520f842a9faed6048e09b54374b4",
+  "fabrication-prototype/BK-KLINE-R2-Edge_Cuts.gm1": "915d55f0efe904269347b95d022837eaf93537316525f29b89454abf3a6b4bce",
+  "fabrication-prototype/BK-KLINE-R2-F_Cu.gtl": "f3abc9d824f800d3088cbcc52eeddb67e0a9fba8e2649b2d82b8ceb03666c977",
+  "fabrication-prototype/BK-KLINE-R2-F_Mask.gts": "9056b991ec09af3cfaa89ce6253e3956d9c1bad6ff1455517b317895f5770d20",
+  "fabrication-prototype/BK-KLINE-R2-F_Silkscreen.gto": "023350b3f97f4b7a071ac310d6d00720be4ffbc6096b5afd603ce2407ba0cbe2",
+  "fabrication-prototype/BK-KLINE-R2-job.gbrjob": "775e3f803ae794c2323e943d4db22bb828496aa59c7df743d9bac5511d9a7547",
+  "fabrication-prototype/BK-KLINE-R2.drl": "58a13c3d82394e66c3c826f92be5132fbf5b8c8b8349f17c1039b020ca3225f6",
+  "fabrication-prototype/positions.csv": "73d77cb30a1a38fb1d3aab567b60ee316de5634668a3a79a2b00d0a1b947f0bd"
+}

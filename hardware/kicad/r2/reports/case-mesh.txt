@@ -1,0 +1,5 @@
+PASS adapter-r2-base.stl: one closed shell, 2324 triangles
+PASS adapter-r2-lid.stl: one closed shell, 264 triangles
+PASS gauge-r2-body.stl: one closed shell, 2160 triangles
+PASS gauge-r2-rear.stl: one closed shell, 2880 triangles
+PASS gauge-r2-spacer.stl: one closed shell, 1440 triangles
