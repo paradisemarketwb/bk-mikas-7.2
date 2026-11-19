@@ -1,0 +1,38 @@
+{
+  "source_commit": "06e3cd544789d32bc98cd7a1f975455666c27971",
+  "run_url": "https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345",
+  "idf": "5.5.1",
+  "lvgl": "9.6.0",
+  "application_version": "2.0.0-r2",
+  "jobs": [
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412014986",
+      "name": "esp32s3 (safe)"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412015471",
+      "name": "host"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412015498",
+      "name": "esp32s3 (live)"
+    }
+  ],
+  "images": {
+    "safe": {
+      "bytes": 1412432,
+      "sha256": "c8f820db016b6292e10975871ac1b83b1c7cc91a8d71cdfebf1dc71e2236b809",
+      "kline_enabled": false,
+      "wifi_enabled": true
+    },
+    "live": {
+      "bytes": 1435424,
+      "sha256": "09e7570b98f4c6b718ecec9c8e752476364f0dd316635332290de4ecf624ce5f",
+      "kline_enabled": true,
+      "wifi_enabled": true
+    }
+  }
+}

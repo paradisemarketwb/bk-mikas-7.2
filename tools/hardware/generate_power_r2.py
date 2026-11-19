@@ -5,18 +5,20 @@ Requires KiCad9 pcbnew. Existing routed PCB is NOT overwritten without --initial
 from pathlib import Path
 import uuid,json,csv,sys
 import pcbnew as p
-from power_parts import parts
+from power_parts import parts,mpns
 root=Path(__file__).resolve().parents[2];out=root/'hardware/kicad/power-r2';out.mkdir(parents=True,exist_ok=True)
 u=lambda:str(uuid.uuid4())
 # TI DRR0012E recommended land pattern: 0.5 pitch; floating pad13 mandatory.
 fp='(footprint "WSON-12_DRR_3x3_EP1.3x2.5" (version 20240108) (generator pcbnew) (layer "F.Cu") (attr smd) (fp_rect (start -1.5 -1.5) (end 1.5 1.5) (stroke (width .1) (type default)) (fill none) (layer "F.Fab")) (fp_rect (start -1.9 -1.75) (end 1.9 1.75) (stroke (width .05) (type default)) (fill none) (layer "F.CrtYd")) (fp_text reference "REF**" (at 0 -2.2) (layer "F.SilkS") (effects (font (size 1 1) (thickness .15))))'
+fp+='(fp_circle (center -1.7 -2.2) (end -1.55 -2.2) (stroke (width .1) (type default)) (fill none) (layer "F.SilkS")) (fp_text user "1" (at -1.7 -3) (layer "F.SilkS") (effects (font (size .8 .8) (thickness .1))))'
 for n in range(1,13):
  x=-1.425 if n<=6 else 1.425;y=(-1.25+(n-1)*.5) if n<=6 else (1.25-(n-7)*.5)
  fp+=f'(pad "{n}" smd rect (at {x} {y}) (size .85 .25) (layers "F.Cu" "F.Paste" "F.Mask"))'
 fp+='(pad "13" smd rect (at 0 0) (size 1.3 2.5) (layers "F.Cu" "F.Paste" "F.Mask")))'
-(out/'BK_POWER.pretty/WSON-12_DRR_3x3_EP1.3x2.5.kicad_mod').write_text(fp)
+if not (out/'BK_POWER.pretty/WSON-12_DRR_3x3_EP1.3x2.5.kicad_mod').exists():
+    (out/'BK_POWER.pretty/WSON-12_DRR_3x3_EP1.3x2.5.kicad_mod').write_text(fp)
 (out/'fp-lib-table').write_text('(fp_lib_table (lib (name BK_POWER) (type KiCad) (uri ${KIPRJMOD}/BK_POWER.pretty) (options "") (descr "TI DRR0012E")))')
-lib=[];instances=[];labels=[];rootuid=u();sources=[('ACC_RAW',14),('CTRL_VS',18),('COMMON_SOURCE',22),('VS_PROT',26),('5V_OUT',34),('USB_5V',38),('GND',42)]
+lib=[];instances=[];labels=[];rootuid=u();sources=[('ACC_RAW',14),('CTRL_VS',18),('COMMON_SOURCE',22),('VS_PROT',26),('5V_OR',34),('USB_5V',38),('GND',42)]
 allparts=parts+[(f'#FLG{i}',net,'',[(net,net,'power_out')],0,0) for i,(net,_) in enumerate(sources)]
 for idx,(ref,val,foot,pins,x,y) in enumerate(allparts):
  name=ref.replace('#','');sx=35.56+(idx%4)*195.58;sy=35.56+(idx//4)*50.8;h=max(5,len(pins)*1.27+1.27);isflag=ref.startswith('#');props=f'(property "Reference" "{ref}" (at 0 {-h-3} 0) (effects (font (size 1.27 1.27)))) (property "Value" "{val}" (at 0 {h+3} 0) (effects (font (size 1 1)))) (property "Footprint" "{foot}" (at 0 0 0) (effects (font (size 1 1)) (hide yes)))'
@@ -32,7 +34,7 @@ sch=f'(kicad_sch (version 20231120) (generator "bk_power_r2") (uuid "{rootuid}")
 (out/'sym-lib-table').write_text('(sym_lib_table (lib (name BK_POWER) (type KiCad) (uri ${KIPRJMOD}/BK_POWER.kicad_sym) (options "") (descr "Original power symbols")))')
 if not (out/'BK-POWER-R2.kicad_pro').exists():(out/'BK-POWER-R2.kicad_pro').write_text(json.dumps({'board':{'design_settings':{'rules':{'min_clearance':.15,'min_track_width':.15,'min_through_hole_diameter':.25}}}},indent=2))
 with (out/'BOM.csv').open('w') as f:
- w=csv.writer(f);w.writerow(['Reference','Value/MPN','Footprint']);w.writerows((c[0],c[1],c[2]) for c in parts)
+ w=csv.writer(f);w.writerow(['Reference','Value','Footprint','Manufacturer_PN']);w.writerows((c[0],c[1],c[2],mpns.get(c[0],'1.5mm plated test point; no fitted part')) for c in parts)
 if '--initial-pcb' not in sys.argv:sys.exit(0)
 b=p.BOARD();nets={}
 for net in sorted({pi[1] for c in parts for pi in c[3] if pi[1]}):ni=p.NETINFO_ITEM(b,'/'+net);b.Add(ni);nets[net]=ni

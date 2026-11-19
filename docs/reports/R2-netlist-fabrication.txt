@@ -1,1 +1,1 @@
-PASS: 45 connected pads match schematic; 7 Gerber layers + Excellon validated
+PASS BK-KLINE-R2: 49 connected pads match schematic; 7 Gerber + PTH/NPTH Excellon; all source/export SHA256 match

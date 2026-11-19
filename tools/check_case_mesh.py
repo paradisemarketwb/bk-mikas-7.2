@@ -3,7 +3,10 @@
 from collections import Counter
 from pathlib import Path
 
-for path in sorted((Path(__file__).resolve().parents[1] / 'hardware/case/r2/stl').glob('*.stl')):
+folder = Path(__file__).resolve().parents[1] / 'hardware/case/r2/stl'
+required = {'gauge-r2-body.stl','gauge-r2-rear.stl','gauge-r2-spacer.stl','adapter-r2-base.stl','adapter-r2-lid.stl','adapter-power-stack-r2-base.stl','adapter-power-stack-r2-lid.stl'}
+assert required <= {p.name for p in folder.glob('*.stl')}, 'Missing required case exports'
+for path in sorted(folder.glob('*.stl')):
     points = [tuple(map(float, line.split()[1:])) for line in path.read_text().splitlines()
               if line.strip().startswith('vertex')]
     assert points and len(points) % 3 == 0, path

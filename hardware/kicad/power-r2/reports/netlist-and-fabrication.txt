@@ -1,0 +1,1 @@
+PASS BK-POWER-R2: 93 connected pads match schematic; 7 Gerber + PTH/NPTH Excellon; all source/export SHA256 match

@@ -1,7 +1,9 @@
 # Заказ платы и монтажа
 
 Проект содержит две собственные платы: интерфейс BK-KLINE-R2 и защиту/питание
-BK-POWER-R2. Для каждой используйте Gerber и Excellon из её KiCad-проекта:
+BK-POWER-R2. [Общий архив для изготовителя](../../hardware/fabrication/BK-R2-prototype-fabrication.zip)
+содержит отдельные подпапки двух плат, BOM и позиции. Для каждой используйте
+Gerber и Excellon из её KiCad-проекта:
 
 - [Интерфейс: fabrication-prototype](../../hardware/kicad/r2/fabrication-prototype/).
 - [Питание: проект и комплект экспорта](../../hardware/kicad/power-r2/README.md).

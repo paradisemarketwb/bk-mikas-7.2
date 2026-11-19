@@ -1,5 +1,7 @@
 # Архитектура R2
 
+![Архитектура](images/system/architecture.svg)
+
 Данные движутся через независимые компоненты:
 
 `kline` → `mikas` → `telemetry` → снимок с mutex → `ui_core` / `history` / `wifi`.

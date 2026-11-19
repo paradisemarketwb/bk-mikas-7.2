@@ -1,7 +1,9 @@
-Test project /tmp/bk-simulator-build
-    Start 1: render_all_screens
-1/1 Test #1: render_all_screens ...............   Passed    0.76 sec
+PASS — Native simulator CTest 3/3
+Source: 06e3cd544789d32bc98cd7a1f975455666c27971
+CI host: https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412015471
 
-100% tests passed out of 1
-
-Total Test time (real) =   0.77 sec
+Coverage: both themes and ten views, real pointer events in menu/editor,
+config/layout validation, nine widget types, bounded chart history,
+nonblocking boot animation, shared profile JSON export/import roundtrip.
+Native build and tests passed; physical Waveshare and Windows execution
+have not been verified in this environment.

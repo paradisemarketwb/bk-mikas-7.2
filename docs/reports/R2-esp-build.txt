@@ -1,26 +1,22 @@
-ESP-IDF 5.5.1 / ESP32-S3 / LVGL9.6.0
-LVGL commit80ca777e37a2b176770726a02e07a6fb79ef0b39
-Docker espressif/idf:v5.5.1
-sha256:dfa2d076c796769c07c155eba6c672b9f395aec943b2ba3701b73379b5f9e884
+R2 software CI: PASS
+Source commit: 06e3cd544789d32bc98cd7a1f975455666c27971
+Run: https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345
+ESP-IDF5.5.1 / LVGL9.6.0 / application2.0.0-r2
 
-Dependency registry unreachable in this environment; official LVGL checked out
-at exact pinned commit and supplied using EXTRA_COMPONENT_DIRS=/lvgl,
-IDF_COMPONENT_MANAGER=0. No substitute library.
+Jobs:
+- esp32s3 (safe): success
+- host: success
+- esp32s3 (live): success
 
-Initial default build: PASS, application size0xb88b0 bytes.
-Enabled Wi-Fi/K-Line build initially failed DRAM link by53976 bytes.
-Cause: LVGL static262144-byte builtin heap plus Wi-Fi.
-Correction: use C library allocator with IDF PSRAM malloc, explicit internal
-RGB bounce/draw allocations preserved. Final results appended below.
+safe: 1412432bytes
+SHA256: c8f820db016b6292e10975871ac1b83b1c7cc91a8d71cdfebf1dc71e2236b809
 
-No physical device, display, radio, ECU or vehicle validation performed.
+live: 1435424bytes
+SHA256: 09e7570b98f4c6b718ecec9c8e752476364f0dd316635332290de4ecf624ce5f
 
-Enabled Wi-Fi + K-Line final-source build: PASS
-Size:0x14ed30 bytes;3MiB app partition,56% free.
-SHA256:a1e5d1c9b15c577f6beff340eee1f53aef16b51f333d8af0c1fdeff4d0b37ce7
-
-Final safe-default build: PASS
-K-Line OFF, Wi-Fi OFF, primary and secondary consoles OFF, USB Serial/JTAG OFF.
-Allocator: C library + IDF PSRAM. Size:0xb76b0 bytes;3MiB app partition,76% free.
-SHA256:cc61c7168f6cab57aefc99f5398da8d79a9b96620b65197d0600890e70ff0af4
-Four LVGL deprecated object-flag API warnings; no compile/link errors.
+Safe: K-Line OFF, Wi-Fi ON. Live: K-Line ON, Wi-Fi ON.
+Primary/secondary consoles and USB Serial/JTAG disabled.
+Host job passed portable C ASan/UBSan, native simulator CTest3/3,
+JavaScript SHA256 and Chromium phone workflow.
+Phone OTA test uses a mock API; no physical ESP32 flash/radio/ECU validation.
+Hardware checks and qualification are tracked separately.

@@ -5,6 +5,7 @@
 - [TI SN74LVC1G125-Q1](https://www.ti.com/product/SN74LVC1G125-Q1).
 - [TI LM7480-Q1 datasheet](https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf).
 - [TI LM66100](https://www.ti.com/product/LM66100).
+- [TI TPS2553](https://www.ti.com/product/TPS2553).
 - [RECOM R-78B2.0 datasheet](https://recom-power.com/pdf/Innoline/R-78B-2.0.pdf).
 - [Waveshare аппаратная документация](https://docs.waveshare.com/ESP32-S3-Touch-LCD-2.1), официальный demo и mechanicalCAD: точные источники/hash в board/st7701_init.h и hardware/case/r2/SOURCES.json.
 - [Espressif ESP-IDF5.5.1](https://docs.espressif.com/projects/esp-idf/en/v5.5.1/esp32s3/).

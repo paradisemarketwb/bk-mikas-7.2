@@ -16,6 +16,7 @@ package, напряжений, температуры и импульсных р
 |LM74800QDRRRQ1 и силовые MOSFET/TVS|[TI datasheet](https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf), [расчёт питания](../hardware/kicad/power-r2/README.md)|
 |RECOM R-78B5.0-2.0|[Официальный datasheet](https://recom-power.com/pdf/Innoline/R-78B-2.0.pdf)|
 |LM66100|[TI](https://www.ti.com/product/LM66100)|
+|TPS2553DBVR, ограничитель выхода5В|[TI](https://www.ti.com/product/TPS2553)|
 
 Указанные ниже адреса — **поисковые ссылки**, а не подтверждённые карточки
 товара. Наличие, цена, подлинность и ревизия платы не проверялись.
