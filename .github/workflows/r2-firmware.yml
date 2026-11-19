@@ -1,0 +1,56 @@
+name: R2 firmware, simulator and phone
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["firmware/**", "simulator/**", "web/**", "tests/**", "tools/**", ".github/workflows/r2-firmware.yml"]
+  push:
+    branches: [main]
+    paths: ["firmware/**", "simulator/**", "web/**", "tests/**", "tools/**", ".github/workflows/r2-firmware.yml"]
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pinned cJSON and portable firmware tests
+        run: |
+          git clone --depth 1 --branch v1.7.19 https://github.com/DaveGamble/cJSON.git "$RUNNER_TEMP/cJSON"
+          test "$(git -C "$RUNNER_TEMP/cJSON" rev-parse HEAD)" = c859b25da02955fef659d658b8f324b5cde87be3
+          CJSON_DIR="$RUNNER_TEMP/cJSON" bash tools/test_firmware_host.sh
+      - run: cmake -S simulator -B build/simulator -DBK_WITH_SDL=OFF
+      - run: cmake --build build/simulator -j2
+      - run: ctest --test-dir build/simulator --output-on-failure
+      - run: node tools/check_web.cjs
+      - run: npm ci --prefix web
+      - run: npm exec --prefix web -- playwright install --with-deps chromium
+      - run: node tests/test_phone.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: R2-phone-screenshots
+          path: docs/images/web/*.png
+  esp32s3:
+    runs-on: ubuntu-24.04
+    container: espressif/idf:v5.5.1
+    strategy:
+      matrix:
+        mode: [safe, live]
+    steps:
+      - uses: actions/checkout@v4
+      - shell: bash
+        run: |
+          . /opt/esp/idf/export.sh
+          cd firmware
+          if [ "${{ matrix.mode }}" = live ]; then
+            printf 'CONFIG_BK_ENABLE_KLINE=y\n' > /tmp/live.defaults
+            idf.py -D SDKCONFIG_DEFAULTS='sdkconfig.defaults;/tmp/live.defaults' set-target esp32s3
+          else
+            idf.py set-target esp32s3
+          fi
+          idf.py build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BK-R2-ESP32S3-${{ matrix.mode }}-experimental
+          path: |
+            firmware/build/*.bin
+            firmware/build/bootloader/bootloader.bin
+            firmware/build/partition_table/partition-table.bin
+            firmware/build/flasher_args.json

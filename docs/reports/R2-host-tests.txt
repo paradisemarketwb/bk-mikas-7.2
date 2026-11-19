@@ -1,0 +1,11 @@
+PASS — GitHub CI host job
+Source: 06e3cd544789d32bc98cd7a1f975455666c27971
+https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412015471
+
+Portable C with ASan/UBSan: monitor codec/escaping/checksum/read-only boundary,
+field decoders and freshness; profile JSON atomic import/roundtrip, duplicate
+keys and geometry rejection; bounded history and DTC event retention.
+
+The same host job also passed native CTest, browser JavaScript/SHA256 and
+Chromium phone workflow. Phone API is mocked; no physical radio/OTA/ECU test.
+See R2-software-ci.json for machine-readable job conclusions.

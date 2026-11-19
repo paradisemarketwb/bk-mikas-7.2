@@ -1,0 +1,9 @@
+PASS — Native simulator CTest 3/3
+Source: 06e3cd544789d32bc98cd7a1f975455666c27971
+CI host: https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345/job/135412015471
+
+Coverage: both themes and ten views, real pointer events in menu/editor,
+config/layout validation, nine widget types, bounded chart history,
+nonblocking boot animation, shared profile JSON export/import roundtrip.
+Native build and tests passed; physical Waveshare and Windows execution
+have not been verified in this environment.

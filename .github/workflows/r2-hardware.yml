@@ -1,0 +1,42 @@
+name: R2 KiCad and fabrication checks
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["hardware/**", "docs/wiring/harness.json", "tools/check_r2_hardware.py", "tools/check_case_mesh.py", "tools/render_system_diagrams.py", "tools/package_fabrication.py", "tools/check_netlist_exports.py", "tools/hardware/**", ".github/workflows/r2-hardware.yml"]
+  push:
+    branches: [main]
+    paths: ["hardware/**", "docs/wiring/harness.json", "tools/check_r2_hardware.py", "tools/check_case_mesh.py", "tools/render_system_diagrams.py", "tools/package_fabrication.py", "tools/check_netlist_exports.py", "tools/hardware/**", ".github/workflows/r2-hardware.yml"]
+jobs:
+  kicad:
+    runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/kicad/kicad:9.0
+      options: --user 0
+    steps:
+      - uses: actions/checkout@v4
+      - name: ERC, DRC and schematic netlists for both boards
+        run: |
+          for item in r2:BK-KLINE-R2 power-r2:BK-POWER-R2; do
+            directory="hardware/kicad/${item%:*}"
+            name="${item#*:}"
+            output="/tmp/r2-hardware/$name"
+            mkdir -p "$output"
+            kicad-cli sch erc --exit-code-violations -o "$output/ERC.txt" "$directory/$name.kicad_sch"
+            kicad-cli pcb drc --exit-code-violations -o "$output/DRC.txt" "$directory/$name.kicad_pcb"
+            kicad-cli sch export netlist --format kicadxml -o "$output/netlist.xml" "$directory/$name.kicad_sch"
+            /usr/bin/python3 tools/check_netlist_exports.py "$output/netlist.xml" "$directory/reports/netlist.xml"
+          done
+      - name: Verify connectivity, fabrication files, case meshes and harness
+        run: |
+          /usr/bin/python3 tools/check_r2_hardware.py
+          /usr/bin/python3 tools/check_case_mesh.py
+          /usr/bin/python3 tools/hardware/check_power_budget.py
+          /usr/bin/python3 tools/render_system_diagrams.py --check
+          /usr/bin/python3 tools/package_fabrication.py --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: R2-KiCad-reports
+          path: |
+            /tmp/r2-hardware/
+            hardware/fabrication/*.zip

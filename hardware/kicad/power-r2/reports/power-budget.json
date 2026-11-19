@@ -1,0 +1,40 @@
+{
+  "assumed_envelope": {
+    "vehicle_nominal_V": 12,
+    "regulated_input_V": [
+      9,
+      16
+    ],
+    "positive_pulse_V": 200,
+    "positive_pulse_s": 0.35,
+    "minimum_pulse_interval_s": 60,
+    "maximum_ambient_C": 70,
+    "continuous_5V_load_A": 1.0,
+    "usb2_host_budget_A": 0.5,
+    "usb3_host_budget_A": 0.9
+  },
+  "ov_nominal_V": 17.644333333333336,
+  "ov_tolerance_range_V": [
+    16.81282178217822,
+    18.501612794612793
+  ],
+  "uv_rising_nominal_V": 8.069888888888888,
+  "uv_rising_tolerance_range_V": [
+    7.702425742574258,
+    8.448088664421997
+  ],
+  "uv_falling_nominal_V": 7.4208888888888875,
+  "R1_worst_200V_pulse_W": 1.958361373737374,
+  "R1_worst_pulse_J": 0.6854264808080809,
+  "R1_pulse_average_at_60s_interval_W": 0.01142377468013468,
+  "R2_200V_W": 0.3461330448891292,
+  "R4_200V_W": 0.28727377190462505,
+  "D1_62V_nominal_pulse_W": 0.8556,
+  "converter_input_A_at_8V_85pct_efficiency": 0.7352941176470589,
+  "converter_input_A_at_9V_85pct_efficiency": 0.6535947712418301,
+  "Q1_loss_at_9V_with_hot_Rds_1ohm_W": 0.4271861249946602,
+  "current_limit_max_including_1pct_R_A": 1.263933440000369,
+  "current_limit_nominal_A": 1.1636818652701817,
+  "current_limit_min_including_1pct_R_A": 1.0755341009033124,
+  "LM66100_continuous_rating_A": 1.5
+}

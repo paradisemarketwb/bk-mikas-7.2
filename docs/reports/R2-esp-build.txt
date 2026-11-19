@@ -1,0 +1,22 @@
+R2 software CI: PASS
+Source commit: 06e3cd544789d32bc98cd7a1f975455666c27971
+Run: https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44480725345
+ESP-IDF5.5.1 / LVGL9.6.0 / application2.0.0-r2
+
+Jobs:
+- esp32s3 (safe): success
+- host: success
+- esp32s3 (live): success
+
+safe: 1412432bytes
+SHA256: c8f820db016b6292e10975871ac1b83b1c7cc91a8d71cdfebf1dc71e2236b809
+
+live: 1435424bytes
+SHA256: 09e7570b98f4c6b718ecec9c8e752476364f0dd316635332290de4ecf624ce5f
+
+Safe: K-Line OFF, Wi-Fi ON. Live: K-Line ON, Wi-Fi ON.
+Primary/secondary consoles and USB Serial/JTAG disabled.
+Host job passed portable C ASan/UBSan, native simulator CTest3/3,
+JavaScript SHA256 and Chromium phone workflow.
+Phone OTA test uses a mock API; no physical ESP32 flash/radio/ECU validation.
+Hardware checks and qualification are tracked separately.

@@ -1,0 +1,1204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/workspace/bk-mikas-7.2/hardware/kicad/power-r2/BK-POWER-R2.kicad_sch</source>
+    <date>2026-11-19T12:33:00+0000</date>
+    <tool>Eeschema 9.0.2+dfsg-1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>BK-POWER-R2 - LM74800 protected power + USB ideal diode interposer</title>
+        <company/>
+        <rev>R2</rev>
+        <date/>
+        <source>BK-POWER-R2.kicad_sch</source>
+        <comment number="1" value="Engineering design: bench/load-dump qualification required"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>100n 630V X7R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a61e32ad-e7f7-44ea-b63b-6a80cabb6bab</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>4u7 100V X7S</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>db7a5d71-958b-4351-b4ce-e9267a7e13f6</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>100n 50V X7R</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d49dc98a-afb1-4236-a374-699c8f471741</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>1u 50V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bc9f79b5-32db-43e3-8eea-3ac1f8f01fe2</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>10u 50V X7R</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>27764bb3-fbab-486b-a28d-086f81d52b71</tstamps>
+    </comp>
+    <comp ref="C6">
+      <value>10u 16V X7R</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C6" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e56b8059-d2b2-41cb-a865-2423f2d84747</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>100n 50V X7R</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C7" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7324b52a-cf55-44c6-9755-f588a7f4a473</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>10u 16V X7R</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C8" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ce0988e6-4d6d-4315-9aff-918af2f20152</tstamps>
+    </comp>
+    <comp ref="C9">
+      <value>100n 50V X7R</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C9" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>14e99453-ce7a-472b-9fea-e2b69cce18f8</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>100n 50V X7R</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="C10" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>79c4ac4b-63c0-42d1-a1fb-a20eb6ec242d</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>BZG03B62-M / 62V</value>
+      <footprint>Diode_SMD:D_SMA</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f16dd746-7659-46e7-a549-b0d48ad9257a</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>BAS21H,115</value>
+      <footprint>Diode_SMD:D_SOD-123F</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SOD-123F</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>473f5ed1-0e30-4a90-9bad-509c81db2989</tstamps>
+    </comp>
+    <comp ref="D3">
+      <value>SMBJ150A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3e59990b-3947-4899-90f0-92f7c05c40f0</tstamps>
+    </comp>
+    <comp ref="D4">
+      <value>SMBJ33CA</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>03c69e68-5bc1-499d-a0d4-95ae60bafc6c</tstamps>
+    </comp>
+    <comp ref="D5">
+      <value>SMBJ18A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f6bfae1f-b34d-4a00-80c4-9fa870df3a65</tstamps>
+    </comp>
+    <comp ref="D6">
+      <value>SS110 / negative VS clamp</value>
+      <footprint>Diode_SMD:D_SMA</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="D6" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f37376f3-87cd-407b-b6ca-2eef4ebe7815</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>ACC_IN_FUSED_2A</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</footprint>
+      <fields>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="J1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>eb799775-d3fe-4b24-a8a3-e45bc5678753</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>VS_AND_5V_OUT</value>
+      <footprint>Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="J2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5a99f5fa-c749-47a4-b8ca-a7249ff86084</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>USB_HOST_5V_GND</value>
+      <footprint>Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="J3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>90c73538-67a2-436d-97a4-c775d909f36d</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>IPD50R380CE</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="Q1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>14ce8b0b-57a5-4755-b171-0139d2941d75</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>BUK7Y4R8-60E</value>
+      <footprint>Package_TO_SOT_SMD:LFPAK56</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:LFPAK56</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="Q2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5434b132-860d-4d01-a836-bc9f1ab56c66</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>10k 1W 400V pulse</value>
+      <footprint>Resistor_SMD:R_2010_5025Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_2010_5025Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>63025c14-d4f8-4a8b-8411-98c31cae439f</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>100k 0.75W 200V</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8188e677-590a-4a05-9181-f9ff61139d6d</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>7k5 1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>948a125d-e0c8-4f94-a5fe-62c65cc4e8c2</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>100k 0.75W 200V</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>73c0a212-0dfe-4d93-bc9f-3d3b3c5703b5</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>18k 1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05ad7e03-7469-40b7-a732-9a47398f4cf6</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>22k1 1%</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="R6" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a5285d4f-376b-4260-9398-de478d2b7c4e</tstamps>
+    </comp>
+    <comp ref="TP1">
+      <value>ACC_RAW</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <fields>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="TP1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3ea28a5a-9348-4695-9ecd-cc3af1e42e40</tstamps>
+    </comp>
+    <comp ref="TP2">
+      <value>VS_PROT</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <fields>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="TP2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>530fe4e6-f173-4a18-aff6-7be52b946c38</tstamps>
+    </comp>
+    <comp ref="TP3">
+      <value>5V_CAR</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <fields>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="TP3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>92f3e382-4ba4-4e3d-9d28-fb89755d1d89</tstamps>
+    </comp>
+    <comp ref="TP4">
+      <value>5V_OUT</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <fields>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="TP4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e19d4234-eefb-4932-977f-146cd9ed9dd4</tstamps>
+    </comp>
+    <comp ref="TP5">
+      <value>GND</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <fields>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="TP5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>22e7d5ad-5c1e-4908-b062-1c2099b33a9f</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>LM74800QDRRRQ1</value>
+      <footprint>BK_POWER:WSON-12_DRR_3x3_EP1.3x2.5</footprint>
+      <fields>
+        <field name="Footprint">BK_POWER:WSON-12_DRR_3x3_EP1.3x2.5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="U1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>23f05020-8885-4701-92c9-bd682c9d95a4</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>R-78B5.0-2.0</value>
+      <footprint>Converter_DCDC:Converter_DCDC_RECOM_R-78B-2.0_THT</footprint>
+      <fields>
+        <field name="Footprint">Converter_DCDC:Converter_DCDC_RECOM_R-78B-2.0_THT</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="U2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a49cd26a-ccb0-4641-8ee8-dddbf3e05a0c</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>LM66100DCKR</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="U3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>02a0dbc3-aad8-45f8-9645-e14bc0da08dc</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>LM66100DCKR</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="U4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9ad9a156-c583-4858-985a-8f54090ee707</tstamps>
+    </comp>
+    <comp ref="U5">
+      <value>TPS2553DBVR / current limit</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-6</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_POWER" part="U5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-POWER-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b4383239-ec43-48e7-9a91-c37d4d4957dd</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="BK_POWER" part="C1">
+      <fields>
+        <field name="Reference">C1</field>
+        <field name="Value">100n 630V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C10">
+      <fields>
+        <field name="Reference">C10</field>
+        <field name="Value">100n 50V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C2">
+      <fields>
+        <field name="Reference">C2</field>
+        <field name="Value">4u7 100V X7S</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C3">
+      <fields>
+        <field name="Reference">C3</field>
+        <field name="Value">100n 50V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C4">
+      <fields>
+        <field name="Reference">C4</field>
+        <field name="Value">1u 50V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C5">
+      <fields>
+        <field name="Reference">C5</field>
+        <field name="Value">10u 50V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C6">
+      <fields>
+        <field name="Reference">C6</field>
+        <field name="Value">10u 16V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C7">
+      <fields>
+        <field name="Reference">C7</field>
+        <field name="Value">100n 50V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C8">
+      <fields>
+        <field name="Reference">C8</field>
+        <field name="Value">10u 16V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="C9">
+      <fields>
+        <field name="Reference">C9</field>
+        <field name="Value">100n 50V X7R</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D1">
+      <fields>
+        <field name="Reference">D1</field>
+        <field name="Value">BZG03B62-M / 62V</field>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D2">
+      <fields>
+        <field name="Reference">D2</field>
+        <field name="Value">BAS21H,115</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123F</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D3">
+      <fields>
+        <field name="Reference">D3</field>
+        <field name="Value">SMBJ150A</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D4">
+      <fields>
+        <field name="Reference">D4</field>
+        <field name="Value">SMBJ33CA</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D5">
+      <fields>
+        <field name="Reference">D5</field>
+        <field name="Value">SMBJ18A</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="D6">
+      <fields>
+        <field name="Reference">D6</field>
+        <field name="Value">SS110 / negative VS clamp</field>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="J1">
+      <fields>
+        <field name="Reference">J1</field>
+        <field name="Value">ACC_IN_FUSED_2A</field>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="ACC" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="J2">
+      <fields>
+        <field name="Reference">J2</field>
+        <field name="Value">VS_AND_5V_OUT</field>
+        <field name="Footprint">Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VS_PROT" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="5V_OUT" type="passive"/>
+        <pin num="4" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="J3">
+      <fields>
+        <field name="Reference">J3</field>
+        <field name="Value">USB_HOST_5V_GND</field>
+        <field name="Footprint">Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VBUS" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="Q1">
+      <fields>
+        <field name="Reference">Q1</field>
+        <field name="Value">IPD50R380CE</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="Q2">
+      <fields>
+        <field name="Reference">Q2</field>
+        <field name="Value">BUK7Y4R8-60E</field>
+        <field name="Footprint">Package_TO_SOT_SMD:LFPAK56</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="S" type="passive"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+        <pin num="4" name="G" type="input"/>
+        <pin num="5" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R1">
+      <fields>
+        <field name="Reference">R1</field>
+        <field name="Value">10k 1W 400V pulse</field>
+        <field name="Footprint">Resistor_SMD:R_2010_5025Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R2">
+      <fields>
+        <field name="Reference">R2</field>
+        <field name="Value">100k 0.75W 200V</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R3">
+      <fields>
+        <field name="Reference">R3</field>
+        <field name="Value">7k5 1%</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R4">
+      <fields>
+        <field name="Reference">R4</field>
+        <field name="Value">100k 0.75W 200V</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R5">
+      <fields>
+        <field name="Reference">R5</field>
+        <field name="Value">18k 1%</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="R6">
+      <fields>
+        <field name="Reference">R6</field>
+        <field name="Value">22k1 1%</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="TP1">
+      <fields>
+        <field name="Reference">TP1</field>
+        <field name="Value">ACC_RAW</field>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="ACC_RAW" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="TP2">
+      <fields>
+        <field name="Reference">TP2</field>
+        <field name="Value">VS_PROT</field>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VS_PROT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="TP3">
+      <fields>
+        <field name="Reference">TP3</field>
+        <field name="Value">5V_CAR</field>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="5V_CAR" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="TP4">
+      <fields>
+        <field name="Reference">TP4</field>
+        <field name="Value">5V_OUT</field>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="5V_OUT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="TP5">
+      <fields>
+        <field name="Reference">TP5</field>
+        <field name="Value">GND</field>
+        <field name="Footprint">TestPoint:TestPoint_Pad_D1.5mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="U1">
+      <fields>
+        <field name="Reference">U1</field>
+        <field name="Value">LM74800QDRRRQ1</field>
+        <field name="Footprint">BK_POWER:WSON-12_DRR_3x3_EP1.3x2.5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="DGATE" type="output"/>
+        <pin num="2" name="A" type="input"/>
+        <pin num="3" name="VSNS" type="input"/>
+        <pin num="4" name="SW" type="passive"/>
+        <pin num="5" name="OV" type="input"/>
+        <pin num="6" name="EN_UVLO" type="input"/>
+        <pin num="7" name="GND" type="power_in"/>
+        <pin num="8" name="HGATE" type="output"/>
+        <pin num="9" name="OUT" type="input"/>
+        <pin num="10" name="VS" type="power_in"/>
+        <pin num="11" name="CAP" type="output"/>
+        <pin num="12" name="C" type="input"/>
+        <pin num="13" name="RTN" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="U2">
+      <fields>
+        <field name="Reference">U2</field>
+        <field name="Value">R-78B5.0-2.0</field>
+        <field name="Footprint">Converter_DCDC:Converter_DCDC_RECOM_R-78B-2.0_THT</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="5V" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="U3">
+      <fields>
+        <field name="Reference">U3</field>
+        <field name="Value">LM66100DCKR</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="nCE" type="input"/>
+        <pin num="4" name="NC" type="passive"/>
+        <pin num="5" name="nST" type="open_collector"/>
+        <pin num="6" name="VOUT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="U4">
+      <fields>
+        <field name="Reference">U4</field>
+        <field name="Value">LM66100DCKR</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="nCE" type="input"/>
+        <pin num="4" name="NC" type="passive"/>
+        <pin num="5" name="nST" type="open_collector"/>
+        <pin num="6" name="VOUT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_POWER" part="U5">
+      <fields>
+        <field name="Reference">U5</field>
+        <field name="Value">TPS2553DBVR / current limit</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="nFAULT" type="open_collector"/>
+        <pin num="5" name="ILIM" type="output"/>
+        <pin num="6" name="OUT" type="power_out"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="BK_POWER">
+      <uri>/workspace/bk-mikas-7.2/hardware/kicad/power-r2/BK_POWER.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/5V_CAR" class="Default">
+      <node ref="C6" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="C7" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="TP3" pin="1" pinfunction="5V_CAR" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="5V" pintype="power_out"/>
+      <node ref="U3" pin="1" pinfunction="VIN" pintype="power_in"/>
+    </net>
+    <net code="2" name="/5V_OR" class="Default">
+      <node ref="C10" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U3" pin="3" pinfunction="nCE" pintype="input"/>
+      <node ref="U3" pin="6" pinfunction="VOUT" pintype="passive"/>
+      <node ref="U4" pin="3" pinfunction="nCE" pintype="input"/>
+      <node ref="U4" pin="6" pinfunction="VOUT" pintype="passive"/>
+      <node ref="U5" pin="1" pinfunction="IN" pintype="power_in"/>
+      <node ref="U5" pin="3" pinfunction="EN" pintype="input"/>
+    </net>
+    <net code="3" name="/5V_OUT" class="Default">
+      <node ref="C8" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="5V_OUT" pintype="passive"/>
+      <node ref="TP4" pin="1" pinfunction="5V_OUT" pintype="passive"/>
+      <node ref="U5" pin="6" pinfunction="OUT" pintype="power_out"/>
+    </net>
+    <net code="4" name="/ACC_RAW" class="Default">
+      <node ref="C1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="ACC" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="D" pintype="passive"/>
+      <node ref="R1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R4" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="TP1" pin="1" pinfunction="ACC_RAW" pintype="passive"/>
+    </net>
+    <net code="5" name="/CAP" class="Default">
+      <node ref="C3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="CAP" pintype="output"/>
+    </net>
+    <net code="6" name="/COMMON_SOURCE" class="Default">
+      <node ref="C4" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="Q2" pin="1" pinfunction="S" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="S" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="A" pintype="input"/>
+      <node ref="U1" pin="9" pinfunction="OUT" pintype="input"/>
+    </net>
+    <net code="7" name="/CTRL_VS" class="Default">
+      <node ref="C2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="C3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D6" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="R1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="VS" pintype="power_in"/>
+      <node ref="U1" pin="3" pinfunction="VSNS" pintype="input"/>
+      <node ref="U1" pin="4" pinfunction="SW" pintype="passive"/>
+    </net>
+    <net code="8" name="/DGATE" class="Default">
+      <node ref="Q2" pin="4" pinfunction="G" pintype="input"/>
+      <node ref="U1" pin="1" pinfunction="DGATE" pintype="output"/>
+    </net>
+    <net code="9" name="/GND" class="Default">
+      <node ref="C1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C10" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C4" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C5" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C6" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C7" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C8" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C9" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D4" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D5" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D6" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="GND" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="R3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R5" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R6" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="TP5" pin="1" pinfunction="GND" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U3" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U4" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U5" pin="2" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="10" name="/HGATE" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="U1" pin="8" pinfunction="HGATE" pintype="output"/>
+    </net>
+    <net code="11" name="/ILIM" class="Default">
+      <node ref="R6" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U5" pin="5" pinfunction="ILIM" pintype="output"/>
+    </net>
+    <net code="12" name="/OV_SENSE" class="Default">
+      <node ref="R2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="OV" pintype="input"/>
+    </net>
+    <net code="13" name="/TVS_MID" class="Default">
+      <node ref="D3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D4" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="14" name="/USB_5V" class="Default">
+      <node ref="C9" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="VBUS" pintype="passive"/>
+      <node ref="U4" pin="1" pinfunction="VIN" pintype="power_in"/>
+    </net>
+    <net code="15" name="/UV_SENSE" class="Default">
+      <node ref="R4" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R5" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="EN_UVLO" pintype="input"/>
+    </net>
+    <net code="16" name="/VS_PROT" class="Default">
+      <node ref="C5" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="D5" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="VS_PROT" pintype="passive"/>
+      <node ref="Q2" pin="5" pinfunction="D" pintype="passive"/>
+      <node ref="TP2" pin="1" pinfunction="VS_PROT" pintype="passive"/>
+      <node ref="U1" pin="12" pinfunction="C" pintype="input"/>
+      <node ref="U2" pin="1" pinfunction="VIN" pintype="power_in"/>
+    </net>
+    <net code="17" name="unconnected-(U1-RTN-Pad13)" class="Default">
+      <node ref="U1" pin="13" pinfunction="RTN" pintype="passive+no_connect"/>
+    </net>
+    <net code="18" name="unconnected-(U3-NC-Pad4)" class="Default">
+      <node ref="U3" pin="4" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="19" name="unconnected-(U3-nST-Pad5)" class="Default">
+      <node ref="U3" pin="5" pinfunction="nST" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="20" name="unconnected-(U4-NC-Pad4)" class="Default">
+      <node ref="U4" pin="4" pinfunction="NC" pintype="passive+no_connect"/>
+    </net>
+    <net code="21" name="unconnected-(U4-nST-Pad5)" class="Default">
+      <node ref="U4" pin="5" pinfunction="nST" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="22" name="unconnected-(U5-nFAULT-Pad4)" class="Default">
+      <node ref="U5" pin="4" pinfunction="nFAULT" pintype="open_collector+no_connect"/>
+    </net>
+  </nets>
+</export>

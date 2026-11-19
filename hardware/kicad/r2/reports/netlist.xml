@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/workspace/bk-mikas-7.2/hardware/kicad/r2/BK-KLINE-R2.kicad_sch</source>
+    <date>2026-11-19T12:26:33+0000</date>
+    <tool>Eeschema 9.0.2+dfsg-1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>BK-KLINE-R2 - PROTECTED INTERFACE</title>
+        <company/>
+        <rev>R2</rev>
+        <date/>
+        <source>BK-KLINE-R2.kicad_sch</source>
+        <comment number="1" value="USE BK-POWER-R2; BENCH QUALIFICATION REQUIRED"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>100n 16V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="C1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>82e94161-d3cd-4e9b-817a-072bfef82639</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>100n 50V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="C2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1fdef72d-11a3-4196-92fb-a4482acced7b</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>100n 16V</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="C3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a75936d4-6cad-454f-85f6-3c9a4c4c7933</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>SMAJ18A</value>
+      <footprint>Diode_SMD:D_SMA</footprint>
+      <fields>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="D1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b79c691a-72b8-4b9c-b092-ad5fc9891d63</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>VEHICLE_PROTECTED</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</footprint>
+      <fields>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="J1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c64d341c-df85-4cc8-9ded-bd86bb86ddb6</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>DISPLAY</value>
+      <footprint>Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="J2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f65a721d-36c2-4fa4-ae33-4975574090ed</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>REGULATED_5V</value>
+      <footprint>TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</footprint>
+      <fields>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="J3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3deab039-0e5c-4cd9-bf87-827c6eb092b0</tstamps>
+    </comp>
+    <comp ref="JP1">
+      <value>REMOVE_FOR_SERVICE</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <fields>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="JP1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e36b8f51-fdea-4c33-944a-a1d0689ebd72</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>2N7002</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="Q1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b264741b-a052-436f-a987-326cb2999913</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>100R</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6493a8be-dd54-4700-be21-1058e9cdb7f6</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cf1ef5d3-1756-49cb-923e-8e73acffadec</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R3" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ec38b388-03dd-4cdb-831f-a404511a91ae</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>100k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R4" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b5d6350a-af72-4488-8494-823c6bbc71e1</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R5" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aac9bfbb-476c-489c-b307-5a44e23472dc</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R6" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>32a5bdba-70b5-44fc-98a7-00f7c364a5ee</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>22R pulse 1W</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <fields>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="R7" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5236caeb-98fe-4735-9111-2888fc61dcbd</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>L9637D</value>
+      <footprint>Package_SO:SOIC-8_3.9x4.9mm_P1.27mm</footprint>
+      <fields>
+        <field name="Footprint">Package_SO:SOIC-8_3.9x4.9mm_P1.27mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="U1" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a1f07310-fdec-43ba-999a-e47c1aad79e2</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>SN74LVC1G125QDBVRQ1</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5</footprint>
+      <fields>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="BK_R2" part="U2" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="BK-KLINE-R2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5ee45133-8511-430d-a3d6-740e1fe33d34</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="BK_R2" part="C1">
+      <fields>
+        <field name="Reference">C1</field>
+        <field name="Value">100n 16V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="C2">
+      <fields>
+        <field name="Reference">C2</field>
+        <field name="Value">100n 50V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="C3">
+      <fields>
+        <field name="Reference">C3</field>
+        <field name="Value">100n 16V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="D1">
+      <fields>
+        <field name="Reference">D1</field>
+        <field name="Value">SMAJ18A</field>
+        <field name="Footprint">Diode_SMD:D_SMA</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="J1">
+      <fields>
+        <field name="Reference">J1</field>
+        <field name="Value">VEHICLE_PROTECTED</field>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VS" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="K" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="J2">
+      <fields>
+        <field name="Reference">J2</field>
+        <field name="Value">DISPLAY</field>
+        <field name="Footprint">Connector_JST:JST_XH_B6B-XH-A_1x06_P2.50mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="5V" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+        <pin num="3" name="3V3" type="passive"/>
+        <pin num="4" name="TX43" type="passive"/>
+        <pin num="5" name="RX44" type="passive"/>
+        <pin num="6" name="ARM19" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="J3">
+      <fields>
+        <field name="Reference">J3</field>
+        <field name="Value">REGULATED_5V</field>
+        <field name="Footprint">TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="5V" type="passive"/>
+        <pin num="2" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="JP1">
+      <fields>
+        <field name="Reference">JP1</field>
+        <field name="Value">REMOVE_FOR_SERVICE</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="BUS" type="passive"/>
+        <pin num="2" name="CHIP" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="Q1">
+      <fields>
+        <field name="Reference">Q1</field>
+        <field name="Value">2N7002</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R1">
+      <fields>
+        <field name="Reference">R1</field>
+        <field name="Value">100R</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R2">
+      <fields>
+        <field name="Reference">R2</field>
+        <field name="Value">1k</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R3">
+      <fields>
+        <field name="Reference">R3</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R4">
+      <fields>
+        <field name="Reference">R4</field>
+        <field name="Value">100k</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R5">
+      <fields>
+        <field name="Reference">R5</field>
+        <field name="Value">1k</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R6">
+      <fields>
+        <field name="Reference">R6</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">Resistor_SMD:R_0805_2012Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="R7">
+      <fields>
+        <field name="Reference">R7</field>
+        <field name="Value">22R pulse 1W</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="U1">
+      <fields>
+        <field name="Reference">U1</field>
+        <field name="Value">L9637D</field>
+        <field name="Footprint">Package_SO:SOIC-8_3.9x4.9mm_P1.27mm</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="RX" type="output"/>
+        <pin num="2" name="LO" type="output"/>
+        <pin num="3" name="VCC" type="power_in"/>
+        <pin num="4" name="TX" type="input"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="K" type="bidirectional"/>
+        <pin num="7" name="VS" type="power_in"/>
+        <pin num="8" name="LI" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="BK_R2" part="U2">
+      <fields>
+        <field name="Reference">U2</field>
+        <field name="Value">SN74LVC1G125QDBVRQ1</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="nOE" type="input"/>
+        <pin num="2" name="A" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="Y" type="tri_state"/>
+        <pin num="5" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="BK_R2">
+      <uri>/workspace/bk-mikas-7.2/hardware/kicad/r2/BK_R2.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/3V3" class="Default">
+      <node ref="C1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="C3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="3V3" pintype="passive"/>
+      <node ref="R3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R6" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="VCC" pintype="power_in"/>
+      <node ref="U2" pin="5" pinfunction="VCC" pintype="power_in"/>
+    </net>
+    <net code="2" name="/5V" class="Default">
+      <node ref="J2" pin="1" pinfunction="5V" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="5V" pintype="passive"/>
+    </net>
+    <net code="3" name="/ARM_GATE" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G" pintype="input"/>
+      <node ref="R4" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R5" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="4" name="/ESP_RX" class="Default">
+      <node ref="J2" pin="5" pinfunction="RX44" pintype="passive"/>
+      <node ref="R2" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="5" name="/ESP_TX" class="Default">
+      <node ref="J2" pin="4" pinfunction="TX43" pintype="passive"/>
+      <node ref="R1" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="6" name="/GND" class="Default">
+      <node ref="C1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C2" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="C3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="GND" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="S" pintype="passive"/>
+      <node ref="R4" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="3" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="7" name="/K_BUS" class="Default">
+      <node ref="J1" pin="3" pinfunction="K" pintype="passive"/>
+      <node ref="JP1" pin="1" pinfunction="BUS" pintype="passive"/>
+    </net>
+    <net code="8" name="/K_CHIP" class="Default">
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="R7" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="K" pintype="bidirectional"/>
+    </net>
+    <net code="9" name="/K_TAP" class="Default">
+      <node ref="JP1" pin="2" pinfunction="CHIP" pintype="passive"/>
+      <node ref="R7" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="10" name="/N_ENABLE" class="Default">
+      <node ref="Q1" pin="3" pinfunction="D" pintype="passive"/>
+      <node ref="R3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="nOE" pintype="input"/>
+    </net>
+    <net code="11" name="/RX_CHIP" class="Default">
+      <node ref="R2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="RX" pintype="output"/>
+    </net>
+    <net code="12" name="/TX_ARM" class="Default">
+      <node ref="J2" pin="6" pinfunction="ARM19" pintype="passive"/>
+      <node ref="R5" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="13" name="/TX_BUF" class="Default">
+      <node ref="R1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="A" pintype="input"/>
+    </net>
+    <net code="14" name="/TX_CHIP" class="Default">
+      <node ref="R6" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="TX" pintype="input"/>
+      <node ref="U2" pin="4" pinfunction="Y" pintype="tri_state"/>
+    </net>
+    <net code="15" name="/VS_PROT" class="Default">
+      <node ref="C2" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="VS" pintype="passive"/>
+      <node ref="U1" pin="7" pinfunction="VS" pintype="power_in"/>
+    </net>
+    <net code="16" name="unconnected-(U1-LI-Pad8)" class="Default">
+      <node ref="U1" pin="8" pinfunction="LI" pintype="input+no_connect"/>
+    </net>
+    <net code="17" name="unconnected-(U1-LO-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="LO" pintype="output+no_connect"/>
+    </net>
+  </nets>
+</export>

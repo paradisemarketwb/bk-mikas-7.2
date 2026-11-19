@@ -1,42 +1,40 @@
-# Комплектующие собственного БК — ревизия R1B
+# Что купить для R2
 
-**Заказывать компоненты по этому документу, а не по старым черновикам R0.** Готовый, проверенный именно для нашего БК K-Line↔UART модуль на L9637D на OZON/WB/AliExpress пока не подтверждён; поэтому проектируем свою плату. USB KKL / FT232 — **не равно** UART-модулю для ESP32-S3.
+Полные таблицы конкретных MPN/посадочных мест — [BOM интерфейса](../hardware/kicad/r2/BOM.csv)
+и [проект питания](../hardware/kicad/power-r2/README.md). Корпуса и крепёж —
+[CAD R2](../hardware/case/r2/README.md). Замена MPN требует проверки pinout,
+package, напряжений, температуры и импульсных режимов, а не только похожего имени.
 
-## Список деталей
+Основные компоненты:
 
-| Код | Количество | Наименование, назначение | Дополнительно |
-|---|---:|---|---|
-| LCD | 1 | **Waveshare ESP32-S3-Touch-LCD-2.1** или 2.1B, круглый 480×480, сенсор | Предварительно проверять ревизию и 12PIN кабель |
-| U1 | 1 | **ST E-L9637D / L9637D**, SO-8 | Физический интерфейс K-Line |
-| U2 | 1 | **SN74LVC1G125-Q1**, SOT-23-5, 3,3 В | Аппаратная блокировка TX на загрузке |
-| R1, R2 | 2 | 1 кОм, SMD 0805 | Последовательные TX/RX |
-| R3 | 1 | 10 кОм SMD 0805 | Pull-up U2 /OE к 3V3 |
-| C3 | 1 | 100 нФ X7R ≥16 В | Развязка U2 3V3 |
-| C1 | 1 | 100 нФ X7R, ≥16 В, 0805 | Развязка VCC 3,3 В |
-| C2 | 1 | 100 нФ X7R, ≥50 В, 0805 | Развязка VS 12 В |
-| J1 | 1 | 3-контактный разъём провода (ACC / GND / K) | Выбрать тип и шаг до PCB |
-| J2 | 1 | 6-контактный разъём к пигтейлу дисплея | Штатный 12PIN шлейф разделывают по сигналам |
-| J3 | 1 | 2-контактный разъём 5 В / GND | От отдельного автомобильного DC/DC |
-| JP1 | 1 | Сервисная перемычка 2pin с колпачком | Отключение только ветви БК от K-Line |
-| F1 | 1 | Держатель + предохранитель 1 А | В самом начале отвода питания ACC |
-| PWR | 1 | Защищённый автомобильный преобразователь 12→5 В с запасом не менее 2 А | Нужны документы по пуску/помехам/импульсам, модель не утверждена |
-| WIRE | по месту | Автомобильные жилы ~0,35–0,5 мм², термоусадка, изоляция, пигтейл WAVESHARE | Цвета назначены в wiring |
+| Деталь | Где проверять характеристики |
+|---|---|
+|Waveshare ESP32-S3-Touch-LCD-2.1|[Официальная страница](https://docs.waveshare.com/ESP32-S3-Touch-LCD-2.1)|
+|L9637D SOIC8|[ST datasheet](https://www.st.com/resource/en/datasheet/l9637.pdf)|
+|SN74LVC1G125QDBVRQ1|[TI](https://www.ti.com/product/SN74LVC1G125-Q1)|
+|2N7002 SOT23|Проверить выводыG1/S2/D3 по MPN изBOM|
+|LM74800QDRRRQ1 и силовые MOSFET/TVS|[TI datasheet](https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf), [расчёт питания](../hardware/kicad/power-r2/README.md)|
+|RECOM R-78B5.0-2.0|[Официальный datasheet](https://recom-power.com/pdf/Innoline/R-78B-2.0.pdf)|
+|LM66100|[TI](https://www.ti.com/product/LM66100)|
+|TPS2553DBVR, ограничитель выхода5В|[TI](https://www.ti.com/product/TPS2553)|
 
-**Удалены из R0:** 5-вольтовый буфер SN74AHCT1G125 и делитель 10k/18k. В R1B применяется **другой** буфер **SN74LVC1G125-Q1 3,3 В**, предназначенный для безопасного запрета TX во время загрузки UART0, не для согласования уровней.
+Указанные ниже адреса — **поисковые ссылки**, а не подтверждённые карточки
+товара. Наличие, цена, подлинность и ревизия платы не проверялись.
 
-## Ссылки
+- [OZON: Waveshare ESP32-S3 Touch LCD2.1](https://www.ozon.ru/search/?text=Waveshare%20ESP32-S3-Touch-LCD-2.1)
+- [Wildberries: Waveshare ESP32-S3](https://www.wildberries.ru/catalog/0/search.aspx?search=Waveshare%20ESP32-S3)
+- [AliExpress: точное имя модуля](https://www.aliexpress.com/w/wholesale-ESP32-S3-Touch-LCD-2.1.html)
+- [OZON: L9637D](https://www.ozon.ru/search/?text=L9637D)
+- [AliExpress: L9637D](https://www.aliexpress.com/w/wholesale-L9637D.html)
+- [Mouser: L9637D](https://www.mouser.com/c/?q=L9637D)
+- [DigiKey: LM74800QDRRRQ1](https://www.digikey.com/en/products/result?keywords=LM74800QDRRRQ1)
+- [Mouser: R-78B5.0-2.0](https://www.mouser.com/c/?q=R-78B5.0-2.0)
 
-| Что искать | OZON | Wildberries | AliExpress | Документация |
-|---|---|---|---|---|
-| Waveshare 2.1 ESP32-S3 | [Кандидат 5365894816](https://www.ozon.ru/product/waveshare-esp32-s3-2-1inch-round-ips-capacitive-touch-display-board-480-480-262k-color-wifi-5365894816/) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=Waveshare%20ESP32-S3%202.1) | [Поиск](https://aliexpress.ru/wholesale?SearchText=ESP32-S3-Touch-LCD-2.1) | [Waveshare](https://docs.waveshare.com/ESP32-S3-Touch-LCD-2.1) |
-| E-L9637D / L9637D | [Поиск](https://www.ozon.ru/search/?text=L9637D) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=L9637D) | [Поиск](https://aliexpress.ru/wholesale?SearchText=L9637D) | [Производитель ST](https://www.st.com/en/automotive-analog-and-power/l9637.html) |
-| Буфер U2 SN74LVC1G125-Q1 | [Поиск](https://www.ozon.ru/search/?text=SN74LVC1G125) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=SN74LVC1G125) | [Поиск](https://aliexpress.ru/wholesale?SearchText=SN74LVC1G125) | [TI](https://www.ti.com/product/SN74LVC1G125-Q1) |
-| SOIC-8→DIP8 (на макет) | [Поиск](https://www.ozon.ru/search/?text=SOIC8%20DIP8%20переходник) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=SOIC8%20DIP8) | [Поиск](https://aliexpress.ru/wholesale?SearchText=SOIC8%20DIP8) | Сверить шаг и корпус |
-| Резисторы 0805 / C 100 нФ | [Поиск](https://www.ozon.ru/search/?text=0805%201k%20100nF) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=0805%201k%20100nF) | [Поиск](https://aliexpress.ru/wholesale?SearchText=0805%201k%20100nF) | Важны допуски и напряжение C2 |
-| SH1.0 12 pin кабель | [Поиск](https://www.ozon.ru/search/?text=SH1.0%2012pin) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=SH1.0%2012pin) | [Поиск](https://aliexpress.ru/wholesale?SearchText=JST%20SH%201.0%2012pin) | Лучше штатный кабель Waveshare |
-| Автомобильный DC/DC 5V ≥2A | [Поиск](https://www.ozon.ru/search/?text=автомобильный%20DC%20DC%205В%202А) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=DC%20DC%2012%205%202A) | [Поиск](https://aliexpress.ru/wholesale?SearchText=automotive%20DC-DC%205V%202A) | Не брать неподтверждённый модуль для постоянной установки |
-| Держатель предохранителя 1А | [Поиск](https://www.ozon.ru/search/?text=держатель%20предохранителя%201А) | [Поиск](https://www.wildberries.ru/catalog/0/search.aspx?search=держатель%20предохранителя%201А) | [Поиск](https://aliexpress.ru/wholesale?SearchText=automotive%20inline%20fuse%20holder) | Отдельная цепь ACC |
+Не заменяйте силовую плату случайным автомобильным buck-модулем. Она выполняет
+reverse/OV/UV/load-dump и USB ORing. Керамика, резисторы и защитные диоды имеют
+указанные напряжения/импульсные требования; снижать их без расчёта нельзя.
 
-Ссылки, помеченные **«Поиск»**, открывают поиск, а не подтверждённый остаток или товар. На момент проверки ST обозначает E-L9637D действующей автомобильной микросхемой SO-8: [официальная страница](https://www.st.com/en/automotive-analog-and-power/l9637.html). Не покупать готовый USB KKL в расчёте на подключение к UART GPIO напрямую.
-
-**Потребуется позже:** детали печатной платы по KiCad BOM (конкретные разъёмы/посадочные места), прошивка firmware.bin и измеренный корпус. Точная цена и наличие не подтверждены.
+Для ручной сборки нужны паяльная станция, флюс, увеличение, мультиметр,
+лабораторный источник с ограничением тока и осциллограф для проверки запуска.
+QFN силового контроллера требует корректной пайки exposed pad и осмотра;
+при отсутствии оборудования разумнее заказать монтаж у изготовителя.

@@ -1,0 +1,11 @@
+menu "BK Mikas R2"
+config BK_ENABLE_KLINE
+    bool "Enable physical K-Line (R2 wiring and JP1 checked)"
+    default n
+    help
+        GPIO19 is TX_ARM, GPIO43/44 UART. Native USB must be disconnected.
+        Select UART switch to external header; remove JP1 before flashing.
+config BK_ENABLE_WIFI
+    bool "Enable password-protected local SoftAP"
+    default y
+endmenu
