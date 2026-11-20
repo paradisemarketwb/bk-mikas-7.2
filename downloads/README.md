@@ -1,20 +1,21 @@
 # Hunter Reference preview — готовые файлы
 
 Ветка `feat/hunter-reference-ui`, [PR №3](https://github.com/paradisemarketwb/bk-mikas-7.2/pull/3).
-В main не объединено. Версия прошивки `2.2.0-hunter-preview`.
+В main не объединено. Версия прошивки `2.2.1-uaz21-preview`.
 
 - [Windows x64: bk_sim.exe + SDL2](BK-MIKAS-Hunter-Windows-x64-preview.zip) · [SHA256](BK-MIKAS-Hunter-Windows-x64-preview.zip.sha256).
 - [ESP32-S3: safe / UART-live / USB-KKL](BK-MIKAS-Hunter-ESP32S3-preview.zip) · [SHA256](BK-MIKAS-Hunter-ESP32S3-preview.zip.sha256).
 - [Галерея LVGL](../docs/images/hunter-reference/reference-contact.png), [полный отчёт](../docs/lvgl/HUNTER_STATUS.md).
 
-Исходники бинарников: `2a154ab3e111e023c7a9cb800b075b3467c2eae2`.
-Проверенные CI: [Windows](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44687830017)
-и [ESP32/host](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44687829981).
+Исходники бинарников: `33de17b7af80cc5deceb781ea1901669d43ecbe2`.
+Проверенные CI: [Windows](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44694755286)
+и [ESP32/host](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44694755292).
 Бинарники скопированы из успешных Actions, не собраны заново при упаковке.
+Ресурсы и размеры взяты из пользовательского UAZ21-комплекта; [сверка и отличия](../docs/lvgl/UAZ21_DESIGN.md).
 Внутри ZIP: BUILD-METADATA.json и SHA256SUMS.txt на все включённые файлы.
 
 Windows: распаковать весь архив в доступную для записи папку. Запустить
-Reference.cmd или Classic.cmd. Каждый запускатель возвращает свой сохранённый
+UAZ21.cmd для нового дизайна, либо Reference.cmd / Classic.cmd. Каждый запускатель возвращает свой сохранённый
 JSON-профиль. Для программы без загрузчика — bk_sim.exe. Подробности в
 WINDOWS-BUNDLE-RU.md внутри архива. Данные симуляционные; CI работал на Windows
 Server 2025 с Visual Studio 2026, ручной запуск именно Windows 10 не выполнялся.
