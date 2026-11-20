@@ -100,9 +100,12 @@ LVGL CTest:6проверок схемы/жестов/drag/save/cancel/reset/ре
 save/reload/export и подтверждённое OTA с SHA256. Все проходят локально.
 
 CI сборки: Windows VS2026 и ESPsafe/UART-live/USB-KKL. Проверенный интеграционный
-набор: [Windows](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44639843151),
-[ESP/host](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44639843167).
-Финальная проверка последних визуальных правок отражена в PRchecks.
+набор: [Windows](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44687830017),
+[ESP/host](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/runs/44687829981).
+Сборки соответствуют исходникам `2a154ab`; все пять jobs прошли успешно.
+Готовые [Windows ZIP](../../downloads/BK-MIKAS-Hunter-Windows-x64-preview.zip) и
+[ESP32 ZIP](../../downloads/BK-MIKAS-Hunter-ESP32S3-preview.zip) содержат эти
+артефакты, provenance и SHA256, без пересборки бинарников при упаковке.
 CI WindowsServer2025 не заменяет ручной запуск на компьютере с Windows10.
 
 Локальный renderCPUbatch: среднее3.50ms, максимум8.27ms за51batch. Это время
