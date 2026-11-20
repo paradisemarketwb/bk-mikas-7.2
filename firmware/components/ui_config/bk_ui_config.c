@@ -69,7 +69,9 @@ bool bk_layout_validate(const bk_layout_t *l) {
           (unsigned)w->missing_policy > BK_MISSING_INACTIVE)
         return false;
       if (w->x < 0 || w->y < 0 || w->w < 16 || w->h < 16 || w->x + w->w > 480 ||
-          w->y + w->h > 444)
+          w->y + w->h >
+              ((w->type == BK_WIDGET_ARC || w->type == BK_WIDGET_NEEDLE) ? 472
+                                                                         : 444))
         return false;
       if ((w->type == BK_WIDGET_NUMBER &&
            (w->w < 100 ||
@@ -188,7 +190,7 @@ void bk_layout_default_screen(bk_layout_screen_t *s, unsigned slot,
   s->background = style == BK_STYLE_REFERENCE ? 0xf5f6ef : 0xf7f7ef;
   s->widget_count = 4;
   s->widgets[0] =
-      widget(BK_WIDGET_ARC, main[kind], 33, 16, 414, 414, maxima[kind]);
+      widget(BK_WIDGET_ARC, main[kind], 33, 33, 414, 414, maxima[kind]);
   s->widgets[0].primary = true;
   s->widgets[1] =
       widget(BK_WIDGET_NUMBER, main[kind], 85, 150, 310, 130, maxima[kind]);
@@ -205,7 +207,7 @@ void bk_layout_default_screen(bk_layout_screen_t *s, unsigned slot,
           widget(BK_WIDGET_NUMBER, BK_SPEED, 90, 125, 300, 148, 160);
       s->widgets[1].font_size = 128;
       s->widgets[1].primary = true;
-      s->widgets[2] = widget(BK_WIDGET_NUMBER, BK_RPM, 110, 335, 260, 76, 6000);
+      s->widgets[2] = widget(BK_WIDGET_NUMBER, BK_RPM, 90, 335, 300, 76, 6000);
       s->widgets[2].font_size = 64;
       s->widget_count = 3;
     } else if (kind == 1) {
@@ -224,7 +226,7 @@ void bk_layout_default_screen(bk_layout_screen_t *s, unsigned slot,
     } else if (kind == 2) {
       s->widget_count = 3;
       s->widgets[0] =
-          widget(BK_WIDGET_NUMBER, BK_FUEL_L100, 105, 125, 270, 100, 30);
+          widget(BK_WIDGET_NUMBER, BK_FUEL_L100, 70, 125, 340, 100, 30);
       s->widgets[0].font_size = 64;
       s->widgets[0].primary = true;
       s->widgets[1] =

@@ -12,7 +12,7 @@ typedef struct {
 } bk_widget_registry_entry_t;
 extern const bk_widget_registry_entry_t bk_widget_registry[BK_WIDGET_COUNT];
 typedef struct {
-  lv_obj_t *root, *value, *unit, *needle, *chart;
+  lv_obj_t *root, *value, *unit, *needle, *chart, *backdrop;
   lv_chart_series_t *series;
   bk_widget_config_t config;
   bool dark, editing;

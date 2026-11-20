@@ -291,14 +291,15 @@ static void keyboard_navigation(bool vertical, int direction) {
   }
 }
 #ifdef BK_HAVE_SDL
-static int interactive(void) {
+static int interactive(bool smoke) {
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER)) {
     fprintf(stderr, "%s\n", SDL_GetError());
     return 1;
   }
   SDL_Window *window = SDL_CreateWindow(
       "HUNTER SIMULATION | arrows: gestures | 1 Classic / 2 Reference | E edit",
-      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 480, 0);
+      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 480,
+      smoke ? SDL_WINDOW_HIDDEN : 0);
   SDL_Renderer *renderer =
       window ? SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE) : NULL;
   SDL_Texture *texture =
@@ -313,7 +314,10 @@ static int interactive(void) {
   lv_indev_t *pointer = lv_indev_create();
   lv_indev_set_type(pointer, LV_INDEV_TYPE_POINTER);
   lv_indev_set_read_cb(pointer, pointer_read);
-  bool running = true, dark = false, editing = false;
+  bk_ui_config_t initial_config;
+  bk_ui_get_config(&initial_config);
+  bool running = true, dark = initial_config.dark, editing = false;
+  unsigned smoke_frames = 0;
   uint32_t previous = SDL_GetTicks(), last = previous;
   while (running) {
     SDL_Event e;
@@ -472,6 +476,8 @@ static int interactive(void) {
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
+    if (smoke && ++smoke_frames >= 8)
+      running = false;
     SDL_Delay(10);
   }
   bk_ui_end_edit(false);
@@ -497,6 +503,27 @@ static int run_checks(lv_display_t *display, const char *dir) {
   bk_layout_reference_defaults(&reference);
   CHECK(bk_layout_validate(&classic), "Classic defaults valid");
   CHECK(bk_layout_validate(&reference), "Reference defaults valid");
+  /* Regression guard: refresh must preserve the right-hand pill and the
+   * Russian left caption through values and missing-source transitions. */
+  bk_widget_config_t digital = reference.screens[3].widgets[0];
+  bk_widget_t probe;
+  bk_widget_create_style(&probe, lv_screen_active(), &digital, false,
+                         BK_STYLE_REFERENCE);
+  for (unsigned i = 0; i < 8; i++) {
+    bk_widget_update(&probe, 44.28 + i,
+                     i == 3 ? BK_VALUE_NO_SIGNAL : BK_VALUE_VALID, true,
+                     "Расход воздуха", "кг/ч");
+    lv_obj_update_layout(probe.root);
+    CHECK(lv_obj_get_x(probe.backdrop) == digital.w * 47 / 100,
+          "DIGITAL pill stays right on refresh");
+    CHECK(lv_obj_get_x(probe.value) == digital.w * 47 / 100 &&
+              lv_obj_get_x(probe.unit) == digital.w * 47 / 100,
+          "DIGITAL value and unit stay in pill");
+    CHECK(!strcmp(lv_label_get_text(probe.chart), "ДМРВ") &&
+              lv_obj_get_x(probe.chart) == 0,
+          "DIGITAL left caption survives refresh");
+  }
+  lv_obj_delete(probe.root);
   fixture_calibrations();
   gps = true;
   connected = true;
@@ -537,6 +564,13 @@ static int run_checks(lv_display_t *display, const char *dir) {
   CHECK(readback.screens[1].sequence_index != index,
         "Horizontal swipe switches primary");
   CHECK(bk_ui_set_layout(&classic), "Reset baseline");
+  bk_ui_select_screen(1);
+  bk_ui_select_screen(8);
+  swipe(pointer, 240, 195, 240, 195);
+  swipe(pointer, 240, 195, 240, 195);
+  render(display);
+  snprintf(path, sizeof(path), "%s/widget-editor.ppm", dir);
+  CHECK(!ppm(path), "Widget editor screenshot");
   bk_ui_select_screen(1);
   bk_ui_begin_edit();
   swipe(pointer, 100, 320, 108, 304);
@@ -642,7 +676,8 @@ static int run_checks(lv_display_t *display, const char *dir) {
 int main(int argc, char **argv) {
   const char *input = NULL, *output = NULL, *render_dir = NULL,
              *headless = NULL;
-  bool reference = false, classic = false, no_persist = false, demo = false;
+  bool reference = false, classic = false, no_persist = false, demo = false,
+       smoke_window = false;
   for (int i = 1; i < argc; i++) {
     if (!strcmp(argv[i], "--import") && i + 1 < argc)
       input = argv[++i];
@@ -652,6 +687,8 @@ int main(int argc, char **argv) {
       save_path = argv[++i];
     else if (!strcmp(argv[i], "--no-persist"))
       no_persist = true;
+    else if (!strcmp(argv[i], "--smoke-window"))
+      smoke_window = true;
     else if (!strcmp(argv[i], "--demo"))
       demo = true;
     else if (!strcmp(argv[i], "--reference"))
@@ -743,7 +780,7 @@ int main(int argc, char **argv) {
     return result;
   }
 #ifdef BK_HAVE_SDL
-  int result = interactive();
+  int result = interactive(smoke_window);
   if (output && !export_profile(output))
     result = 1;
   if (!no_persist && !export_profile(save_path))
@@ -752,6 +789,7 @@ int main(int argc, char **argv) {
   lv_deinit();
   return result;
 #else
+  (void)smoke_window;
   fprintf(stderr, "SDL2 unavailable; use --render DIR or --headless DIR.\n");
   return 2;
 #endif

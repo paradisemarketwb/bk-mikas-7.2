@@ -70,3 +70,8 @@ set_tests_properties(profile_exact_roundtrip PROPERTIES DEPENDS profile_import)
 add_test(NAME calibrated_profile_export COMMAND bk_sim --import ${CMAKE_CURRENT_SOURCE_DIR}/profiles/reference-calibrated.json --export ${CMAKE_CURRENT_BINARY_DIR}/calibrated-roundtrip.json --render ${CMAKE_CURRENT_BINARY_DIR})
 add_test(NAME calibrated_profile_exact_roundtrip COMMAND ${CMAKE_COMMAND} -E compare_files ${CMAKE_CURRENT_SOURCE_DIR}/profiles/reference-calibrated.json ${CMAKE_CURRENT_BINARY_DIR}/calibrated-roundtrip.json)
 set_tests_properties(calibrated_profile_exact_roundtrip PROPERTIES DEPENDS calibrated_profile_export)
+
+if(BK_WITH_SDL AND (SDL2_FOUND OR (SDL2_INCLUDE_DIR AND SDL2_LIBRARY)))
+ add_test(NAME sdl_window_texture_smoke COMMAND bk_sim --reference --smoke-window --no-persist)
+ set_tests_properties(sdl_window_texture_smoke PROPERTIES TIMEOUT 20)
+endif()

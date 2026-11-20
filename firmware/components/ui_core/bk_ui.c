@@ -9,7 +9,7 @@
 #define DTC_LIMIT 127
 static struct {
   lv_obj_t *root, *body, *status, *editor_error, *brightness_label,
-      *clock_label;
+      *clock_label, *raw_info;
   bk_layout_t layout;
   bk_widget_t widgets[BK_LAYOUT_MAX_WIDGETS];
   unsigned rendered;
@@ -70,6 +70,20 @@ static bool instrument(unsigned view) {
 static void refresh(void) {
   if (!ui.root)
     return;
+  if (ui.raw_info) {
+    char text[180], maf[32], lambda[32];
+    if (ui.states[BK_MAF_RAW] == BK_VALUE_VALID)
+      snprintf(maf, sizeof(maf), "%.0f", ui.values[BK_MAF_RAW]);
+    else
+      snprintf(maf, sizeof(maf), "--");
+    if (ui.states[BK_LAMBDA] == BK_VALUE_VALID)
+      snprintf(lambda, sizeof(lambda), "%.0f", ui.values[BK_LAMBDA]);
+    else
+      snprintf(lambda, sizeof(lambda), "--");
+    snprintf(text, sizeof(text), "Связь: %s\nДМРВ raw: %s\nЛямбда raw: %s",
+             ui.connected ? "есть" : "нет", maf, lambda);
+    label(ui.raw_info, text);
+  }
   bool waiting = !ui.connected;
   lv_obj_set_hidden(ui.status, !waiting);
   if (waiting)
@@ -162,9 +176,15 @@ static void pointer_navigation(lv_event_t *e) {
       next_instrument(dy < 0 ? 1 : -1);
     else if (ui.nav_axis == 1 && abs(dx) >= 40) {
       int slot = bk_layout_view_to_screen(ui.screen);
-      if (slot >= 0 &&
-          bk_layout_step_primary(&ui.layout.screens[slot], dx < 0 ? 1 : -1))
-        show();
+      if (slot >= 0) {
+        bk_layout_screen_t saved = ui.layout.screens[slot];
+        if (bk_layout_step_primary(&ui.layout.screens[slot], dx < 0 ? 1 : -1)) {
+          if (bk_layout_validate(&ui.layout))
+            show();
+          else
+            ui.layout.screens[slot] = saved;
+        }
+      }
     }
   }
 }
@@ -451,6 +471,7 @@ static void edit_step(lv_event_t *e) {
 }
 static void show_editor(void) {
   ui.rendered = 0;
+  ui.raw_info = NULL;
   lv_obj_clean(ui.body);
   ui.editor_error = NULL;
   ui.delete_pending = false;
@@ -499,6 +520,7 @@ static void brightness_changed(lv_event_t *e) {
 
 static void divider(int y) {
   lv_obj_t *o = lv_obj_create(ui.body);
+  lv_obj_set_clickable(o, false);
   lv_obj_remove_style_all(o);
   lv_obj_set_pos(o, 65, y);
   lv_obj_set_size(o, 350, 1);
@@ -527,6 +549,7 @@ static void draw_background(const bk_layout_screen_t *screen) {
       ui.background_images[screen->background_id]) {
     lv_obj_t *image = lv_image_create(ui.body);
     lv_image_set_src(image, ui.background_images[screen->background_id]);
+    lv_obj_set_clickable(image, false);
     const lv_image_dsc_t *source = ui.background_images[screen->background_id];
     unsigned edge = source->header.w < source->header.h ? source->header.w
                                                         : source->header.h;
@@ -539,6 +562,7 @@ static void draw_background(const bk_layout_screen_t *screen) {
      * uploaded pixels. */
     for (unsigned i = 0; i < 7; i++) {
       lv_obj_t *ring = lv_obj_create(ui.body);
+      lv_obj_set_clickable(ring, false);
       lv_obj_remove_style_all(ring);
       int size = 130 + (int)i * 54;
       lv_obj_set_size(ring, size, size);
@@ -674,7 +698,7 @@ static void catalog_page(void) {
         snprintf(lambda, sizeof(lambda), "--");
       snprintf(text, sizeof(text), "Связь: %s\nДМРВ raw: %s\nЛямбда raw: %s",
                ui.connected ? "есть" : "нет", maf, lambda);
-      bk_text(p, text, 0, y, 300);
+      ui.raw_info = bk_text(p, text, 0, y, 300);
       y += 100;
     }
     size_t count = 0;
@@ -698,12 +722,14 @@ static void menu_tile(const char *title, unsigned icon, int x, int y,
                       lv_event_cb_t cb, uintptr_t arg, bool active) {
   lv_obj_t *o = button_on(ui.body, "", x, y, 180, cb, arg);
   lv_obj_set_size(o, 180, 116);
+  lv_obj_set_style_pad_all(o, 0, 0);
+  lv_obj_delete(lv_obj_get_child(o, 0));
   lv_obj_set_style_bg_color(o,
                             lv_color_hex(active    ? 0x009d31
                                          : ui.dark ? 0x283c30
                                                    : 0xe5e9df),
                             0);
-  lv_obj_t *text = bk_text(o, title, 2, 71, 160);
+  lv_obj_t *text = bk_text(o, title, 8, 78, 164);
   lv_obj_set_style_text_color(text,
                               lv_color_hex(active    ? 0xffffff
                                            : ui.dark ? 0xe9f1ed
@@ -720,6 +746,7 @@ static void show(void) {
     return;
   }
   ui.rendered = 0;
+  ui.raw_info = NULL;
   lv_obj_clean(ui.body);
   ui.brightness_label = NULL;
   ui.clock_label = NULL;
@@ -735,7 +762,11 @@ static void show(void) {
   lv_obj_set_style_border_width(ui.root, 0, 0);
   lv_obj_set_style_border_color(ui.root,
                                 lv_color_hex(ui.dark ? 0x52665a : 0x171d1b), 0);
-  lv_obj_set_pos(ui.status, 100, reference ? 91 : 438);
+  lv_obj_set_pos(ui.status, 100, 405);
+  lv_obj_set_style_bg_opa(ui.status, 230, 0);
+  lv_obj_set_style_bg_color(ui.status,
+                            lv_color_hex(ui.dark ? 0x412b22 : 0xffefdb), 0);
+  lv_obj_set_style_text_color(ui.status, lv_color_hex(0xc74732), 0);
   lv_obj_set_width(ui.status, 280);
   if (reference && !instrument(ui.screen))
     reference_rim();
@@ -793,8 +824,10 @@ static void show(void) {
     } else if (reference) {
       lv_obj_t *b = button("Меню", 196, 431, 88, 5);
       lv_obj_set_height(b, 34);
-    } else
-      button("Меню", 180, 381, 120, 5);
+    } else {
+      lv_obj_t *b = button("Меню", 180, 431, 120, 5);
+      lv_obj_set_height(b, 32);
+    }
   } else if (ui.screen == 5) {
     if (reference) {
       reference_header("Меню", 9);
@@ -816,7 +849,7 @@ static void show(void) {
       button("Подключение", 140, 329, 200, 6);
     }
   } else if (ui.screen == 6) {
-    reference_header("Подключение", 7);
+    reference_header("Wi-Fi", 7);
     if (ui.ssid[0]) {
       char data[240], ss[67], pw[131];
       size_t s = 0, p = 0;
@@ -835,20 +868,21 @@ static void show(void) {
       snprintf(data, sizeof(data), "WIFI:T:%s;S:%s;P:%s;;",
                ui.password[0] ? "WPA" : "nopass", ss, pw);
       lv_obj_t *qr = lv_qrcode_create(ui.body);
-      lv_qrcode_set_size(qr, 180);
+      lv_qrcode_set_size(qr, 235);
       lv_qrcode_set_dark_color(qr, lv_color_hex(0));
       lv_qrcode_set_light_color(qr, lv_color_hex(0xffffff));
-      lv_obj_set_pos(qr, 150, 110);
+      lv_obj_set_pos(qr, 122, 104);
       lv_qrcode_update(qr, data, strlen(data));
-      single_line(ui.ssid, 65, 303, 350);
+      single_line(ui.ssid, 70, 349, 340);
       char b[100];
       snprintf(b, sizeof(b), "Пароль: %s", ui.password);
-      single_line(b, 60, 333, 360);
-      single_line(ui.url, 65, 362, 350);
+      single_line(b, 80, 377, 320);
+      single_line(ui.url, 90, 405, 300);
     } else
       bk_text(ui.body, "Точка доступа выключена\nQR появится после запуска AP",
               70, 185, 340);
-    button("Назад", 180, 411, 120, 5);
+    lv_obj_t *back = button("Назад", 196, 436, 88, 5);
+    lv_obj_set_height(back, 30);
   } else if (ui.screen == 7) {
     reference_header("Ошибки ЭБУ", 0);
     lv_obj_t *p = scroll_panel();

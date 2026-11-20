@@ -85,6 +85,8 @@ static void classic_create(bk_widget_t *w, lv_obj_t *parent,
     if (c->type == BK_WIDGET_CHART) {
       w->value = bk_text(w->root, "", 0, 0, c->w);
       w->chart = lv_chart_create(w->root);
+      lv_obj_set_clickable(w->chart, false);
+      lv_obj_set_scrollable(w->chart, false);
       lv_obj_set_pos(w->chart, 5, 28);
       lv_obj_set_size(w->chart, c->w - 10, c->h - 32);
       lv_obj_set_style_bg_color(w->chart,
@@ -100,6 +102,7 @@ static void classic_create(bk_widget_t *w, lv_obj_t *parent,
     } else if (c->type == BK_WIDGET_BAR || c->type == BK_WIDGET_TEMPERATURE) {
       w->value = bk_text(w->root, "", 0, 0, c->w);
       w->chart = lv_bar_create(w->root);
+      lv_obj_set_clickable(w->chart, false);
       lv_obj_set_pos(w->chart, 4, c->h - 20);
       lv_obj_set_size(w->chart, c->w - 8, 16);
       lv_bar_set_range(w->chart, 0, 1000);
@@ -150,6 +153,7 @@ static void reference_create(bk_widget_t *w, lv_obj_t *parent,
     if (c->type == BK_WIDGET_NUMBER) {
       w->value = bk_text(w->root, "", 0, -5, c->w);
       w->unit = bk_text(w->root, "", 0, c->h - 24, c->w);
+      w->chart = bk_text(w->root, "", 0, c->h - 24, c->w);
       lv_obj_set_style_text_font(w->value,
                                  c->font_size >= 128 ? &bk_font_reference_128
                                  : c->font_size >= 96
@@ -161,6 +165,7 @@ static void reference_create(bk_widget_t *w, lv_obj_t *parent,
       w->chart = bk_text(w->root, "", 0, c->h / 2 - 17, c->w * 45 / 100);
       lv_obj_set_style_text_font(w->chart, &bk_font_reference_header, 0);
       lv_obj_t *pill = lv_obj_create(w->root);
+      w->backdrop = pill;
       lv_obj_set_pos(pill, c->w * 47 / 100, 0);
       lv_obj_set_size(pill, c->w * 53 / 100, c->h);
       lv_obj_set_style_radius(pill, 14, 0);
@@ -168,12 +173,14 @@ static void reference_create(bk_widget_t *w, lv_obj_t *parent,
                                 0);
       lv_obj_set_style_border_width(pill, 0, 0);
       lv_obj_set_scrollable(pill, false);
-      w->value = bk_text(w->root, "", c->w * 47 / 100, -12, c->w * 53 / 100);
+      lv_obj_set_clickable(pill, false);
+      w->value = bk_text(w->root, "", c->w * 47 / 100, 0, c->w * 53 / 100);
       lv_obj_set_style_text_font(w->value, &lv_font_montserrat_48, 0);
       w->unit =
-          bk_text(w->root, "", c->w * 47 / 100, c->h - 23, c->w * 53 / 100);
+          bk_text(w->root, "", c->w * 47 / 100, c->h - 20, c->w * 53 / 100);
     } else {
       w->chart = lv_bar_create(w->root);
+      lv_obj_set_clickable(w->chart, false);
       lv_obj_set_pos(w->chart, 0, 0);
       lv_obj_set_size(w->chart, c->w, 15);
       lv_bar_set_range(w->chart, 0, 1000);
@@ -182,6 +189,19 @@ static void reference_create(bk_widget_t *w, lv_obj_t *parent,
                                 lv_color_hex(dark ? 0x34453b : 0xd9ded7), 0);
       lv_obj_set_style_bg_color(w->chart, lv_color_hex(c->color),
                                 LV_PART_INDICATOR);
+      if (c->type == BK_WIDGET_BAR && c->metric == BK_FUEL_LEVEL) {
+        lv_obj_set_height(w->chart, 19);
+        for (unsigned i = 1; i < 6; i++) {
+          lv_obj_t *gap = lv_obj_create(w->root);
+          lv_obj_remove_style_all(gap);
+          lv_obj_set_pos(gap, (int)c->w * (int)i / 6 - 3, 0);
+          lv_obj_set_size(gap, 6, 19);
+          lv_obj_set_style_bg_opa(gap, 255, 0);
+          lv_obj_set_style_bg_color(
+              gap, lv_color_hex(dark ? 0x101c17 : 0xf5f6ef), 0);
+          lv_obj_set_clickable(gap, false);
+        }
+      }
       w->value = bk_text(w->root, "", 0, 22, c->w);
     }
   }
@@ -422,8 +442,33 @@ void bk_widget_update(bk_widget_t *w, double value, bk_value_state_t state,
     snprintf(number, sizeof(number), "%.*f", c->precision, value);
   else
     snprintf(number, sizeof(number), "%s", state_text);
-  if (w->style == BK_STYLE_REFERENCE &&
-      (c->type == BK_WIDGET_NUMBER || c->type == BK_WIDGET_DIGITAL)) {
+  /* DIGITAL is a fixed left caption plus a right pill. It deliberately has
+   * its own update path: NUMBER's inline unit layout must never move it. */
+  if (w->style == BK_STYLE_REFERENCE && c->type == BK_WIDGET_DIGITAL) {
+    int x = c->w * 47 / 100, width = c->w * 53 / 100;
+    text(w->value, number);
+    text(w->unit, u);
+    text(w->chart, c->metric == BK_MAF              ? "ДМРВ"
+                   : c->metric == BK_LAMBDA_VOLTAGE ? "ЛЯМБДА"
+                                                    : name);
+    lv_obj_set_pos(w->chart, 0, c->h / 2 - 17);
+    lv_obj_set_width(w->chart, c->w * 45 / 100);
+    lv_obj_set_pos(w->backdrop, x, 0);
+    lv_obj_set_size(w->backdrop, width, c->h);
+    lv_obj_set_pos(w->value, x, 0);
+    lv_obj_set_width(w->value, width);
+    lv_obj_set_pos(w->unit, x, c->h - 20);
+    lv_obj_set_width(w->unit, width);
+    const lv_font_t *font = valid ? &bk_font_reference_64 : &bk_font_ru_20;
+    lv_point_t size;
+    lv_text_get_size(&size, number, font, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+    if (size.x > width)
+      font = valid ? &lv_font_montserrat_48 : &bk_font_ru_20;
+    lv_obj_set_style_text_font(w->value, font, 0);
+    lv_obj_set_style_text_color(w->value, warning ? color : fg, 0);
+    return;
+  }
+  if (w->style == BK_STYLE_REFERENCE && c->type == BK_WIDGET_NUMBER) {
     if (valid && c->metric == BK_TRIP_SECONDS)
       snprintf(number, sizeof(number), "%02u:%02u", (unsigned)value / 3600,
                ((unsigned)value / 60) % 60);
@@ -456,11 +501,59 @@ void bk_widget_update(bk_widget_t *w, double value, bk_value_state_t state,
         lv_obj_set_style_text_font(w->value, font, 0);
       }
     }
+    bool inline_unit = valid && c->type == BK_WIDGET_NUMBER &&
+                       (c->metric == BK_COOLANT || c->metric == BK_VOLTAGE ||
+                        c->metric == BK_FUEL_L100 || c->metric == BK_RANGE ||
+                        c->metric == BK_RPM || c->metric == BK_DISTANCE ||
+                        c->metric == BK_AVG_SPEED);
+    if (inline_unit) {
+      const char *suffix = c->metric == BK_COOLANT && !c->unit[0] ? "°C" : u;
+      const lv_font_t *ufont =
+          c->metric == BK_RPM ? &bk_font_ru_20 : &bk_font_reference_header;
+      const lv_font_t *nfont =
+          lv_obj_get_style_text_font(w->value, LV_PART_MAIN);
+      lv_point_t ns, us;
+      lv_text_get_size(&ns, number, nfont, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+      lv_text_get_size(&us, suffix, ufont, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+      if (ns.x + us.x + 8 > c->w) {
+        ufont = &bk_font_ru_20;
+        lv_text_get_size(&us, suffix, ufont, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+      }
+      if (ns.x + us.x + 8 > c->w) {
+        nfont = &lv_font_montserrat_48;
+        lv_text_get_size(&ns, number, nfont, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+        lv_obj_set_style_text_font(w->value, nfont, 0);
+      }
+      if (ns.x + us.x + 8 > c->w) {
+        nfont = &bk_font_ru_20;
+        lv_text_get_size(&ns, number, nfont, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+        lv_obj_set_style_text_font(w->value, nfont, 0);
+      }
+      int start = (c->w - ns.x - us.x - 8) / 2;
+      if (start < 0)
+        start = 0;
+      lv_obj_set_width(w->value, ns.x + 2);
+      lv_obj_set_pos(w->value, start, -5);
+      text(w->unit, suffix);
+      lv_obj_set_style_text_font(w->unit, ufont, 0);
+      lv_obj_set_width(w->unit, us.x + 2);
+      lv_obj_set_pos(w->unit, start + ns.x + 8,
+                     -5 + (nfont->line_height - nfont->base_line) -
+                         (ufont->line_height - ufont->base_line));
+      if (w->chart)
+        text(w->chart, c->metric == BK_RANGE       ? "Запас хода"
+                       : c->metric == BK_AVG_SPEED ? "Средняя"
+                                                   : "");
+    } else if (c->type == BK_WIDGET_NUMBER) {
+      lv_obj_set_width(w->value, c->w);
+      lv_obj_set_pos(w->value, 0, -5);
+      lv_obj_set_style_text_font(w->unit, &bk_font_ru_20, 0);
+      lv_obj_set_width(w->unit, c->w);
+      lv_obj_set_pos(w->unit, 0, c->h - 24);
+      if (w->chart)
+        text(w->chart, "");
+    }
     lv_obj_set_style_text_color(w->value, warning ? color : fg, 0);
-    if (c->type == BK_WIDGET_DIGITAL)
-      text(w->chart, c->metric == BK_MAF              ? "ДМРВ"
-                     : c->metric == BK_LAMBDA_VOLTAGE ? "ЛЯМБДА"
-                                                      : name);
     return;
   }
   if (w->style == BK_STYLE_REFERENCE &&

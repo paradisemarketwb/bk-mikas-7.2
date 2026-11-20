@@ -6,6 +6,9 @@ on:
   push:
     branches: [feat/hunter-reference-ui]
     paths: ["firmware/**", "simulator/**", "tests/**", ".github/workflows/hunter-windows.yml"]
+concurrency:
+  group: hunter-windows-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   windows:
     runs-on: windows-2025-vs2026
@@ -26,6 +29,8 @@ jobs:
           Copy-Item build/simulator/Release/*.exe build/windows-package/
           Copy-Item "$env:VCPKG_INSTALLATION_ROOT/installed/x64-windows/bin/SDL2.dll" build/windows-package/
           Copy-Item simulator/README.md build/windows-package/
+          Copy-Item simulator/WINDOWS-BUNDLE-RU.md build/windows-package/
+          Copy-Item simulator/launchers/*.cmd build/windows-package/
           Copy-Item simulator/profiles build/windows-package/ -Recurse
           New-Item -ItemType Directory -Force build/windows-package/licenses | Out-Null
           Copy-Item firmware/components/ui_widgets/licenses/DejaVu-copyright.txt build/windows-package/licenses/
