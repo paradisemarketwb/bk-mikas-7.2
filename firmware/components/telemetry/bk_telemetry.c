@@ -12,7 +12,7 @@ bool bk_store_reply(bk_snapshot_t *s,bk_tel_metric_t m,const uint8_t *b,unsigned
  const bk_field_t *f=&bk_fields[m];int raw=b[0];
  if(n==2)raw|=(int)b[1]<<8;
  if(f->is_signed)raw=(int8_t)b[0];
- s->samples[m]=(bk_sample_t){raw*f->scale+f->offset,now,m==TEL_AIR?TEL_NEEDS_DATA:TEL_VALID,TEL_SOURCE_MIKAS};return true;
+ s->samples[m]=(bk_sample_t){.value=raw*f->scale+f->offset,.at_ms=now,.state=m==TEL_AIR?TEL_NEEDS_DATA:TEL_VALID,.source=TEL_SOURCE_MIKAS,.raw=raw,.raw_valid=true};return true;
 }
 bk_sample_t bk_store_get(const bk_snapshot_t *s,bk_tel_metric_t m,uint64_t now){
  if(!s||m<0||m>=TEL_METRIC_COUNT)return (bk_sample_t){.state=TEL_UNAVAILABLE};

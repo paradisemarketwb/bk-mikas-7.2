@@ -1,0 +1,117 @@
+screen,element,x_px,y_px,w_px,h_px,w_mm,h_mm,font_px,type,value
+01_main,time,155,33,95,34,10.557,3.778,30,text,12:34
+01_main,wifi,280,34,40,32,4.445,3.556,0,icon,wifi
+01_main,rpm_track,40,80,400,300,44.45,33.338,0,widget,rpm_arc_track
+01_main,rpm_value_arc,40,80,400,300,44.45,33.338,0,widget,rpm_arc_demo
+01_main,speed,102,132,276,150,30.671,16.669,146,text,64
+01_main,speed_unit,175,282,130,40,14.446,4.445,34,text,км/ч
+01_main,rpm_min,48,316,30,30,3.334,3.334,27,text,0
+01_main,rpm_max,402,316,30,30,3.334,3.334,27,text,6
+01_main,separator,100,341,280,2,31.115,0.222,0,line,
+01_main,rpm,120,351,240,48,26.67,5.334,38,text,2450 об/мин
+01_main,rpm_icon,181,408,36,28,4.001,3.111,0,icon,engine
+01_main,rpm_factor,226,405,100,32,11.113,3.556,26,text,×1000
+02_engine,header_icon,108,45,48,48,5.334,5.334,0,icon,engine
+02_engine,header,170,49,222,40,24.67,4.445,34,text,Двигатель
+02_engine,coolant_icon,83,135,64,70,7.112,7.779,0,icon,coolant
+02_engine,coolant_value,184,132,220,80,24.448,8.89,74,text,87°C
+02_engine,temp_track,60,232,360,28,40.005,3.111,0,widget,coolant_track
+02_engine,temp_fill,60,232,360,28,40.005,3.111,0,widget,coolant_demo
+02_engine,temp_50,22,268,80,32,8.89,3.556,26,text,50°
+02_engine,temp_90,225,268,80,32,8.89,3.556,26,text,90°
+02_engine,temp_120,378,268,80,32,8.89,3.556,26,text,120°
+02_engine,separator,60,313,360,2,40.005,0.222,0,line,
+02_engine,battery_icon,126,340,64,52,7.112,5.779,0,icon,battery
+02_engine,voltage,211,338,182,58,20.225,6.445,52,text,13.9 V
+02_engine,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+03_fuel,header_icon,108,45,48,48,5.334,5.334,0,icon,fuel
+03_fuel,header,170,49,222,40,24.67,4.445,34,text,Топливо
+03_fuel,consumption,70,125,170,80,18.891,8.89,72,text,12.4
+03_fuel,consumption_unit,241,155,170,38,18.891,4.223,30,text,л/100 км
+03_fuel,separator,55,228,370,2,41.116,0.222,0,line,
+03_fuel,range_icon,96,252,60,64,6.668,7.112,0,icon,fuel
+03_fuel,range,177,246,226,75,25.114,8.334,60,text,328 км
+03_fuel,range_label,182,320,225,34,25.003,3.778,28,text,запас хода
+03_fuel,empty,103,371,30,30,3.334,3.334,26,text,E
+03_fuel,segments,135,371,216,28,24.003,3.111,0,widget,fuel_segments_demo
+03_fuel,full,365,371,30,30,3.334,3.334,26,text,F
+03_fuel,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+04_sensors,header_icon,108,45,48,48,5.334,5.334,0,icon,pulse
+04_sensors,header,170,49,222,40,24.67,4.445,34,text,Датчики
+04_sensors,name_0,70,139,180,46,20.003,5.112,33,text,ДМРВ
+04_sensors,pill_0,255,137,160,56,17.78,6.223,0,widget,value_pill
+04_sensors,value_0,263,145,144,40,16.002,4.445,30,text,12.3 г/с
+04_sensors,sep_0,60,208,360,2,40.005,0.222,0,line,
+04_sensors,name_1,70,227,180,46,20.003,5.112,33,text,ЛЯМБДА
+04_sensors,pill_1,255,225,160,56,17.78,6.223,0,widget,value_pill
+04_sensors,value_1,263,233,144,40,16.002,4.445,30,text,0.87 λ
+04_sensors,sep_1,60,296,360,2,40.005,0.222,0,line,
+04_sensors,name_2,70,315,180,46,20.003,5.112,33,text,УОЗ
+04_sensors,pill_2,255,313,160,56,17.78,6.223,0,widget,value_pill
+04_sensors,value_2,263,321,144,40,16.002,4.445,30,text,12.5°
+04_sensors,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+05_trip,header_icon,108,45,48,48,5.334,5.334,0,icon,road
+05_trip,header,170,49,222,40,24.67,4.445,34,text,Поездка
+05_trip,route,80,125,60,60,6.668,6.668,0,icon,route
+05_trip,distance,166,122,245,64,27.226,7.112,54,text,56.8 км
+05_trip,sep1,60,205,360,2,40.005,0.222,0,line,
+05_trip,clock,80,226,60,60,6.668,6.668,0,icon,clock
+05_trip,time,160,218,250,64,27.781,7.112,58,text,01:24
+05_trip,sep2,60,295,360,2,40.005,0.222,0,line,
+05_trip,gauge,80,320,60,60,6.668,6.668,0,icon,gauge
+05_trip,average,161,312,260,60,28.893,6.668,46,text,40.6 км/ч
+05_trip,label,192,371,180,32,20.003,3.556,28,text,средняя
+05_trip,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+06_menu,header_icon,108,45,48,48,5.334,5.334,0,icon,menu
+06_menu,header,170,49,222,40,24.67,4.445,34,text,Меню
+06_menu,tile0,42,124,192,124,21.336,13.78,0,widget,menu_tile_active
+06_menu,icon0,106,136,64,64,7.112,7.112,0,icon,gauge_white
+06_menu,text0,48,207,180,32,20.003,3.556,25,text,Показания
+06_menu,tile1,246,124,192,124,21.336,13.78,0,widget,menu_tile
+06_menu,icon1,310,136,64,64,7.112,7.112,0,icon,engine
+06_menu,text1,252,207,180,32,20.003,3.556,25,text,Ошибки
+06_menu,tile2,42,260,192,124,21.336,13.78,0,widget,menu_tile
+06_menu,icon2,106,272,64,64,7.112,7.112,0,icon,settings
+06_menu,text2,48,343,180,32,20.003,3.556,25,text,Настройки
+06_menu,tile3,246,260,192,124,21.336,13.78,0,widget,menu_tile
+06_menu,icon3,310,272,64,64,7.112,7.112,0,icon,phone
+06_menu,text3,252,343,180,32,20.003,3.556,25,text,Подключение
+06_menu,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+07_wifi,header_icon,108,45,48,48,5.334,5.334,0,icon,wifi
+07_wifi,header,170,49,222,40,24.67,4.445,34,text,Wi-Fi
+07_wifi,qr,108,118,264,264,29.337,29.337,0,qr,Динамический QR
+07_wifi,caption,92,401,296,36,32.893,4.001,28,text,Подключите телефон
+08_errors,header_icon,108,45,48,48,5.334,5.334,0,icon,engine
+08_errors,header,170,49,222,40,24.67,4.445,34,text,ЭБУ
+08_errors,sep0,65,112,350,2,38.894,0.222,0,line,
+08_errors,warn0,58,131,52,52,5.779,5.779,0,icon,warning
+08_errors,code0,130,125,215,43,23.892,4.778,36,text,P0110
+08_errors,desc0,130,173,265,78,29.448,8.668,21,text,Датчик температуры / воздуха на впуске / (неисправность цепи)
+08_errors,open0,411,162,20,28,2.223,3.111,0,icon,chevron_right
+08_errors,sep1,55,256,370,2,41.116,0.222,0,line,
+08_errors,warn1,58,276,52,52,5.779,5.779,0,icon,warning
+08_errors,code1,130,270,215,43,23.892,4.778,36,text,P0130
+08_errors,desc1,130,318,265,78,29.448,8.668,21,text,"Датчик кислорода / (Банк 1, датчик 1) / неисправность"
+08_errors,open1,411,307,20,28,2.223,3.111,0,icon,chevron_right
+08_errors,sep2,55,401,370,2,41.116,0.222,0,line,
+08_errors,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+09_settings,header_icon,108,45,48,48,5.334,5.334,0,icon,settings
+09_settings,header,170,49,222,40,24.67,4.445,34,text,Настройки
+09_settings,icon0,57,142,48,48,5.334,5.334,0,icon,brightness
+09_settings,label0,121,149,154,38,17.113,4.223,29,text,Яркость
+09_settings,value0,278,149,116,38,12.891,4.223,27,text,80%
+09_settings,open0,408,152,22,28,2.445,3.111,0,icon,chevron_right
+09_settings,sep0,56,208,368,2,40.894,0.222,0,line,
+09_settings,icon1,57,224,48,48,5.334,5.334,0,icon,theme
+09_settings,label1,121,231,154,38,17.113,4.223,29,text,Тема
+09_settings,value1,278,231,116,38,12.891,4.223,27,text,Светлая
+09_settings,open1,408,234,22,28,2.445,3.111,0,icon,chevron_right
+09_settings,sep1,56,290,368,2,40.894,0.222,0,line,
+09_settings,icon2,57,306,48,48,5.334,5.334,0,icon,wifi
+09_settings,label2,121,313,154,38,17.113,4.223,29,text,Wi-Fi
+09_settings,switch,330,306,88,48,9.779,5.334,0,widget,switch_on
+09_settings,pagination,213,428,54,20,6.001,2.223,0,widget,page_dots
+10_splash,art,46,66,388,220,43.117,24.448,0,art,splash_art_source.png
+10_splash,brand,90,291,300,70,33.338,7.779,60,text,HUNTER
+10_splash,welcome,75,367,330,42,36.671,4.667,30,text,Добро пожаловать
+10_splash,progress,186,421,108,8,12.002,0.889,0,widget,progress

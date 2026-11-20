@@ -7,7 +7,7 @@
 
 ## Windows 10
 
-1. Установить Git, CMake 3.20+, Visual Studio 2022 Community с компонентом
+1. Установить Git, CMake 4.2+, Visual Studio 2026 Community с компонентом
    «Разработка классических приложений на C++» (Desktop development with C++).
 2. Открыть Developer PowerShell. Клонировать репозиторий и перейти в его корень.
 3. Для интерактивного окна установить SDL2 через vcpkg:
@@ -16,7 +16,7 @@
 git clone https://github.com/microsoft/vcpkg C:/dev/vcpkg
 C:/dev/vcpkg/bootstrap-vcpkg.bat
 C:/dev/vcpkg/vcpkg install sdl2:x64-windows
-cmake -S simulator -B build/simulator -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -S simulator -B build/simulator -G "Visual Studio 18 2026" -A x64 -DENABLE_CUSTOM_COMPILER_FLAGS=OFF -DCMAKE_TOOLCHAIN_FILE=C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows -DBK_REQUIRE_SDL=ON
 cmake --build build/simulator --config Release
 ./build/simulator/Release/bk_sim.exe
 ```
@@ -25,14 +25,14 @@ cmake --build build/simulator --config Release
 настоящий LVGL headless renderer, который сохраняет все экраны в PPM:
 
 ```powershell
-cmake -S simulator -B build/simulator -A x64 -DBK_WITH_SDL=OFF
+cmake -S simulator -B build/simulator -G "Visual Studio 18 2026" -A x64 -DENABLE_CUSTOM_COMPILER_FLAGS=OFF -DBK_WITH_SDL=OFF
 cmake --build build/simulator --config Release
 ./build/simulator/Release/bk_sim.exe --headless build/simulator
 ctest --test-dir build/simulator -C Release --output-on-failure
 ```
 
-PPM можно открыть в GIMP/IrfanView; готовые PNG находятся в
-[`docs/images/lvgl`](../docs/images/lvgl/all-screens.png).
+PPM можно открыть в GIMP/IrfanView; новые PNG находятся в
+[галерее Hunter](../docs/images/hunter-reference/reference-contact.png).
 
 ## Linux
 
@@ -50,28 +50,37 @@ ctest --test-dir build/simulator --output-on-failure
 
 ## Управление
 
-- Мышь — сенсор, горизонтальный свайп между пятью приборами.
+- Мышь — сенсор: вертикальный свайп меняет прибор; горизонтальный — основной параметр текущего прибора.
 - Нажатие/долгое нажатие на виджет — редактор (тип, метрика, положение, диапазон, пороги, цвет).
-- Стрелки — десять системных/исходных экранов; T — день/ночь; C — связь/устаревшие данные.
+- ↑/↓ — приборы; ←/→ — параметры текущего прибора; T — день/ночь; C — потеря связи.
+- 1/2 — заводской набор Classic/Reference (перед этим экспортируйте свою компоновку).
+- G — появление/исчезновение внешнего источника; M/L — демонстрационная калибровка ДМРВ/лямбды.
+- J/K — коэффициент ДМРВ; E — перемещение, Enter — сохранить, R — сбросить текущий экран.
+- Ctrl+S — сохранить профиль; F12 — снимок `hunter-screenshot.ppm`; Q — меню.
 - +/− — обороты; W/S — температура; V — напряжение; D — три ошибки ЭБУ.
 - Пробел — остановить периодическое обновление; Escape — выход.
 - Настройки → Редактор экранов: добавить/удалить виджет, менять параметры и применить.
 - Яркость в симуляторе сохраняется в UI-модели; PWM физической платы отсутствует.
 
-Показания в симуляторе искусственные. Скорость, запас хода, пробег и средняя
-скорость не генерируются. Пример QR использует явно демонстрационные реквизиты
+Показания в симуляторе искусственные, включая скорость, запас хода, пробег
+и среднюю скорость. G переключает доступность демонстрационного внешнего источника.
+В реальной прошивке эти данные без проверенного источника недоступны. Пример QR использует явно демонстрационные реквизиты
 `HUNTER-SIMULATION / SIMULATOR-ONLY`; прошивка передаёт собственные реквизиты AP
 через API, пароля по умолчанию из симулятора в ней нет.
 
 Сборка и headless запуск проверены на Linux (GCC 14.2, SDL2 runtime 2.32.4).
-Windows-инструкции подготовлены; физический запуск на Windows не проверен.
+Сборка Windows x64 с VS2026 и headless запуск `.exe` проверяются в
+[Hunter Windows CI](https://github.com/paradisemarketwb/bk-mikas-7.2/actions/workflows/hunter-windows.yml).
+Артефакт `Hunter-Windows-x64-VS2026-preview` содержит `.exe` и `SDL2.dll`.
+CI использует Windows Server 2025: ручной запуск интерактивного окна именно
+на Windows 10 остаётся проверкой на компьютере пользователя.
 
 ## Проверка конструктора и экспорт изображений
 
 `ctest` кроме20screenframes выполняет реальную последовательность касаний
 редактора: выбор виджета → изменение типа ARC на NEEDLE → сохранение → сравнение
 модели. Далее проверяются все9типов,64-point bounded history, отказ размещения
-за границей круглого дисплея и600msnonblockingboot. Создаются также
+за границей круглого дисплея. Приветственный экран и его задержка удалены. Создаются также
 `widget-00..08.ppm`, `layout-editor.ppm`, `widget-editor.ppm`.
 
 Для PNGгалереи установить Pillow и выполнить из корня репозитория:
@@ -115,3 +124,42 @@ python simulator/export_gallery.py build/simulator
 
 В CTest дополнительно проверяются JSON export и import теми же исходниками,
 что в прошивке. Проверено равенство JSON до/после roundtrip.
+
+## Hunter Reference preview
+
+Ветка `feat/hunter-reference-ui`; до приёмки пользователя не сливается в main.
+В одной программе доступны Classic R2 и Hunter Reference, стиль хранится у
+каждого прибора. Старые JSON `version:3/layout:1` мигрируют в Classic;
+новый экспорт `version:4/layout:2` содержит последовательности параметров,
+калибровки и политики источников. Сам импорт не записывает профиль в прибор.
+
+Для проверки сохранения обязательно задайте `--export my-profile.json` при
+первом запуске, затем `--import my-profile.json --export my-profile.json`.
+При завершении через Escape/крестик сохраняется окончательная компоновка.
+Для переноса между компьютерами сохраните JSON и пользовательские ресурсы фонов.
+
+[Калибровки и источники](../docs/sources-calibration.md),
+[хранилище пользовательских фонов и миграция](../docs/hunter-background-migration.md).
+
+Готовый Windows ZIP содержит `Classic.cmd` и `Reference.cmd`. Каждый хранит свой
+`hunter-*-profile.json`: существующий файл загружается при повторном запуске,
+заводской стиль применяется только при первом. Распакуйте в доступную для записи
+папку. `--demo` включает примерные коэффициенты только для симулятора и не
+совместим с `--import`, чтобы не перезаписывать пользовательскую калибровку.
+
+Снимки нового стиля: `python simulator/export_hunter_gallery.py build/simulator`.
+Для SDL дополнительно выполняется короткий `--smoke-window --no-persist` тест
+реального создания окна, текстуры и вывода кадров.
+
+## Макет UAZ21
+
+Новый комплект ресурсов: `design/uaz21/`. Для отдельного чистого профиля нового
+дизайна запустите `UAZ21.cmd`; прежние `Classic.cmd` и `Reference.cmd` сохраняют
+свои файлы. В существующем профиле применяйте «Reference: заводской вид» только
+к нужному экрану: калибровки и другие экраны не сбрасываются.
+
+Иконки — предоставленные ARGB8888, геометрия — JSON/CSV макета. Главная дуга
+показывает RPM0…6000 независимо от скорости; параметры и QR динамические.
+Кнопки яркости/темы/ошибок работают, редактор находится в Настройки → Ещё.
+Wi-Fi отображает состояние AP и открывает подключение; это не новая команда
+отключения сети. Приветствие с автомобилем остаётся отключённым по прежнему ТЗ.

@@ -18,4 +18,10 @@ endchoice
 config BK_ENABLE_WIFI
     bool "Enable password-protected local SoftAP"
     default y
+config BK_PROFILE_UI
+    bool "Log UI task timing and heap every 10 seconds"
+    default n
+    help
+        Measure LVGL handler CPU time and task stack on the actual board.
+        Host simulator timings are not physical display FPS measurements.
 endmenu

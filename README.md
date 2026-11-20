@@ -1,5 +1,11 @@
 # БК Микас7.2 · HUNTER R2
 
+> **Hunter Reference preview:** ветка `feat/hunter-reference-ui`,
+> [PR №3](https://github.com/paradisemarketwb/bk-mikas-7.2/pull/3).
+> Classic R2 сохранён; новый стиль, жесты, конструктор и калибровки описаны
+> в [статусе Hunter](docs/lvgl/HUNTER_STATUS.md). В main до приёмки не сливается.
+
+
 Круглый сенсорный бортовой компьютер для УАЗ Hunter / ЗМЗ-409 / Микас7.2:
 Waveshare ESP32-S3-Touch-LCD-2.1,480×480, проводная K-Line через L9637D.
 Работает без интернета; телефон подключается к локальной сети прибора.

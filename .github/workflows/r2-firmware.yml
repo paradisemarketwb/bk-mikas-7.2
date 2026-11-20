@@ -16,6 +16,7 @@ jobs:
           git clone --depth 1 --branch v1.7.19 https://github.com/DaveGamble/cJSON.git "$RUNNER_TEMP/cJSON"
           test "$(git -C "$RUNNER_TEMP/cJSON" rev-parse HEAD)" = c859b25da02955fef659d658b8f324b5cde87be3
           CJSON_DIR="$RUNNER_TEMP/cJSON" bash tools/test_firmware_host.sh
+      - run: python3 tools/check_uaz21_assets.py
       - run: cmake -S simulator -B build/simulator -DBK_WITH_SDL=OFF
       - run: cmake --build build/simulator -j2
       - run: ctest --test-dir build/simulator --output-on-failure
@@ -31,6 +32,7 @@ jobs:
     runs-on: ubuntu-24.04
     container: espressif/idf:v5.5.1
     strategy:
+      fail-fast: false
       matrix:
         mode: [safe, live, usb-kkl]
     steps:
