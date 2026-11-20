@@ -111,6 +111,7 @@ void bk_layout_reference_defaults(bk_layout_t *out);
 void bk_layout_default_screen(bk_layout_screen_t *out, unsigned slot,
                               bk_style_t style);
 void bk_metric_preset_defaults(bk_metric_t metric, bk_metric_preset_t *out);
+void bk_layout_seed_legacy_sequence(bk_layout_screen_t *screen);
 bool bk_layout_step_primary(bk_layout_screen_t *screen, int direction);
 bool bk_layout_validate(const bk_layout_t *layout);
 /* View IDs0..4 instruments,5menu,6WiFi,7DTC,8settings,9diagnostics,

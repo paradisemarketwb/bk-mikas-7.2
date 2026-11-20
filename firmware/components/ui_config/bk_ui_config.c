@@ -329,3 +329,46 @@ bool bk_layout_step_primary(bk_layout_screen_t *s, int direction) {
     }
   return true;
 }
+
+/* Add navigation metadata to v1 without applying a preset or moving a widget.
+ */
+void bk_layout_seed_legacy_sequence(bk_layout_screen_t *s) {
+  if (!s || !s->widget_count)
+    return;
+  unsigned primary = 0;
+  for (unsigned i = 0; i < s->widget_count; i++)
+    if (s->widgets[i].type == BK_WIDGET_NUMBER) {
+      primary = i;
+      break;
+    }
+  const bk_widget_config_t *w = &s->widgets[primary];
+  bk_metric_preset_t *p = &s->sequence[0];
+  bk_metric_preset_defaults(w->metric, p);
+  p->min = w->min;
+  p->max = w->max;
+  p->warn_low = w->warn_low;
+  p->warn_high = w->warn_high;
+  p->flags = w->flags;
+  p->precision = w->precision;
+  memcpy(p->unit, w->unit, sizeof(p->unit));
+  for (unsigned i = 0; i < s->widget_count; i++) {
+    bk_widget_config_t *candidate = &s->widgets[i];
+    bool paired = candidate->metric == w->metric &&
+                  (candidate->type == BK_WIDGET_NUMBER ||
+                   candidate->type == BK_WIDGET_ARC ||
+                   candidate->type == BK_WIDGET_NEEDLE);
+    candidate->primary = i == primary || paired;
+    if (candidate->primary && (candidate->type == BK_WIDGET_ARC ||
+                               candidate->type == BK_WIDGET_NEEDLE))
+      p->type = candidate->type;
+  }
+  const bk_metric_t common[] = {BK_RPM,           BK_COOLANT,   BK_VOLTAGE,
+                                BK_MAF,           BK_INJECTION, BK_THROTTLE,
+                                BK_LAMBDA_VOLTAGE};
+  s->sequence_count = 1;
+  s->sequence_index = 0;
+  for (unsigned i = 0; i < sizeof(common) / sizeof(common[0]); i++)
+    if (common[i] != w->metric) {
+      bk_metric_preset_defaults(common[i], &s->sequence[s->sequence_count++]);
+    }
+}

@@ -389,6 +389,31 @@ static char *body_read(httpd_req_t *r, unsigned max) {
   }
   return b;
 }
+/* Validate/migrate using the same C contract without changing active/NVS data.
+ */
+static esp_err_t profile_migrate_post(httpd_req_t *r) {
+  if (!authorized(r, true))
+    return ESP_OK;
+  char *body = body_read(r, BK_PROFILE_JSON_MAX);
+  bk_settings_t *profile = malloc(sizeof(*profile));
+  if (!body || !profile) {
+    free(body);
+    free(profile);
+    return httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST,
+                               "Invalid profile body");
+  }
+  bool valid = bk_settings_from_json(body, profile);
+  free(body);
+  char *json = valid ? bk_settings_to_json(profile) : NULL;
+  free(profile);
+  if (!json)
+    return httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST,
+                               "Invalid profile or migration failed");
+  httpd_resp_set_type(r, "application/json");
+  esp_err_t e = httpd_resp_sendstr(r, json);
+  cJSON_free(json);
+  return e;
+}
 static esp_err_t config_post(httpd_req_t *r) {
   if (!authorized(r, true))
     return ESP_OK;
@@ -643,6 +668,9 @@ esp_err_t bk_wifi_start(const bk_wifi_hooks_t *hooks) {
        .handler = background_post},
       {.uri = "/api/background", .method = HTTP_GET, .handler = background_get},
       {.uri = "/api/config", .method = HTTP_POST, .handler = config_post},
+      {.uri = "/api/profile/migrate",
+       .method = HTTP_POST,
+       .handler = profile_migrate_post},
       {.uri = "/api/reset", .method = HTTP_POST, .handler = reset_post},
       {.uri = "/api/ota", .method = HTTP_POST, .handler = ota_post}};
   for (unsigned i = 0; i < sizeof(routes) / sizeof(routes[0]); i++) {

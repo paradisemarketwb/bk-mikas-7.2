@@ -91,6 +91,8 @@ bool bk_settings_migrate_v3(const void *blob, size_t size, bk_settings_t *out) {
       memcpy(v->unit, w->unit, sizeof(v->unit));
     }
   }
+  for (unsigned i = 0; i < s->layout.screen_count; i++)
+    bk_layout_seed_legacy_sequence(&s->layout.screens[i]);
   if (s->screen == 9) {
     s->screen = 0;
     for (unsigned i = 0; i < s->layout.screen_count; i++)

@@ -30,6 +30,10 @@ int main(void) {
   assert(bk_settings_from_json(json, t));
   char *a = bk_settings_to_json(s), *b = bk_settings_to_json(t);
   assert(a && b && !strcmp(a, b));
+  FILE *migrated = fopen("build/tests/migrated-legacy-profile.json", "wb");
+  assert(migrated);
+  assert(fputs(a, migrated) >= 0);
+  fclose(migrated);
   free(a);
   free(b);
   free(json);
@@ -37,6 +41,15 @@ int main(void) {
     assert(s->layout.screens[i].style == BK_STYLE_CLASSIC);
   assert(s->layout.screens[0].widgets[0].x == 33 &&
          s->layout.screens[0].widgets[0].y == 16);
+  bk_layout_screen_t legacy_screen = s->layout.screens[0];
+  assert(legacy_screen.sequence_count > 1);
+  assert(legacy_screen.widgets[0].primary && legacy_screen.widgets[1].primary);
+  assert(bk_layout_step_primary(&legacy_screen, 1));
+  assert(legacy_screen.widgets[0].metric == legacy_screen.widgets[1].metric);
+  assert(legacy_screen.widgets[1].metric !=
+         s->layout.screens[0].widgets[1].metric);
+  assert(legacy_screen.widgets[0].y == 16 &&
+         legacy_screen.widgets[1].x == s->layout.screens[0].widgets[1].x);
   ((unsigned char *)old)[4] = 9;
   assert(bk_settings_decode(old, n, t) && t->screen == 0);
   free(old);
@@ -64,8 +77,12 @@ int main(void) {
   assert(b && !strcmp(a, b));
   free(a);
   free(b);
-  FILE *reference=fopen("build/tests/reference-profile.json","wb");assert(reference);
-  a=bk_settings_to_json(s);assert(a&&fputs(a,reference)>=0);fclose(reference);free(a);
+  FILE *reference = fopen("build/tests/reference-profile.json", "wb");
+  assert(reference);
+  a = bk_settings_to_json(s);
+  assert(a && fputs(a, reference) >= 0);
+  fclose(reference);
+  free(a);
   bk_calibration_t calibration = s->maf;
   bk_layout_screen_t other = s->layout.screens[1];
   bk_layout_default_screen(&s->layout.screens[0], 0, BK_STYLE_REFERENCE);

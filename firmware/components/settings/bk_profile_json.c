@@ -374,6 +374,9 @@ bool bk_settings_from_json(const char *json, bk_settings_t *out) {
         goto bad;
     }
   }
+  if (input_version == 3)
+    for (unsigned i = 0; i < s->layout.screen_count; i++)
+      bk_layout_seed_legacy_sequence(&s->layout.screens[i]);
   if (input_version == 3 && s->screen == 9) {
     s->screen = 0;
     for (unsigned i = 0; i < s->layout.screen_count; i++)

@@ -9,6 +9,7 @@ const server=http.createServer(async(req,res)=>{
  if(req.headers.authorization!==auth){res.statusCode=401;return res.end('Authentication required')}
  if(req.method==='POST'&&req.headers['x-bk-intent']!=='configure'){res.statusCode=403;return res.end('Intent required')}
  const chunks=[];for await(const c of req)chunks.push(c);const body=Buffer.concat(chunks);res.setHeader('Content-Type','application/json');
+ if(req.url==='/api/profile/migrate'){assert.equal(JSON.parse(body).version,3);return res.end(fs.readFileSync(path.join(root,'build/tests/migrated-legacy-profile.json')))}
  if(req.url==='/api/factory')return res.end(JSON.stringify({classic:factoryClassic,reference:factoryReference,background_storage:true}));
  if(req.url==='/api/catalog')return res.end(JSON.stringify({functions:[{name:'Тест форсунок',availability:'Неактивно',reason:'Команда не подтверждена'}]}));
  if(req.url==='/api/background'){assert.equal(req.headers['x-bk-slot'],'0');if(req.method==='POST'){assert.equal(req.headers['x-bk-width'],'240');assert.equal(req.headers['x-bk-height'],'240');assert.equal(body.length,115200);background=Buffer.from(body);return res.end('{"ok":true}')}if(!background){res.statusCode=404;return res.end('{}')}res.setHeader('X-BK-Width','240');res.setHeader('X-BK-Height','240');res.setHeader('Content-Type','application/octet-stream');return res.end(background)}
@@ -58,6 +59,16 @@ const server=http.createServer(async(req,res)=>{
   await page.click('#save');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Профиль сохранён'));
   assert.equal(profile.layout.screens[0].background_mode,2);assert.equal(profile.layout.screens[0].background_scale,100);
   await page.click('[data-page="catalog"]');await page.waitForFunction(()=>document.getElementById('catalog-items').textContent.includes('Команда не подтверждена'));
+  await page.click('[data-page="editor"]');
+  const savedBeforeImport=saved;
+  await page.setInputFiles('#import',path.join(root,'simulator/profiles/default.json'));
+  await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Импортирован в редактор'));
+  assert.equal(saved,savedBeforeImport); // Migration validates without applying or writing NVS.
+  await page.click('#save');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Профиль сохранён'));
+  assert.equal(profile.version,4);assert.equal(profile.layout.version,2);
+  assert.equal(profile.layout.screens[0].style,0);assert.equal(profile.layout.screens[0].widgets[0].y,16);
+  assert(profile.layout.screens[0].sequence.length>1);
+  assert(profile.layout.screens[0].widgets[0].primary&&profile.layout.screens[0].widgets[1].primary);
   await page.click('[data-page="update"]');await page.setInputFiles('#image',{name:'bk_mikas_r2.bin',mimeType:'application/octet-stream',buffer:Buffer.alloc(1024,0xe9)});await page.check('#confirm-update');await page.click('#ota');await page.waitForFunction(()=>document.getElementById('message').textContent.includes('Образ принят'));assert(uploaded);
   console.log('Phone UI login, telemetry, Reference/Classic edit, pointer drag, scoped reset, calibration, source policy, RGB565 background, catalog, save/reload/export and confirmed OTA: PASS');
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
