@@ -1,4 +1,5 @@
 #include "bk_settings.h"
+#include "bk_uaz_layout.h"
 #include "bk_ui.h"
 #include "bk_widgets.h"
 #include "cJSON.h"
@@ -489,6 +490,25 @@ static int interactive(bool smoke) {
   return 0;
 }
 #endif
+static lv_obj_t *find_class(lv_obj_t *o, const lv_obj_class_t *type) {
+  if (lv_obj_check_type(o, type))
+    return o;
+  for (unsigned i = 0; i < lv_obj_get_child_count(o); i++) {
+    lv_obj_t *found = find_class(lv_obj_get_child(o, i), type);
+    if (found)
+      return found;
+  }
+  return NULL;
+}
+static bool contains_label(lv_obj_t *o, const char *text) {
+  if (lv_obj_check_type(o, &lv_label_class) &&
+      strstr(lv_label_get_text(o), text))
+    return true;
+  for (unsigned i = 0; i < lv_obj_get_child_count(o); i++)
+    if (contains_label(lv_obj_get_child(o, i), text))
+      return true;
+  return false;
+}
 #define CHECK(test, message)                                                   \
   do {                                                                         \
     if (!(test)) {                                                             \
@@ -514,16 +534,29 @@ static int run_checks(lv_display_t *display, const char *dir) {
                      i == 3 ? BK_VALUE_NO_SIGNAL : BK_VALUE_VALID, true,
                      "Расход воздуха", "кг/ч");
     lv_obj_update_layout(probe.root);
-    CHECK(lv_obj_get_x(probe.backdrop) == digital.w * 47 / 100,
+    CHECK(lv_obj_get_x(probe.backdrop) == digital.w * 185 / 345,
           "DIGITAL pill stays right on refresh");
-    CHECK(lv_obj_get_x(probe.value) == digital.w * 47 / 100 &&
-              lv_obj_get_x(probe.unit) == digital.w * 47 / 100,
+    CHECK(lv_obj_get_x(probe.value) == digital.w * 185 / 345 + 8 &&
+              lv_obj_is_hidden(probe.unit),
           "DIGITAL value and unit stay in pill");
     CHECK(!strcmp(lv_label_get_text(probe.chart), "ДМРВ") &&
               lv_obj_get_x(probe.chart) == 0,
           "DIGITAL left caption survives refresh");
   }
   lv_obj_delete(probe.root);
+  CHECK(reference.screens[0].widgets[0].metric == BK_RPM &&
+            !reference.screens[0].widgets[0].primary,
+        "Reference arc is auxiliary RPM, independent of speed");
+  bk_widget_create_style(&probe, lv_screen_active(),
+                         &reference.screens[0].widgets[0], false,
+                         BK_STYLE_REFERENCE);
+  bk_widget_update(&probe, 3000, BK_VALUE_VALID, true, "Обороты", "об/мин");
+  for (unsigned i = 0; i < 12; i++)
+    tick(NULL, 20);
+  CHECK(lv_arc_get_value(probe.chart) == 500,
+        "3000 RPM renders half of 0..6000 RPM arc");
+  lv_obj_delete(probe.root);
+
   fixture_calibrations();
   gps = true;
   connected = true;
@@ -619,6 +652,46 @@ static int run_checks(lv_display_t *display, const char *dir) {
                                 &calculated) == BK_CAL_OK &&
             fabs(calculated - .870588) < .001,
         "Lambda user calibration");
+  CHECK(bk_ui_set_layout(&reference),
+        "Assets reference for real pointer actions");
+  bk_ui_set_theme(false);
+  bk_ui_select_screen(8);
+  bk_ui_config_t prior, next;
+  bk_ui_get_config(&prior);
+  swipe(pointer, 350, 248, 350, 248);
+  bk_ui_get_config(&next);
+  CHECK(next.dark != prior.dark, "Reference theme row remains functional");
+  swipe(pointer, 350, 248, 350, 248);
+  bk_ui_select_screen(8);
+  swipe(pointer, 350, 166, 350, 166);
+  CHECK(find_class(lv_screen_active(), &lv_slider_class) != NULL,
+        "Reference brightness row opens real slider");
+  bk_ui_get_config(&prior);
+  swipe(pointer, 120, 254, 360, 254);
+  bk_ui_get_config(&next);
+  CHECK(next.brightness != prior.brightness,
+        "Reference brightness slider changes saved config");
+  swipe(pointer, 240, 461, 240, 461);
+  CHECK(find_class(lv_screen_active(), &lv_slider_class) == NULL,
+        "Brightness back returns to settings rows");
+  swipe(pointer, 240, 397, 240, 397);
+  swipe(pointer, 220, 141, 220, 141);
+  CHECK(contains_label(lv_screen_active(), "РЕДАКТОР ЭКРАНА"),
+        "Reference More still reaches screen constructor");
+  CHECK(bk_ui_set_layout(&reference), "Leave constructor safely");
+  bk_ui_select_screen(7);
+  sample();
+  swipe(pointer, 240, 178, 240, 178);
+  CHECK(contains_label(lv_screen_active(), "Код ЭБУ 0x12"),
+        "Reference real numeric DTC row opens details");
+  swipe(pointer, 240, 461, 240, 461);
+  CHECK(!contains_label(lv_screen_active(), "Код ЭБУ 0x12"),
+        "DTC back returns to list");
+  bk_ui_select_screen(6);
+  render(display);
+  lv_obj_t *qr = find_class(lv_screen_active(), &lv_qrcode_class);
+  CHECK(qr && lv_obj_get_width(qr) == 264,
+        "Real Wi-Fi QR uses archive264px allocation");
   bk_layout_t custom = classic;
   custom.screen_count = 1;
   custom.screens[0].widget_count = 1;

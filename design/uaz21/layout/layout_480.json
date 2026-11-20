@@ -1,0 +1,1245 @@
+{
+  "display": {
+    "diagonal_inches": 2.1,
+    "diameter_mm": 53.34,
+    "resolution_assumed": [
+      480,
+      480
+    ],
+    "center": [
+      240,
+      240
+    ],
+    "mm_per_pixel": 0.111125,
+    "clip_radius_px": 240
+  },
+  "colors": {
+    "background": "#f5f6f0",
+    "green": "#075532",
+    "active": "#009b30",
+    "text": "#171d1d"
+  },
+  "status": "Vector redraw from raster reference; layout adapted, not measured device specification",
+  "screens": [
+    {
+      "id": "01_main",
+      "title": "Главный экран",
+      "elements": [
+        {
+          "id": "time",
+          "x": 155,
+          "y": 33,
+          "w": 95,
+          "h": 34,
+          "kind": "text",
+          "value": "12:34",
+          "font_px": 30
+        },
+        {
+          "id": "wifi",
+          "x": 280,
+          "y": 34,
+          "w": 40,
+          "h": 32,
+          "kind": "icon",
+          "value": "wifi",
+          "font_px": 0
+        },
+        {
+          "id": "rpm_track",
+          "x": 40,
+          "y": 80,
+          "w": 400,
+          "h": 300,
+          "kind": "widget",
+          "value": "rpm_arc_track",
+          "font_px": 0
+        },
+        {
+          "id": "rpm_value_arc",
+          "x": 40,
+          "y": 80,
+          "w": 400,
+          "h": 300,
+          "kind": "widget",
+          "value": "rpm_arc_demo",
+          "font_px": 0
+        },
+        {
+          "id": "speed",
+          "x": 102,
+          "y": 132,
+          "w": 276,
+          "h": 150,
+          "kind": "text",
+          "value": "64",
+          "font_px": 146
+        },
+        {
+          "id": "speed_unit",
+          "x": 175,
+          "y": 282,
+          "w": 130,
+          "h": 40,
+          "kind": "text",
+          "value": "км/ч",
+          "font_px": 34
+        },
+        {
+          "id": "rpm_min",
+          "x": 48,
+          "y": 316,
+          "w": 30,
+          "h": 30,
+          "kind": "text",
+          "value": "0",
+          "font_px": 27
+        },
+        {
+          "id": "rpm_max",
+          "x": 402,
+          "y": 316,
+          "w": 30,
+          "h": 30,
+          "kind": "text",
+          "value": "6",
+          "font_px": 27
+        },
+        {
+          "id": "separator",
+          "x": 100,
+          "y": 341,
+          "w": 280,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "rpm",
+          "x": 120,
+          "y": 351,
+          "w": 240,
+          "h": 48,
+          "kind": "text",
+          "value": "2450 об/мин",
+          "font_px": 38
+        },
+        {
+          "id": "rpm_icon",
+          "x": 181,
+          "y": 408,
+          "w": 36,
+          "h": 28,
+          "kind": "icon",
+          "value": "engine",
+          "font_px": 0
+        },
+        {
+          "id": "rpm_factor",
+          "x": 226,
+          "y": 405,
+          "w": 100,
+          "h": 32,
+          "kind": "text",
+          "value": "×1000",
+          "font_px": 26
+        }
+      ]
+    },
+    {
+      "id": "02_engine",
+      "title": "Двигатель",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "engine",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Двигатель",
+          "font_px": 34
+        },
+        {
+          "id": "coolant_icon",
+          "x": 83,
+          "y": 135,
+          "w": 64,
+          "h": 70,
+          "kind": "icon",
+          "value": "coolant",
+          "font_px": 0
+        },
+        {
+          "id": "coolant_value",
+          "x": 184,
+          "y": 132,
+          "w": 220,
+          "h": 80,
+          "kind": "text",
+          "value": "87°C",
+          "font_px": 74
+        },
+        {
+          "id": "temp_track",
+          "x": 60,
+          "y": 232,
+          "w": 360,
+          "h": 28,
+          "kind": "widget",
+          "value": "coolant_track",
+          "font_px": 0
+        },
+        {
+          "id": "temp_fill",
+          "x": 60,
+          "y": 232,
+          "w": 360,
+          "h": 28,
+          "kind": "widget",
+          "value": "coolant_demo",
+          "font_px": 0
+        },
+        {
+          "id": "temp_50",
+          "x": 22,
+          "y": 268,
+          "w": 80,
+          "h": 32,
+          "kind": "text",
+          "value": "50°",
+          "font_px": 26
+        },
+        {
+          "id": "temp_90",
+          "x": 225,
+          "y": 268,
+          "w": 80,
+          "h": 32,
+          "kind": "text",
+          "value": "90°",
+          "font_px": 26
+        },
+        {
+          "id": "temp_120",
+          "x": 378,
+          "y": 268,
+          "w": 80,
+          "h": 32,
+          "kind": "text",
+          "value": "120°",
+          "font_px": 26
+        },
+        {
+          "id": "separator",
+          "x": 60,
+          "y": 313,
+          "w": 360,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "battery_icon",
+          "x": 126,
+          "y": 340,
+          "w": 64,
+          "h": 52,
+          "kind": "icon",
+          "value": "battery",
+          "font_px": 0
+        },
+        {
+          "id": "voltage",
+          "x": 211,
+          "y": 338,
+          "w": 182,
+          "h": 58,
+          "kind": "text",
+          "value": "13.9 V",
+          "font_px": 52
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "03_fuel",
+      "title": "Топливо",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "fuel",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Топливо",
+          "font_px": 34
+        },
+        {
+          "id": "consumption",
+          "x": 70,
+          "y": 125,
+          "w": 170,
+          "h": 80,
+          "kind": "text",
+          "value": "12.4",
+          "font_px": 72
+        },
+        {
+          "id": "consumption_unit",
+          "x": 241,
+          "y": 155,
+          "w": 170,
+          "h": 38,
+          "kind": "text",
+          "value": "л/100 км",
+          "font_px": 30
+        },
+        {
+          "id": "separator",
+          "x": 55,
+          "y": 228,
+          "w": 370,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "range_icon",
+          "x": 96,
+          "y": 252,
+          "w": 60,
+          "h": 64,
+          "kind": "icon",
+          "value": "fuel",
+          "font_px": 0
+        },
+        {
+          "id": "range",
+          "x": 177,
+          "y": 246,
+          "w": 226,
+          "h": 75,
+          "kind": "text",
+          "value": "328 км",
+          "font_px": 60
+        },
+        {
+          "id": "range_label",
+          "x": 182,
+          "y": 320,
+          "w": 225,
+          "h": 34,
+          "kind": "text",
+          "value": "запас хода",
+          "font_px": 28
+        },
+        {
+          "id": "empty",
+          "x": 103,
+          "y": 371,
+          "w": 30,
+          "h": 30,
+          "kind": "text",
+          "value": "E",
+          "font_px": 26
+        },
+        {
+          "id": "segments",
+          "x": 135,
+          "y": 371,
+          "w": 216,
+          "h": 28,
+          "kind": "widget",
+          "value": "fuel_segments_demo",
+          "font_px": 0
+        },
+        {
+          "id": "full",
+          "x": 365,
+          "y": 371,
+          "w": 30,
+          "h": 30,
+          "kind": "text",
+          "value": "F",
+          "font_px": 26
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "04_sensors",
+      "title": "Датчики",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "pulse",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Датчики",
+          "font_px": 34
+        },
+        {
+          "id": "name_0",
+          "x": 70,
+          "y": 139,
+          "w": 180,
+          "h": 46,
+          "kind": "text",
+          "value": "ДМРВ",
+          "font_px": 33
+        },
+        {
+          "id": "pill_0",
+          "x": 255,
+          "y": 137,
+          "w": 160,
+          "h": 56,
+          "kind": "widget",
+          "value": "value_pill",
+          "font_px": 0
+        },
+        {
+          "id": "value_0",
+          "x": 263,
+          "y": 145,
+          "w": 144,
+          "h": 40,
+          "kind": "text",
+          "value": "12.3 г/с",
+          "font_px": 30
+        },
+        {
+          "id": "sep_0",
+          "x": 60,
+          "y": 208,
+          "w": 360,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "name_1",
+          "x": 70,
+          "y": 227,
+          "w": 180,
+          "h": 46,
+          "kind": "text",
+          "value": "ЛЯМБДА",
+          "font_px": 33
+        },
+        {
+          "id": "pill_1",
+          "x": 255,
+          "y": 225,
+          "w": 160,
+          "h": 56,
+          "kind": "widget",
+          "value": "value_pill",
+          "font_px": 0
+        },
+        {
+          "id": "value_1",
+          "x": 263,
+          "y": 233,
+          "w": 144,
+          "h": 40,
+          "kind": "text",
+          "value": "0.87 λ",
+          "font_px": 30
+        },
+        {
+          "id": "sep_1",
+          "x": 60,
+          "y": 296,
+          "w": 360,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "name_2",
+          "x": 70,
+          "y": 315,
+          "w": 180,
+          "h": 46,
+          "kind": "text",
+          "value": "УОЗ",
+          "font_px": 33
+        },
+        {
+          "id": "pill_2",
+          "x": 255,
+          "y": 313,
+          "w": 160,
+          "h": 56,
+          "kind": "widget",
+          "value": "value_pill",
+          "font_px": 0
+        },
+        {
+          "id": "value_2",
+          "x": 263,
+          "y": 321,
+          "w": 144,
+          "h": 40,
+          "kind": "text",
+          "value": "12.5°",
+          "font_px": 30
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "05_trip",
+      "title": "Поездка",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "road",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Поездка",
+          "font_px": 34
+        },
+        {
+          "id": "route",
+          "x": 80,
+          "y": 125,
+          "w": 60,
+          "h": 60,
+          "kind": "icon",
+          "value": "route",
+          "font_px": 0
+        },
+        {
+          "id": "distance",
+          "x": 166,
+          "y": 122,
+          "w": 245,
+          "h": 64,
+          "kind": "text",
+          "value": "56.8 км",
+          "font_px": 54
+        },
+        {
+          "id": "sep1",
+          "x": 60,
+          "y": 205,
+          "w": 360,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "clock",
+          "x": 80,
+          "y": 226,
+          "w": 60,
+          "h": 60,
+          "kind": "icon",
+          "value": "clock",
+          "font_px": 0
+        },
+        {
+          "id": "time",
+          "x": 160,
+          "y": 218,
+          "w": 250,
+          "h": 64,
+          "kind": "text",
+          "value": "01:24",
+          "font_px": 58
+        },
+        {
+          "id": "sep2",
+          "x": 60,
+          "y": 295,
+          "w": 360,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "gauge",
+          "x": 80,
+          "y": 320,
+          "w": 60,
+          "h": 60,
+          "kind": "icon",
+          "value": "gauge",
+          "font_px": 0
+        },
+        {
+          "id": "average",
+          "x": 161,
+          "y": 312,
+          "w": 260,
+          "h": 60,
+          "kind": "text",
+          "value": "40.6 км/ч",
+          "font_px": 46
+        },
+        {
+          "id": "label",
+          "x": 192,
+          "y": 371,
+          "w": 180,
+          "h": 32,
+          "kind": "text",
+          "value": "средняя",
+          "font_px": 28
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "06_menu",
+      "title": "Меню",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "menu",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Меню",
+          "font_px": 34
+        },
+        {
+          "id": "tile0",
+          "x": 42,
+          "y": 124,
+          "w": 192,
+          "h": 124,
+          "kind": "widget",
+          "value": "menu_tile_active",
+          "font_px": 0
+        },
+        {
+          "id": "icon0",
+          "x": 106,
+          "y": 136,
+          "w": 64,
+          "h": 64,
+          "kind": "icon",
+          "value": "gauge_white",
+          "font_px": 0
+        },
+        {
+          "id": "text0",
+          "x": 48,
+          "y": 207,
+          "w": 180,
+          "h": 32,
+          "kind": "text",
+          "value": "Показания",
+          "font_px": 25
+        },
+        {
+          "id": "tile1",
+          "x": 246,
+          "y": 124,
+          "w": 192,
+          "h": 124,
+          "kind": "widget",
+          "value": "menu_tile",
+          "font_px": 0
+        },
+        {
+          "id": "icon1",
+          "x": 310,
+          "y": 136,
+          "w": 64,
+          "h": 64,
+          "kind": "icon",
+          "value": "engine",
+          "font_px": 0
+        },
+        {
+          "id": "text1",
+          "x": 252,
+          "y": 207,
+          "w": 180,
+          "h": 32,
+          "kind": "text",
+          "value": "Ошибки",
+          "font_px": 25
+        },
+        {
+          "id": "tile2",
+          "x": 42,
+          "y": 260,
+          "w": 192,
+          "h": 124,
+          "kind": "widget",
+          "value": "menu_tile",
+          "font_px": 0
+        },
+        {
+          "id": "icon2",
+          "x": 106,
+          "y": 272,
+          "w": 64,
+          "h": 64,
+          "kind": "icon",
+          "value": "settings",
+          "font_px": 0
+        },
+        {
+          "id": "text2",
+          "x": 48,
+          "y": 343,
+          "w": 180,
+          "h": 32,
+          "kind": "text",
+          "value": "Настройки",
+          "font_px": 25
+        },
+        {
+          "id": "tile3",
+          "x": 246,
+          "y": 260,
+          "w": 192,
+          "h": 124,
+          "kind": "widget",
+          "value": "menu_tile",
+          "font_px": 0
+        },
+        {
+          "id": "icon3",
+          "x": 310,
+          "y": 272,
+          "w": 64,
+          "h": 64,
+          "kind": "icon",
+          "value": "phone",
+          "font_px": 0
+        },
+        {
+          "id": "text3",
+          "x": 252,
+          "y": 343,
+          "w": 180,
+          "h": 32,
+          "kind": "text",
+          "value": "Подключение",
+          "font_px": 25
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "07_wifi",
+      "title": "Подключение Wi-Fi",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "wifi",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Wi-Fi",
+          "font_px": 34
+        },
+        {
+          "id": "qr",
+          "x": 108,
+          "y": 118,
+          "w": 264,
+          "h": 264,
+          "kind": "qr",
+          "value": "Динамический QR",
+          "font_px": 0
+        },
+        {
+          "id": "caption",
+          "x": 92,
+          "y": 401,
+          "w": 296,
+          "h": 36,
+          "kind": "text",
+          "value": "Подключите телефон",
+          "font_px": 28
+        }
+      ]
+    },
+    {
+      "id": "08_errors",
+      "title": "Ошибки ЭБУ",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "engine",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "ЭБУ",
+          "font_px": 34
+        },
+        {
+          "id": "sep0",
+          "x": 65,
+          "y": 112,
+          "w": 350,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "warn0",
+          "x": 58,
+          "y": 131,
+          "w": 52,
+          "h": 52,
+          "kind": "icon",
+          "value": "warning",
+          "font_px": 0
+        },
+        {
+          "id": "code0",
+          "x": 130,
+          "y": 125,
+          "w": 215,
+          "h": 43,
+          "kind": "text",
+          "value": "P0110",
+          "font_px": 36
+        },
+        {
+          "id": "desc0",
+          "x": 130,
+          "y": 173,
+          "w": 265,
+          "h": 78,
+          "kind": "text",
+          "value": "Датчик температуры\nвоздуха на впуске\n(неисправность цепи)",
+          "font_px": 21
+        },
+        {
+          "id": "open0",
+          "x": 411,
+          "y": 162,
+          "w": 20,
+          "h": 28,
+          "kind": "icon",
+          "value": "chevron_right",
+          "font_px": 0
+        },
+        {
+          "id": "sep1",
+          "x": 55,
+          "y": 256,
+          "w": 370,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "warn1",
+          "x": 58,
+          "y": 276,
+          "w": 52,
+          "h": 52,
+          "kind": "icon",
+          "value": "warning",
+          "font_px": 0
+        },
+        {
+          "id": "code1",
+          "x": 130,
+          "y": 270,
+          "w": 215,
+          "h": 43,
+          "kind": "text",
+          "value": "P0130",
+          "font_px": 36
+        },
+        {
+          "id": "desc1",
+          "x": 130,
+          "y": 318,
+          "w": 265,
+          "h": 78,
+          "kind": "text",
+          "value": "Датчик кислорода\n(Банк 1, датчик 1)\nнеисправность",
+          "font_px": 21
+        },
+        {
+          "id": "open1",
+          "x": 411,
+          "y": 307,
+          "w": 20,
+          "h": 28,
+          "kind": "icon",
+          "value": "chevron_right",
+          "font_px": 0
+        },
+        {
+          "id": "sep2",
+          "x": 55,
+          "y": 401,
+          "w": 370,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "09_settings",
+      "title": "Настройки",
+      "elements": [
+        {
+          "id": "header_icon",
+          "x": 108,
+          "y": 45,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "settings",
+          "font_px": 0
+        },
+        {
+          "id": "header",
+          "x": 170,
+          "y": 49,
+          "w": 222,
+          "h": 40,
+          "kind": "text",
+          "value": "Настройки",
+          "font_px": 34
+        },
+        {
+          "id": "icon0",
+          "x": 57,
+          "y": 142,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "brightness",
+          "font_px": 0
+        },
+        {
+          "id": "label0",
+          "x": 121,
+          "y": 149,
+          "w": 154,
+          "h": 38,
+          "kind": "text",
+          "value": "Яркость",
+          "font_px": 29
+        },
+        {
+          "id": "value0",
+          "x": 278,
+          "y": 149,
+          "w": 116,
+          "h": 38,
+          "kind": "text",
+          "value": "80%",
+          "font_px": 27
+        },
+        {
+          "id": "open0",
+          "x": 408,
+          "y": 152,
+          "w": 22,
+          "h": 28,
+          "kind": "icon",
+          "value": "chevron_right",
+          "font_px": 0
+        },
+        {
+          "id": "sep0",
+          "x": 56,
+          "y": 208,
+          "w": 368,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "icon1",
+          "x": 57,
+          "y": 224,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "theme",
+          "font_px": 0
+        },
+        {
+          "id": "label1",
+          "x": 121,
+          "y": 231,
+          "w": 154,
+          "h": 38,
+          "kind": "text",
+          "value": "Тема",
+          "font_px": 29
+        },
+        {
+          "id": "value1",
+          "x": 278,
+          "y": 231,
+          "w": 116,
+          "h": 38,
+          "kind": "text",
+          "value": "Светлая",
+          "font_px": 27
+        },
+        {
+          "id": "open1",
+          "x": 408,
+          "y": 234,
+          "w": 22,
+          "h": 28,
+          "kind": "icon",
+          "value": "chevron_right",
+          "font_px": 0
+        },
+        {
+          "id": "sep1",
+          "x": 56,
+          "y": 290,
+          "w": 368,
+          "h": 2,
+          "kind": "line",
+          "value": "",
+          "font_px": 0
+        },
+        {
+          "id": "icon2",
+          "x": 57,
+          "y": 306,
+          "w": 48,
+          "h": 48,
+          "kind": "icon",
+          "value": "wifi",
+          "font_px": 0
+        },
+        {
+          "id": "label2",
+          "x": 121,
+          "y": 313,
+          "w": 154,
+          "h": 38,
+          "kind": "text",
+          "value": "Wi-Fi",
+          "font_px": 29
+        },
+        {
+          "id": "switch",
+          "x": 330,
+          "y": 306,
+          "w": 88,
+          "h": 48,
+          "kind": "widget",
+          "value": "switch_on",
+          "font_px": 0
+        },
+        {
+          "id": "pagination",
+          "x": 213,
+          "y": 428,
+          "w": 54,
+          "h": 20,
+          "kind": "widget",
+          "value": "page_dots",
+          "font_px": 0
+        }
+      ]
+    },
+    {
+      "id": "10_splash",
+      "title": "Заставка",
+      "elements": [
+        {
+          "id": "art",
+          "x": 46,
+          "y": 66,
+          "w": 388,
+          "h": 220,
+          "kind": "art",
+          "value": "splash_art_source.png",
+          "font_px": 0
+        },
+        {
+          "id": "brand",
+          "x": 90,
+          "y": 291,
+          "w": 300,
+          "h": 70,
+          "kind": "text",
+          "value": "HUNTER",
+          "font_px": 60
+        },
+        {
+          "id": "welcome",
+          "x": 75,
+          "y": 367,
+          "w": 330,
+          "h": 42,
+          "kind": "text",
+          "value": "Добро пожаловать",
+          "font_px": 30
+        },
+        {
+          "id": "progress",
+          "x": 186,
+          "y": 421,
+          "w": 108,
+          "h": 8,
+          "kind": "widget",
+          "value": "progress",
+          "font_px": 0
+        }
+      ]
+    }
+  ]
+}

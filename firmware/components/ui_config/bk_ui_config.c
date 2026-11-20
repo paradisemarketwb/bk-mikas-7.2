@@ -1,4 +1,5 @@
 #include "bk_ui_config.h"
+#include "bk_uaz_layout.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -9,9 +10,9 @@ unsigned bk_layout_screen_to_view(unsigned s) { return s < 5 ? s : s + 5; }
 static bool terminated(const char *s, size_t n) {
   return memchr(s, 0, n) != NULL;
 }
-static bool inside(int x, int y) {
+static bool inside(int x, int y, int radius) {
   int dx = x - 240, dy = y - 240;
-  return dx * dx + dy * dy <= 232 * 232;
+  return dx * dx + dy * dy <= radius * radius;
 }
 static bool preset_valid(const bk_metric_preset_t *p) {
   return (unsigned)p->metric < BK_METRIC_COUNT &&
@@ -75,26 +76,45 @@ bool bk_layout_validate(const bk_layout_t *l) {
         return false;
       if ((w->type == BK_WIDGET_NUMBER &&
            (w->w < 100 ||
-            w->h < (s->style == BK_STYLE_REFERENCE ? 64 : 110))) ||
-          ((w->type == BK_WIDGET_CHART || w->type == BK_WIDGET_BAR ||
-            w->type == BK_WIDGET_TEMPERATURE) &&
+            w->h < (s->style == BK_STYLE_REFERENCE ? 48 : 110))) ||
+          ((w->type == BK_WIDGET_CHART || w->type == BK_WIDGET_TEMPERATURE) &&
            (w->w < 64 || w->h < 48)) ||
+          (w->type == BK_WIDGET_BAR &&
+           (w->w < 64 || w->h < (s->style == BK_STYLE_REFERENCE ? 28 : 48))) ||
           ((w->type == BK_WIDGET_DIGITAL || w->type == BK_WIDGET_ALARM) &&
            w->h < 48))
         return false;
       if (w->color > 0xffffff ||
           (w->font_size != 20 && w->font_size != 48 && w->font_size != 64 &&
-           w->font_size != 96 && w->font_size != 128))
+           w->font_size != 96 && w->font_size != 128 && w->font_size != 146 &&
+           w->font_size != 74 && w->font_size != 72 && w->font_size != 60 &&
+           w->font_size != 58 && w->font_size != 54 && w->font_size != 52 &&
+           w->font_size != 46 && w->font_size != 38 && w->font_size != 34 &&
+           w->font_size != 30 && w->font_size != 26))
         return false;
-      if (w->type == BK_WIDGET_ARC || w->type == BK_WIDGET_NEEDLE) {
+      int radius = s->style == BK_STYLE_REFERENCE ? 240 : 232;
+      if (s->style == BK_STYLE_REFERENCE && w->type == BK_WIDGET_ARC &&
+          w->w > w->h) {
+        /* Cropped 200-degree decorative arc: validate painted stroke, not its
+         * transparent bounding corners (archive's explicit clipping rule). */
+        double r = w->w * 192.0 / 400, cx = w->x + w->w * .5,
+               cy = w->y + w->h * 2.0 / 3;
+        for (unsigned degree = 170; degree <= 370; degree += 2) {
+          double t = degree * 3.141592653589793 / 180;
+          double dx = cx + r * cos(t) - 240, dy = cy + r * sin(t) - 240;
+          if (dx * dx + dy * dy > radius * radius)
+            return false;
+        }
+      } else if (w->type == BK_WIDGET_ARC || w->type == BK_WIDGET_NEEDLE) {
         int cx = w->x + w->w / 2, cy = w->y + w->h / 2,
             r = (w->w < w->h ? w->w : w->h) / 2;
         double dx = cx - 240, dy = cy - 240;
-        if (sqrt(dx * dx + dy * dy) + r > 232)
+        if (sqrt(dx * dx + dy * dy) + r > radius)
           return false;
-      } else if (!inside(w->x, w->y) || !inside(w->x + w->w, w->y) ||
-                 !inside(w->x, w->y + w->h) ||
-                 !inside(w->x + w->w, w->y + w->h))
+      } else if (!inside(w->x, w->y, radius) ||
+                 !inside(w->x + w->w, w->y, radius) ||
+                 !inside(w->x, w->y + w->h, radius) ||
+                 !inside(w->x + w->w, w->y + w->h, radius))
         return false;
     }
   }
@@ -199,70 +219,76 @@ void bk_layout_default_screen(bk_layout_screen_t *s, unsigned slot,
   s->widgets[3] =
       widget(BK_WIDGET_DIGITAL, right[kind], 245, 295, 165, 75, 6000);
   if (style == BK_STYLE_REFERENCE) {
+    s->background = 0xf5f6f0;
     if (kind == 0) {
       s->show_title = false;
-      s->widgets[0] = widget(BK_WIDGET_ARC, BK_SPEED, 52, 52, 376, 376, 160);
-      s->widgets[0].primary = true;
-      s->widgets[1] =
-          widget(BK_WIDGET_NUMBER, BK_SPEED, 90, 125, 300, 148, 160);
-      s->widgets[1].font_size = 128;
-      s->widgets[1].primary = true;
-      s->widgets[2] = widget(BK_WIDGET_NUMBER, BK_RPM, 90, 335, 300, 76, 6000);
-      s->widgets[2].font_size = 64;
       s->widget_count = 3;
+      s->widgets[0] = widget(BK_WIDGET_ARC, BK_RPM, 40, 80, 400, 300, 6000);
+      s->widgets[1] =
+          widget(BK_WIDGET_NUMBER, BK_SPEED, 102, 132, 276, 190, 160);
+      s->widgets[1].font_size = 146;
+      s->widgets[1].primary = true;
+      s->widgets[2] = widget(BK_WIDGET_NUMBER, BK_RPM, 120, 351, 240, 48, 6000);
+      s->widgets[2].font_size = 38;
     } else if (kind == 1) {
       s->widget_count = 3;
       s->widgets[0] =
-          widget(BK_WIDGET_NUMBER, BK_COOLANT, 100, 115, 280, 126, 120);
-      s->widgets[0].font_size = 96;
+          widget(BK_WIDGET_NUMBER, BK_COOLANT, 184, 132, 220, 80, 120);
+      s->widgets[0].font_size = 74;
       s->widgets[0].primary = true;
       s->widgets[1] =
-          widget(BK_WIDGET_TEMPERATURE, BK_COOLANT, 65, 245, 350, 56, 120);
-      s->widgets[1].min = 40;
+          widget(BK_WIDGET_TEMPERATURE, BK_COOLANT, 22, 232, 436, 68, 120);
+      s->widgets[1].min = 50;
       s->widgets[1].primary = true;
       s->widgets[2] =
-          widget(BK_WIDGET_NUMBER, BK_VOLTAGE, 100, 325, 280, 86, 16);
-      s->widgets[2].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_VOLTAGE, 211, 338, 182, 58, 16);
+      s->widgets[2].font_size = 52;
     } else if (kind == 2) {
       s->widget_count = 3;
       s->widgets[0] =
-          widget(BK_WIDGET_NUMBER, BK_FUEL_L100, 70, 125, 340, 100, 30);
-      s->widgets[0].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_FUEL_L100, 70, 125, 341, 100, 30);
+      s->widgets[0].font_size = 72;
       s->widgets[0].primary = true;
       s->widgets[1] =
-          widget(BK_WIDGET_NUMBER, BK_RANGE, 110, 270, 260, 100, 800);
-      s->widgets[1].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_RANGE, 177, 246, 226, 108, 800);
+      s->widgets[1].font_size = 60;
       s->widgets[2] =
-          widget(BK_WIDGET_BAR, BK_FUEL_LEVEL, 105, 377, 270, 48, 100);
+          widget(BK_WIDGET_BAR, BK_FUEL_LEVEL, 103, 371, 292, 32, 100);
+      s->widgets[2].font_size = 26;
     } else if (kind == 3) {
       s->widget_count = 3;
-      s->widgets[0] = widget(BK_WIDGET_DIGITAL, BK_MAF, 60, 130, 360, 68, 80);
-      snprintf(s->widgets[0].unit, sizeof(s->widgets[0].unit), "г/с");
-      s->widgets[0].precision = 1;
+      s->widgets[0] = widget(BK_WIDGET_DIGITAL, BK_MAF, 70, 137, 345, 56, 80);
       s->widgets[0].primary = true;
+      s->widgets[0].precision = 1;
+      snprintf(s->widgets[0].unit, sizeof(s->widgets[0].unit), "г/с");
       s->widgets[1] =
-          widget(BK_WIDGET_DIGITAL, BK_LAMBDA_VOLTAGE, 60, 225, 360, 68, 1.2f);
+          widget(BK_WIDGET_DIGITAL, BK_LAMBDA_VOLTAGE, 70, 225, 345, 56, 1.2f);
       s->widgets[1].precision = 2;
       s->widgets[2] =
-          widget(BK_WIDGET_DIGITAL, BK_IGNITION, 60, 318, 360, 68, 60);
+          widget(BK_WIDGET_DIGITAL, BK_IGNITION, 70, 313, 345, 56, 60);
       s->widgets[2].precision = 1;
+      for (unsigned n = 0; n < 3; n++)
+        s->widgets[n].font_size = 30;
     } else {
       s->widget_count = 3;
       s->widgets[0] =
-          widget(BK_WIDGET_NUMBER, BK_DISTANCE, 135, 120, 260, 90, 1000);
-      s->widgets[0].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_DISTANCE, 166, 122, 245, 64, 1000);
+      s->widgets[0].font_size = 54;
       s->widgets[0].precision = 1;
       s->widgets[0].primary = true;
       s->widgets[1] =
-          widget(BK_WIDGET_NUMBER, BK_TRIP_SECONDS, 135, 220, 260, 90, 86400);
-      s->widgets[1].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_TRIP_SECONDS, 160, 218, 250, 64, 86400);
+      s->widgets[1].font_size = 58;
+      /* Shift the transparent compound bbox by4px and narrow10px to keep its
+       * lower right corner inside the physical circle; ink retains its anchor.
+       */
       s->widgets[2] =
-          widget(BK_WIDGET_NUMBER, BK_AVG_SPEED, 135, 320, 260, 90, 160);
-      s->widgets[2].font_size = 64;
+          widget(BK_WIDGET_NUMBER, BK_AVG_SPEED, 165, 312, 250, 92, 160);
+      s->widgets[2].font_size = 46;
       s->widgets[2].precision = 1;
     }
     for (unsigned i = 0; i < s->widget_count; i++)
-      s->widgets[i].color = 0x009d31;
+      s->widgets[i].color = 0x009b30;
   }
   bk_metric_t primary = main[kind];
   for (unsigned i = 0; i < s->widget_count; i++)

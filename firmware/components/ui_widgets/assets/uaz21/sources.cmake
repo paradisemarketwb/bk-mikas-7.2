@@ -1,0 +1,17 @@
+set(BK_UAZ_ASSET_SOURCES
+ "${CMAKE_CURRENT_LIST_DIR}/bk_uaz_widgets.c"
+ "${CMAKE_CURRENT_LIST_DIR}/uaz_icons.c"
+ "${CMAKE_CURRENT_LIST_DIR}/bk_uaz_fonts.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_146.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_74.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_72.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_60.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_58.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_54.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_52.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_46.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_38.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_34.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_30.c"
+ "${CMAKE_CURRENT_LIST_DIR}/fonts/bk_uaz_font_26.c"
+)

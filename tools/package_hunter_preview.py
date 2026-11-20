@@ -49,7 +49,7 @@ def partitions(path):
         assert (result[name]['offset'],result[name]['size']) == (address,size), name
     return result
 
-metadata = dict(source_commit=a.source_sha, version='2.2.0-hunter-preview', branch='feat/hunter-reference-ui', pr='https://github.com/paradisemarketwb/bk-mikas-7.2/pull/3', physical_tested=False, windows10_manual_tested=False, windows_ci_platform='Windows Server 2025 / Visual Studio 2026 / x64', windows_ci_run=a.windows_run, firmware_ci_run=a.firmware_run)
+metadata = dict(source_commit=a.source_sha, version='2.2.1-uaz21-preview', branch='feat/hunter-reference-ui', pr='https://github.com/paradisemarketwb/bk-mikas-7.2/pull/3', physical_tested=False, windows10_manual_tested=False, windows_ci_platform='Windows Server 2025 / Visual Studio 2026 / x64', windows_ci_run=a.windows_run, firmware_ci_run=a.firmware_run)
 
 def finish(directory, name, extra):
     (directory/'BUILD-METADATA.json').write_text(json.dumps(metadata|extra,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

@@ -1,7 +1,10 @@
 #include "bk_ui.h"
 #include "bk_screens.h"
 #include "bk_sources.h"
+#include "bk_uaz_fonts.h"
+#include "bk_uaz_layout.h"
 #include "bk_widgets.h"
+#include "uaz_icons.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +33,8 @@ static struct {
   bk_widget_config_t drag_origin;
   bk_layout_screen_t canvas_backup;
   unsigned category;
-  bool service_confirmed, reset_pending;
+  bool service_confirmed, reset_pending, brightness_edit, settings_more;
+  int dtc_detail;
   uint8_t dtcs[DTC_LIMIT];
   size_t dtc_count;
   bool dtcs_valid;
@@ -442,7 +446,17 @@ static void edit_step(lv_event_t *e) {
     w->precision = (w->precision + d + 4) % 4;
     break;
   case 11:
-    w->font_size = w->font_size == 20 ? 48 : 20;
+    if (ui.layout.screens[ui.edit_screen].style == BK_STYLE_CLASSIC)
+      w->font_size = w->font_size == 20 ? 48 : 20;
+    else {
+      const uint8_t sizes[] = {20, 26, 30, 34, 38, 46, 48,  52, 54,
+                               58, 60, 64, 72, 74, 96, 128, 146};
+      unsigned i = 0;
+      while (i < sizeof(sizes) && sizes[i] != w->font_size)
+        i++;
+      w->font_size =
+          sizes[(i + (d > 0 ? 1 : sizeof(sizes) - 1)) % sizeof(sizes)];
+    }
     break;
   case 12: {
     unsigned p = 0;
@@ -518,30 +532,55 @@ static void brightness_changed(lv_event_t *e) {
     ui.brightness_callback(ui.brightness, ui.brightness_context);
 }
 
-static void divider(int y) {
-  lv_obj_t *o = lv_obj_create(ui.body);
-  lv_obj_set_clickable(o, false);
+static lv_obj_t *uaz_text(lv_obj_t *parent, const char *text, bk_uaz_box_t box,
+                          unsigned px, lv_text_align_t align) {
+  const lv_font_t *font = px == 28   ? &bk_font_reference_header
+                          : px == 21 ? &bk_font_ru_20
+                                     : bk_uaz_font(px);
+  lv_point_t sz;
+  lv_text_get_size(&sz, text, font, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+  if (sz.x > box.w) {
+    font = &bk_uaz_font_26;
+  }
+  lv_obj_t *o = bk_text(parent, text, box.x,
+                        box.y + (box.h - font->line_height) / 2, box.w);
+  lv_obj_set_style_text_font(o, font, 0);
+  lv_text_get_size(&sz, text, font, 0, 0, 10000, LV_TEXT_FLAG_NONE);
+  if (sz.x > box.w)
+    lv_obj_set_style_text_letter_space(o, -1, 0);
+  lv_obj_set_style_text_align(o, align, 0);
+  lv_obj_set_style_text_color(o, fg(), 0);
+  lv_label_set_long_mode(o, LV_LABEL_LONG_MODE_CLIP);
+  return o;
+}
+static void uaz_icon(lv_obj_t *parent, const lv_image_dsc_t *image,
+                     bk_uaz_box_t box) {
+  bk_uaz_image(parent, image, box.x, box.y, box.w, box.h,
+               ui.dark && image != &uaz_warning ? 0x72d6aa : 0xffffffffu);
+}
+static void uaz_line(lv_obj_t *parent, bk_uaz_box_t box) {
+  lv_obj_t *o = lv_obj_create(parent);
   lv_obj_remove_style_all(o);
-  lv_obj_set_pos(o, 65, y);
-  lv_obj_set_size(o, 350, 1);
+  lv_obj_set_clickable(o, false);
+  lv_obj_set_pos(o, box.x, box.y);
+  lv_obj_set_size(o, box.w, box.h);
   lv_obj_set_style_bg_opa(o, 255, 0);
-  lv_obj_set_style_bg_color(o, lv_color_hex(ui.dark ? 0x385044 : 0xd2d7cf), 0);
+  lv_obj_set_style_bg_color(o, lv_color_hex(ui.dark ? 0x385044 : 0xbfc5bf), 0);
 }
 static void reference_header(const char *title, unsigned icon) {
   bool reference =
       ui.layout.screens[ui.last_instrument].style == BK_STYLE_REFERENCE;
-  const lv_font_t *font =
-      reference ? &bk_font_reference_header : &bk_font_ru_20;
-  lv_point_t size;
-  lv_text_get_size(&size, title, font, 0, 0, 480, LV_TEXT_FLAG_NONE);
-  if (size.x > 240) {
-    font = &bk_font_ru_20;
-    lv_text_get_size(&size, title, font, 0, 0, 480, LV_TEXT_FLAG_NONE);
+  if (reference) {
+    bk_reference_icon(ui.body, icon, 108, 45, accent());
+    uaz_text(ui.body, title, BK_UAZ_ENGINE_HEADER, 34, LV_TEXT_ALIGN_LEFT);
+  } else {
+    lv_point_t size;
+    lv_text_get_size(&size, title, &bk_font_ru_20, 0, 0, 480,
+                     LV_TEXT_FLAG_NONE);
+    int x = 240 - (size.x + 60) / 2;
+    bk_legacy_reference_icon(ui.body, icon, x, 52, accent());
+    bk_text(ui.body, title, x + 60, 59, size.x + 2);
   }
-  int total = size.x + 60, x = 240 - total / 2;
-  bk_reference_icon(ui.body, icon, x, 52, accent());
-  lv_obj_t *t = bk_text(ui.body, title, x + 60, 59, size.x + 2);
-  lv_obj_set_style_text_font(t, font, 0);
 }
 static void draw_background(const bk_layout_screen_t *screen) {
   if (screen->background_mode == BK_BACKGROUND_USER &&
@@ -582,46 +621,265 @@ static void draw_background(const bk_layout_screen_t *screen) {
     lv_obj_set_clickable(overlay, false);
   }
 }
-static void reference_rim(void) {
-  lv_obj_t *rim = lv_obj_create(ui.body);
-  lv_obj_remove_style_all(rim);
-  lv_obj_set_size(rim, 480, 480);
-  lv_obj_set_style_radius(rim, 240, 0);
-  lv_obj_set_style_border_width(rim, 10, 0);
-  lv_obj_set_style_border_color(rim,
-                                lv_color_hex(ui.dark ? 0x52665a : 0x171d1b), 0);
-  lv_obj_set_clickable(rim, false);
+static void
+reference_rim(void) { /* Physical bezel is not painted over active pixels. */ }
+static void ref_pagination(void) {
+  unsigned count = 0, index = 0;
+  for (unsigned n = 0; n < ui.layout.screen_count; n++)
+    if (ui.layout.screens[n].enabled) {
+      if (n == ui.last_instrument)
+        index = count;
+      count++;
+    }
+  int diameter = count <= 2 ? 16 : 12, gap = 8,
+      total = count * (diameter + gap) - gap;
+  for (unsigned n = 0; n < count; n++) {
+    lv_obj_t *o = lv_obj_create(ui.body);
+    lv_obj_remove_style_all(o);
+    lv_obj_set_pos(o, 240 - total / 2 + (int)n * (diameter + gap),
+                   438 - diameter / 2);
+    lv_obj_set_size(o, diameter, diameter);
+    lv_obj_set_style_radius(o, diameter / 2, 0);
+    lv_obj_set_style_bg_opa(o, 255, 0);
+    lv_obj_set_style_bg_color(o, lv_color_hex(n == index ? 0x075532 : 0x9ca39f),
+                              0);
+    lv_obj_set_clickable(o, false);
+  }
+}
+static const lv_image_dsc_t *metric_icon(bk_metric_t m) {
+  switch (m) {
+  case BK_COOLANT:
+  case BK_INTAKE:
+    return &uaz_coolant;
+  case BK_VOLTAGE:
+    return &uaz_battery;
+  case BK_FUEL_LPH:
+  case BK_FUEL_L100:
+  case BK_FUEL_LEVEL:
+  case BK_RANGE:
+    return &uaz_fuel;
+  case BK_DISTANCE:
+    return &uaz_route;
+  case BK_TRIP_SECONDS:
+    return &uaz_clock;
+  case BK_SPEED:
+  case BK_AVG_SPEED:
+    return &uaz_gauge;
+  case BK_RPM:
+    return &uaz_engine;
+  default:
+    return &uaz_pulse;
+  }
 }
 static void ref_decor(const bk_layout_screen_t *screen) {
   if (!strcmp(screen->id, "main")) {
-    ui.clock_label = bk_text(ui.body, ui.clock, 190, 22, 100);
+    ui.clock_label =
+        uaz_text(ui.body, ui.clock, BK_UAZ_MAIN_TIME, 30, LV_TEXT_ALIGN_CENTER);
     if (ui.ssid[0])
-      bk_reference_icon(ui.body, 8, 337, 43, accent());
-    divider(325);
-    bk_reference_icon(ui.body, 0, 65, 355, accent());
+      uaz_icon(ui.body, &uaz_wifi, BK_UAZ_MAIN_WIFI);
+    uaz_line(ui.body, BK_UAZ_MAIN_SEPARATOR);
+    const bk_widget_config_t *arc = &screen->widgets[0];
+    char low[24], high[24];
+    double divisor = arc->metric == BK_RPM ? 1000 : 1;
+    snprintf(low, sizeof(low), "%.0f", arc->min / divisor);
+    snprintf(high, sizeof(high), "%.0f", arc->max / divisor);
+    bk_uaz_box_t lb = BK_UAZ_MAIN_RPM_MIN, hb = BK_UAZ_MAIN_RPM_MAX;
+    if (strlen(low) > 2) {
+      lb.x -= 15;
+      lb.w += 30;
+    }
+    if (strlen(high) > 2) {
+      hb.x -= 15;
+      hb.w += 30;
+    }
+    uaz_text(ui.body, low, lb, 26, LV_TEXT_ALIGN_CENTER);
+    uaz_text(ui.body, high, hb, 26, LV_TEXT_ALIGN_CENTER);
+    uaz_icon(ui.body, metric_icon(arc->metric), BK_UAZ_MAIN_RPM_ICON);
+    const char *factor = arc->metric == BK_RPM ? "×1000"
+                         : arc->unit[0]        ? arc->unit
+                                               : bk_metric_units[arc->metric];
+    uaz_text(ui.body, factor, BK_UAZ_MAIN_RPM_FACTOR, 26, LV_TEXT_ALIGN_LEFT);
   } else if (!strcmp(screen->id, "engine")) {
-    divider(310);
-    bk_reference_icon(ui.body, 1, 59, 173, accent());
-    bk_reference_icon(ui.body, 2, 64, 350, accent());
+    uaz_icon(ui.body, metric_icon(screen->widgets[0].metric),
+             BK_UAZ_ENGINE_COOLANT_ICON);
+    uaz_icon(ui.body, &uaz_battery, BK_UAZ_ENGINE_BATTERY_ICON);
+    uaz_line(ui.body, BK_UAZ_ENGINE_SEPARATOR);
+    ref_pagination();
   } else if (!strcmp(screen->id, "fuel")) {
-    divider(240);
-    bk_reference_icon(ui.body, 3, 67, 292, accent());
+    uaz_icon(ui.body, &uaz_fuel, BK_UAZ_FUEL_RANGE_ICON);
+    uaz_line(ui.body, BK_UAZ_FUEL_SEPARATOR);
+    ref_pagination();
+  } else if (!strcmp(screen->id, "sensors")) {
+    uaz_line(ui.body, BK_UAZ_SENSORS_SEP_0);
+    uaz_line(ui.body, BK_UAZ_SENSORS_SEP_1);
+    ref_pagination();
   } else if (!strcmp(screen->id, "trip")) {
-    bk_reference_icon(ui.body, 5, 72, 151, accent());
-    bk_reference_icon(ui.body, 6, 72, 247, accent());
-    bk_reference_icon(ui.body, 0, 72, 344, accent());
+    uaz_icon(ui.body, metric_icon(screen->widgets[0].metric),
+             BK_UAZ_TRIP_ROUTE);
+    uaz_icon(ui.body, &uaz_clock, BK_UAZ_TRIP_CLOCK);
+    uaz_icon(ui.body, &uaz_gauge, BK_UAZ_TRIP_GAUGE);
+    uaz_line(ui.body, BK_UAZ_TRIP_SEP1);
+    uaz_line(ui.body, BK_UAZ_TRIP_SEP2);
+    ref_pagination();
+  } else
+    ref_pagination();
+}
+static void style_toggle(lv_event_t *e);
+static void factory_reference(lv_event_t *e);
+static void title_toggle(lv_event_t *e);
+static void set_category(lv_event_t *e);
+static void settings_action(lv_event_t *e) {
+  unsigned action = (unsigned)(uintptr_t)lv_event_get_user_data(e);
+  ui.brightness_edit = action == 0;
+  ui.settings_more = action == 1;
+  show();
+}
+static void dtc_open(lv_event_t *e) {
+  ui.dtc_detail = (int)(uintptr_t)lv_event_get_user_data(e);
+  show();
+}
+static void dtc_back(lv_event_t *e) {
+  (void)e;
+  ui.dtc_detail = -1;
+  show();
+}
+static void reference_errors(void) {
+  reference_header("ЭБУ", 0);
+  lv_obj_t *panel = lv_obj_create(ui.body);
+  lv_obj_remove_style_all(panel);
+  lv_obj_set_pos(panel, 55, 112);
+  lv_obj_set_size(panel, 376, 290);
+  lv_obj_set_scroll_dir(panel, LV_DIR_VER);
+  lv_obj_set_style_text_color(panel, fg(), 0);
+  if (!ui.dtcs_valid)
+    bk_text(panel, "Список ошибок недоступен", 0, 28, 370);
+  else if (!ui.dtc_count)
+    bk_text(panel, "Ошибок не обнаружено", 0, 28, 370);
+  else if (ui.dtc_detail >= 0 && (unsigned)ui.dtc_detail < ui.dtc_count) {
+    char code[40];
+    snprintf(code, sizeof(code), "Код ЭБУ 0x%02X", ui.dtcs[ui.dtc_detail]);
+    uaz_text(panel, code, (bk_uaz_box_t){25, 8, 326, 46, 34}, 34,
+             LV_TEXT_ALIGN_LEFT);
+    const char *description =
+        ui.dtc_lookup ? ui.dtc_lookup(ui.dtcs[ui.dtc_detail]) : NULL;
+    bk_text(panel, description ? description : "Описание не подтверждено", 25,
+            72, 326);
+  } else {
+    for (size_t n = 0; n < ui.dtc_count; n++) {
+      lv_obj_t *row = lv_obj_create(panel);
+      lv_obj_remove_style_all(row);
+      lv_obj_set_pos(row, 0, (int)n * 145);
+      lv_obj_set_size(row, 376, 145);
+      lv_obj_set_scrollable(row, false);
+      lv_obj_set_clickable(row, true);
+      lv_obj_add_event_cb(row, dtc_open, LV_EVENT_CLICKED,
+                          (void *)(uintptr_t)n);
+      uaz_line(row, (bk_uaz_box_t){10, 0, 350, 2, 0});
+      uaz_icon(row, &uaz_warning, (bk_uaz_box_t){3, 19, 52, 52, 0});
+      char code[32];
+      snprintf(code, sizeof(code), "0x%02X", ui.dtcs[n]);
+      uaz_text(row, code, (bk_uaz_box_t){75, 13, 215, 43, 34}, 34,
+               LV_TEXT_ALIGN_LEFT);
+      const char *desc = ui.dtc_lookup ? ui.dtc_lookup(ui.dtcs[n]) : NULL;
+      lv_obj_t *label =
+          bk_text(row, desc ? desc : "Описание не подтверждено", 75, 61, 265);
+      lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_LEFT, 0);
+      lv_obj_set_height(label, 78);
+      lv_label_set_long_mode(label, LV_LABEL_LONG_MODE_DOTS);
+      uaz_icon(row, &uaz_chevron_right, (bk_uaz_box_t){356, 50, 20, 28, 0});
+    }
   }
-  for (unsigned n = 0; n < ui.layout.screen_count; n++) {
-    lv_obj_t *dot = lv_obj_create(ui.body);
-    lv_obj_remove_style_all(dot);
-    lv_obj_set_size(dot, 5, 5);
-    lv_obj_set_pos(dot, 240 - (int)ui.layout.screen_count * 6 + (int)n * 12,
-                   416);
-    lv_obj_set_style_radius(dot, 3, 0);
-    lv_obj_set_style_bg_opa(dot, 255, 0);
-    lv_obj_set_style_bg_color(
-        dot, lv_color_hex(n == ui.last_instrument ? 0x009d31 : 0xc3cfc3), 0);
+  ref_pagination();
+  lv_obj_t *back = ui.dtc_detail >= 0
+                       ? button_on(ui.body, "Назад", 196, 448, 88, dtc_back, 0)
+                       : button("Назад", 196, 448, 88, 5);
+  lv_obj_set_height(back, 26);
+  lv_obj_set_ext_click_area(back, 12);
+}
+static void reference_settings(void) {
+  reference_header(ui.brightness_edit ? "Яркость" : "Настройки", 10);
+  if (ui.brightness_edit) {
+    char t[64];
+    snprintf(t, sizeof(t), "Яркость %u%%", ui.brightness);
+    ui.brightness_label =
+        uaz_text(ui.body, t, (bk_uaz_box_t){100, 157, 280, 48, 30}, 30,
+                 LV_TEXT_ALIGN_CENTER);
+    lv_obj_t *slider = lv_slider_create(ui.body);
+    lv_obj_set_pos(slider, 90, 240);
+    lv_obj_set_size(slider, 300, 28);
+    lv_slider_set_range(slider, 5, 100);
+    lv_slider_set_value(slider, ui.brightness, LV_ANIM_OFF);
+    lv_obj_set_style_bg_color(slider, accent(), LV_PART_INDICATOR);
+    lv_obj_add_event_cb(slider, brightness_changed, LV_EVENT_VALUE_CHANGED,
+                        NULL);
+  } else if (ui.settings_more) {
+    lv_obj_t *p = scroll_panel();
+    button_on(p, "Редактор экранов", 0, 0, 300, editor_list, 0);
+    button_on(p, "Стиль: Reference", 0, 54, 300, style_toggle, 0);
+    button_on(p, "Reference: заводской вид", 0, 108, 300, factory_reference, 0);
+    button_on(p,
+              ui.layout.screens[ui.last_instrument].show_title
+                  ? "Название: видно"
+                  : "Название: скрыто",
+              0, 162, 300, title_toggle, 0);
+    button_on(p, "Диагностика", 0, 216, 300, set_category,
+              BK_SECTION_DIAGNOSTICS);
+    button_on(p, "Сервисный режим", 0, 270, 300, set_category,
+              BK_SECTION_SERVICE);
+  } else {
+    for (unsigned n = 0; n < 3; n++) {
+      lv_event_cb_t cb = n == 0   ? settings_action
+                         : n == 1 ? theme_event
+                                  : navigate;
+      uintptr_t arg = n == 2 ? 6 : 0;
+      lv_obj_t *row =
+          button_on(ui.body, "", 56, 128 + (int)n * 82, 368, cb, arg);
+      lv_obj_set_size(row, 368, 80);
+      lv_obj_set_style_bg_opa(row, 0, 0);
+      lv_obj_set_style_shadow_width(row, 0, 0);
+      lv_obj_delete(lv_obj_get_child(row, 0));
+    }
+    uaz_icon(ui.body, &uaz_brightness, BK_UAZ_SETTINGS_ICON0);
+    uaz_icon(ui.body, &uaz_theme, BK_UAZ_SETTINGS_ICON1);
+    uaz_icon(ui.body, &uaz_wifi, BK_UAZ_SETTINGS_ICON2);
+    uaz_text(ui.body, "Яркость", BK_UAZ_SETTINGS_LABEL0, 30,
+             LV_TEXT_ALIGN_LEFT);
+    uaz_text(ui.body, "Тема", BK_UAZ_SETTINGS_LABEL1, 30, LV_TEXT_ALIGN_LEFT);
+    uaz_text(ui.body, "Wi-Fi", BK_UAZ_SETTINGS_LABEL2, 30, LV_TEXT_ALIGN_LEFT);
+    char t[20];
+    snprintf(t, sizeof(t), "%u%%", ui.brightness);
+    lv_obj_t *v =
+        uaz_text(ui.body, t, BK_UAZ_SETTINGS_VALUE0, 26, LV_TEXT_ALIGN_RIGHT);
+    lv_obj_set_style_text_color(v, accent(), 0);
+    v = uaz_text(ui.body, ui.dark ? "Тёмная" : "Светлая",
+                 BK_UAZ_SETTINGS_VALUE1, 26, LV_TEXT_ALIGN_RIGHT);
+    lv_obj_set_style_text_color(v, accent(), 0);
+    uaz_icon(ui.body, &uaz_chevron_right, BK_UAZ_SETTINGS_OPEN0);
+    uaz_icon(ui.body, &uaz_chevron_right, BK_UAZ_SETTINGS_OPEN1);
+    /* AP state remains an honest status, opening connection details on tap. */
+    lv_obj_t *status = lv_obj_create(ui.body);
+    lv_obj_set_pos(status, 330, 306);
+    lv_obj_set_size(status, 88, 48);
+    lv_obj_set_style_radius(status, 24, 0);
+    lv_obj_set_style_bg_color(status, accent(), 0);
+    lv_obj_set_style_border_width(status, 0, 0);
+    lv_obj_set_clickable(status, false);
+    lv_obj_t *label = bk_text(status, ui.ssid[0] ? "Вкл." : "Выкл.", 0, 0, 78);
+    lv_obj_center(label);
+    lv_obj_set_style_text_color(label, lv_color_hex(0xffffff), 0);
+    uaz_line(ui.body, BK_UAZ_SETTINGS_SEP0);
+    uaz_line(ui.body, BK_UAZ_SETTINGS_SEP1);
+    ref_pagination();
+    lv_obj_t *more =
+        button_on(ui.body, "Ещё", 150, 380, 180, settings_action, 1);
+    lv_obj_set_height(more, 34);
   }
+  lv_obj_t *back =
+      (ui.brightness_edit || ui.settings_more)
+          ? button_on(ui.body, "Назад", 196, 448, 88, settings_action, 2)
+          : button("Назад", 196, 448, 88, 5);
+  lv_obj_set_height(back, 26);
+  lv_obj_set_ext_click_area(back, 12);
 }
 static void canvas_action(lv_event_t *e) {
   unsigned action = (unsigned)(uintptr_t)lv_event_get_user_data(e);
@@ -720,24 +978,35 @@ static void catalog_page(void) {
 }
 static void menu_tile(const char *title, unsigned icon, int x, int y,
                       lv_event_cb_t cb, uintptr_t arg, bool active) {
-  lv_obj_t *o = button_on(ui.body, "", x, y, 180, cb, arg);
-  lv_obj_set_size(o, 180, 116);
+  lv_obj_t *o = button_on(ui.body, "", x, y, 192, cb, arg);
+  lv_obj_set_size(o, 192, 124);
   lv_obj_set_style_pad_all(o, 0, 0);
   lv_obj_delete(lv_obj_get_child(o, 0));
+  lv_obj_set_style_radius(o, 14, 0);
+  lv_obj_set_style_shadow_width(o, 0, 0);
   lv_obj_set_style_bg_color(o,
-                            lv_color_hex(active    ? 0x009d31
+                            lv_color_hex(active    ? 0x075532
                                          : ui.dark ? 0x283c30
-                                                   : 0xe5e9df),
+                                                   : 0xe2e5e0),
                             0);
-  lv_obj_t *text = bk_text(o, title, 8, 78, 164);
-  lv_obj_set_style_text_color(text,
+  lv_obj_t *label = uaz_text(o, title, (bk_uaz_box_t){6, 83, 180, 32, 26}, 26,
+                             LV_TEXT_ALIGN_CENTER);
+  lv_obj_set_style_text_color(label,
                               lv_color_hex(active    ? 0xffffff
                                            : ui.dark ? 0xe9f1ed
-                                                     : 0x171d1b),
+                                                     : 0x171d1d),
                               0);
-  bk_reference_icon(o, icon, 69, 23,
-                    lv_color_hex(active ? 0xffffff : 0x00592d));
+  const lv_image_dsc_t *image = icon == 0    ? &uaz_engine
+                                : icon == 10 ? &uaz_settings
+                                             : &uaz_gauge;
+  if (active)
+    image = &uaz_gauge;
+  bk_uaz_image(o, image, 64, 12, 64, 64,
+               active    ? 0xffffff
+               : ui.dark ? 0x72d6aa
+                         : 0xffffffffu);
 }
+
 static void show(void) {
   if (!ui.root)
     return;
@@ -822,8 +1091,9 @@ static void show(void) {
         lv_obj_set_height(b, 32);
       }
     } else if (reference) {
-      lv_obj_t *b = button("Меню", 196, 431, 88, 5);
-      lv_obj_set_height(b, 34);
+      lv_obj_t *b = button("Меню", 196, 448, 88, 5);
+      lv_obj_set_height(b, 26);
+      lv_obj_set_ext_click_area(b, 12);
     } else {
       lv_obj_t *b = button("Меню", 180, 431, 120, 5);
       lv_obj_set_height(b, 32);
@@ -831,12 +1101,12 @@ static void show(void) {
   } else if (ui.screen == 5) {
     if (reference) {
       reference_header("Меню", 9);
-      menu_tile("Показания", 0, 55, 125, navigate,
+      menu_tile("Показания", 0, 42, 124, navigate,
                 bk_layout_screen_to_view(ui.last_instrument), true);
-      menu_tile("Диагностика", 0, 245, 125, set_category,
+      menu_tile("Диагностика", 0, 246, 124, set_category,
                 BK_SECTION_DIAGNOSTICS, false);
-      menu_tile("Сервис", 10, 55, 257, set_category, BK_SECTION_SERVICE, false);
-      menu_tile("Настройки", 10, 245, 257, navigate, 8, false);
+      menu_tile("Сервис", 10, 42, 260, set_category, BK_SECTION_SERVICE, false);
+      menu_tile("Настройки", 10, 246, 260, navigate, 8, false);
     } else {
       bk_text(ui.body, "HUNTER · МЕНЮ", 80, 65, 320);
       button("Показания", 115, 113, 250,
@@ -849,7 +1119,7 @@ static void show(void) {
       button("Подключение", 140, 329, 200, 6);
     }
   } else if (ui.screen == 6) {
-    reference_header("Wi-Fi", 7);
+    reference_header("Wi-Fi", 8);
     if (ui.ssid[0]) {
       char data[240], ss[67], pw[131];
       size_t s = 0, p = 0;
@@ -868,21 +1138,31 @@ static void show(void) {
       snprintf(data, sizeof(data), "WIFI:T:%s;S:%s;P:%s;;",
                ui.password[0] ? "WPA" : "nopass", ss, pw);
       lv_obj_t *qr = lv_qrcode_create(ui.body);
-      lv_qrcode_set_size(qr, 235);
+      lv_qrcode_set_size(qr, reference ? 264 : 235);
+      lv_qrcode_set_quiet_zone(qr, true);
       lv_qrcode_set_dark_color(qr, lv_color_hex(0));
       lv_qrcode_set_light_color(qr, lv_color_hex(0xffffff));
-      lv_obj_set_pos(qr, 122, 104);
+      lv_obj_set_pos(qr, reference ? 108 : 122, reference ? 118 : 104);
       lv_qrcode_update(qr, data, strlen(data));
-      single_line(ui.ssid, 70, 349, 340);
+      if (!reference)
+        single_line(ui.ssid, 70, 349, 340);
       char b[100];
       snprintf(b, sizeof(b), "Пароль: %s", ui.password);
-      single_line(b, 80, 377, 320);
-      single_line(ui.url, 90, 405, 300);
+      if (reference)
+        uaz_text(ui.body, "Подключите телефон", BK_UAZ_WIFI_CAPTION, 28,
+                 LV_TEXT_ALIGN_CENTER);
+      else {
+        single_line(b, 80, 377, 320);
+        single_line(ui.url, 90, 405, 300);
+      }
     } else
       bk_text(ui.body, "Точка доступа выключена\nQR появится после запуска AP",
               70, 185, 340);
-    lv_obj_t *back = button("Назад", 196, 436, 88, 5);
-    lv_obj_set_height(back, 30);
+    lv_obj_t *back = button("Назад", 196, reference ? 448 : 436, 88, 5);
+    lv_obj_set_height(back, reference ? 26 : 30);
+    lv_obj_set_ext_click_area(back, 12);
+  } else if (ui.screen == 7 && reference) {
+    reference_errors();
   } else if (ui.screen == 7) {
     reference_header("Ошибки ЭБУ", 0);
     lv_obj_t *p = scroll_panel();
@@ -904,6 +1184,8 @@ static void show(void) {
       }
     }
     button("Назад", 180, 391, 120, 5);
+  } else if (ui.screen == 8 && reference) {
+    reference_settings();
   } else if (ui.screen == 8) {
     reference_header("Настройки", 10);
     lv_obj_t *p = scroll_panel();
@@ -988,7 +1270,8 @@ void bk_ui_create(lv_obj_t *parent) {
   memset(&ui, 0, sizeof(ui));
   bk_layout_defaults(&ui.layout);
   bk_widget_history_reset();
-  ui.brightness = 75;
+  ui.brightness = 80;
+  ui.dtc_detail = -1;
   ui.screen = 1;
   ui.last_instrument = 1;
   ui.grid = true;
@@ -1034,6 +1317,12 @@ void bk_ui_set_theme(bool dark) {
   show();
 }
 void bk_ui_select_screen(unsigned n) {
+  if (n != ui.screen) {
+    ui.dtc_detail = -1;
+    ui.settings_more = false;
+    ui.brightness_edit = false;
+  }
+
   if (n >= 13)
     return;
   if (ui.edit_mode == 3)

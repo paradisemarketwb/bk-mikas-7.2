@@ -20,7 +20,8 @@ FetchContent_Declare(cjson GIT_REPOSITORY https://github.com/DaveGamble/cJSON.gi
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 FetchContent_MakeAvailable(cjson)
 set(BK_COMPONENTS ${CMAKE_CURRENT_SOURCE_DIR}/../firmware/components)
-add_executable(bk_sim main.c
+include(${BK_COMPONENTS}/ui_widgets/assets/uaz21/sources.cmake)
+add_executable(bk_sim main.c ${BK_UAZ_ASSET_SOURCES}
  ${BK_COMPONENTS}/settings/bk_profile_storage.c
  ${BK_COMPONENTS}/sources/bk_sources.c
  ${BK_COMPONENTS}/settings/bk_profile.c
@@ -35,7 +36,7 @@ add_executable(bk_sim main.c
  ${BK_COMPONENTS}/ui_widgets/bk_font_reference_header.c
  ${BK_COMPONENTS}/ui_screens/bk_screens.c)
 target_include_directories(bk_sim PRIVATE ${cjson_SOURCE_DIR} ${BK_COMPONENTS}/sources/include ${BK_COMPONENTS}/settings/include ${BK_COMPONENTS}/ui_config/include ${BK_COMPONENTS}/ui_core/include
- ${BK_COMPONENTS}/ui_widgets/include ${BK_COMPONENTS}/ui_screens/include)
+ ${BK_COMPONENTS}/ui_widgets/include ${BK_COMPONENTS}/ui_widgets/assets/uaz21 ${BK_COMPONENTS}/ui_screens/include)
 target_link_libraries(bk_sim PRIVATE lvgl::lvgl cjson)
 if(NOT MSVC)
  target_link_libraries(bk_sim PRIVATE m)

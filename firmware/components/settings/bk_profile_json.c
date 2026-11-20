@@ -367,7 +367,7 @@ bool bk_settings_from_json(const char *json, bk_settings_t *out) {
       FLOAT(a, "warn_high", w->warn_high);
       INT(a, "color", 0, 0xffffff, w->color);
       INT(a, "flags", 0, 3, w->flags);
-      INT(a, "font_size", 20, 128, w->font_size);
+      INT(a, "font_size", 20, 146, w->font_size);
       INT(a, "precision", 0, 3, w->precision);
       if (!boolean(a, "visible", &w->visible) ||
           !string(a, "unit", w->unit, sizeof(w->unit)))

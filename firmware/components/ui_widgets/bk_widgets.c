@@ -1,4 +1,8 @@
 #include "bk_widgets.h"
+#include "bk_uaz_fonts.h"
+#include "bk_uaz_layout.h"
+#include "bk_uaz_widgets.h"
+#include "uaz_icons.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +41,33 @@ lv_obj_t *bk_gauge(lv_obj_t *parent, lv_color_t color) {
   lv_obj_remove_style(o, NULL, LV_PART_KNOB);
   lv_obj_set_clickable(o, false);
   return o;
+}
+lv_obj_t *bk_uaz_image(lv_obj_t *parent, const lv_image_dsc_t *image, int x,
+                       int y, int width, int height, uint32_t tint) {
+  lv_obj_t *o = lv_image_create(parent);
+  lv_image_set_src(o, image);
+  lv_image_set_pivot(o, 0, 0);
+  lv_image_set_scale_x(o, width * 256 / image->header.w);
+  lv_image_set_scale_y(o, height * 256 / image->header.h);
+  lv_obj_set_pos(o, x, y);
+  lv_obj_set_clickable(o, false);
+  if (tint != 0xffffffffu) {
+    lv_obj_set_style_image_recolor(o, lv_color_hex(tint), 0);
+    lv_obj_set_style_image_recolor_opa(o, 255, 0);
+  }
+  return o;
+}
+void bk_reference_icon(lv_obj_t *parent, unsigned icon, int x, int y,
+                       lv_color_t color) {
+  const lv_image_dsc_t *icons[] = {
+      &uaz_engine,       &uaz_coolant,    &uaz_battery,  &uaz_fuel,
+      &uaz_pulse,        &uaz_road,       &uaz_clock,    &uaz_phone,
+      &uaz_wifi,         &uaz_menu,       &uaz_settings, &uaz_route,
+      &uaz_gauge,        &uaz_brightness, &uaz_theme,    &uaz_warning,
+      &uaz_chevron_right};
+  if (icon < sizeof(icons) / sizeof(icons[0]))
+    bk_uaz_image(parent, icons[icon], x, y, 48, 48,
+                 icon == 15 ? 0xffffffffu : lv_color_to_u32(color) & 0xffffff);
 }
 static void classic_create(bk_widget_t *w, lv_obj_t *parent,
                            const bk_widget_config_t *c, bool dark) {
@@ -127,6 +158,8 @@ static void classic_create(bk_widget_t *w, lv_obj_t *parent,
 
 static void reference_create(bk_widget_t *w, lv_obj_t *parent,
                              const bk_widget_config_t *c, bool dark) {
+  if (bk_uaz_widget_create(w, parent, c, dark))
+    return;
   if (c->type == BK_WIDGET_NEEDLE || c->type == BK_WIDGET_CHART ||
       c->type == BK_WIDGET_ALARM || c->type == BK_WIDGET_STATUS) {
     classic_create(w, parent, c, dark);
@@ -213,7 +246,8 @@ static void indicator_exec(void *var, int32_t n) {
   bk_widget_t *w = var;
   const bk_widget_config_t *c = &w->config;
   if (c->type == BK_WIDGET_ARC)
-    lv_arc_set_value(w->root, n);
+    lv_arc_set_value(
+        w->style == BK_STYLE_REFERENCE && w->chart ? w->chart : w->root, n);
   else if (c->type == BK_WIDGET_NEEDLE)
     lv_scale_set_line_needle_value(w->root, w->needle,
                                    (c->w < c->h ? c->w : c->h) / 2 - 14, n);
@@ -240,9 +274,12 @@ void bk_widget_create(bk_widget_t *w, lv_obj_t *parent,
 static void animate_indicator(bk_widget_t *w, int n) {
   if (n == w->target)
     return;
-  int from = w->target < 0                     ? n
-             : w->config.type == BK_WIDGET_ARC ? lv_arc_get_value(w->root)
-                                               : w->target;
+  int from = w->target < 0 ? n
+             : w->config.type == BK_WIDGET_ARC
+                 ? lv_arc_get_value(w->style == BK_STYLE_REFERENCE && w->chart
+                                        ? w->chart
+                                        : w->root)
+                 : w->target;
   w->target = n;
   lv_anim_delete(w, indicator_exec);
   if (w->editing) {
@@ -258,8 +295,8 @@ static void animate_indicator(bk_widget_t *w, int n) {
   lv_anim_set_path_cb(&a, lv_anim_path_ease_out);
   lv_anim_start(&a);
 }
-void bk_reference_icon(lv_obj_t *parent, unsigned icon, int x, int y,
-                       lv_color_t color) {
+void bk_legacy_reference_icon(lv_obj_t *parent, unsigned icon, int x, int y,
+                              lv_color_t color) {
   static const lv_point_precise_t paths[][16] = {
       {{2, 8},
        {6, 8},
@@ -437,6 +474,15 @@ void bk_widget_update(bk_widget_t *w, double value, bk_value_state_t state,
     state_text = "Недоступно";
   else if (state == BK_VALUE_INSUFFICIENT)
     state_text = "Нет данных";
+  if (w->style == BK_STYLE_REFERENCE && c->type == BK_WIDGET_ARC &&
+      c->w > c->h) {
+    lv_obj_set_style_arc_color(w->chart, color, LV_PART_INDICATOR);
+    animate_indicator(w, n);
+    return;
+  }
+  if (bk_uaz_widget_update(w, value, valid, name, u, state_text,
+                           warning ? color : fg, color))
+    return;
   char number[64], buffer[192];
   if (valid)
     snprintf(number, sizeof(number), "%.*f", c->precision, value);

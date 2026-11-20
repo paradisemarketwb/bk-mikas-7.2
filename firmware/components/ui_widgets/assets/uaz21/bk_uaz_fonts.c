@@ -1,0 +1,2 @@
+#include "bk_uaz_fonts.h"
+const lv_font_t *bk_uaz_font(unsigned px){switch(px){case 146:return &bk_uaz_font_146;case 74:return &bk_uaz_font_74;case 72:return &bk_uaz_font_72;case 60:return &bk_uaz_font_60;case 58:return &bk_uaz_font_58;case 54:return &bk_uaz_font_54;case 52:return &bk_uaz_font_52;case 46:return &bk_uaz_font_46;case 38:return &bk_uaz_font_38;case 34:return &bk_uaz_font_34;case 30:return &bk_uaz_font_30;case 26:return &bk_uaz_font_26;default:return &bk_uaz_font_30;}}
