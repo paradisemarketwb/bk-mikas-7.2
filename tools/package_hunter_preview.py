@@ -66,9 +66,11 @@ with tempfile.TemporaryDirectory(prefix='hunter-package-') as temp:
     temp=Path(temp)
     win=temp/'windows';shutil.copytree(a.windows,win)
     check_pe(win/'bk_sim.exe');check_pe(win/'SDL2.dll')
-    for name in ('Classic.cmd','Reference.cmd','WINDOWS-BUNDLE-RU.md'):
+    for name in ('Classic.cmd','Reference.cmd','UAZ21.cmd','WINDOWS-BUNDLE-RU.md'):
         assert (win/name).is_file(), name
     shutil.copytree(ROOT/'docs/images/hunter-reference',win/'screenshots')
+    copy(ROOT/'design/uaz21/layout/UAZ_21_display_plan.pdf',win/'design/UAZ_21_display_plan.pdf')
+    copy(ROOT/'design/uaz21/PROVENANCE.json',win/'design/PROVENANCE.json')
     finish(win,'BK-MIKAS-Hunter-Windows-x64-preview.zip',dict(kind='windows-simulator',simulation_only=True))
     fw=temp/'firmware';fw.mkdir()
     all_partitions={}
@@ -80,11 +82,14 @@ with tempfile.TemporaryDirectory(prefix='hunter-package-') as temp:
         shutil.copytree(src,fw/mode)
     assert all_partitions['safe']==all_partitions['live']==all_partitions['usb-kkl']
     (fw/'PARTITIONS-VERIFIED.json').write_text(json.dumps(all_partitions['safe'],indent=2)+'\n',encoding='utf-8')
-    for rel in ('docs/hunter-background-migration.md','docs/background-storage.md','docs/sources-calibration.md','docs/wiring/USB_KKL.md','docs/firmware/USB_KKL.md','docs/firmware/R2.md','docs/WIRING.md','docs/lvgl/HUNTER_STATUS.md','docs/lvgl/IMPLEMENTATION.md','docs/lvgl/SCREEN_CUSTOMIZATION.md'):
+    for rel in ('docs/hunter-background-migration.md','docs/background-storage.md','docs/sources-calibration.md','docs/wiring/USB_KKL.md','docs/firmware/USB_KKL.md','docs/firmware/R2.md','docs/WIRING.md','docs/lvgl/HUNTER_STATUS.md','docs/lvgl/IMPLEMENTATION.md','docs/lvgl/SCREEN_CUSTOMIZATION.md','docs/lvgl/UAZ21_DESIGN.md'):
         copy(ROOT/rel,fw/rel)
     for pattern in ('*usb*','waveshare*'):
         for image in (ROOT/'docs/images/hardware').glob(pattern):
             if image.is_file(): copy(image,fw/'docs/images/hardware'/image.name)
+    shutil.copytree(ROOT/'docs/images/hunter-reference',fw/'docs/images/hunter-reference')
+    copy(ROOT/'design/uaz21/layout/UAZ_21_display_plan.pdf',fw/'design/UAZ_21_display_plan.pdf')
+    copy(ROOT/'design/uaz21/PROVENANCE.json',fw/'design/PROVENANCE.json')
     shutil.copytree(ROOT/'firmware/components/ui_widgets/licenses',fw/'licenses/fonts')
     with zipfile.ZipFile(ROOT/'downloads/BK-MIKAS-USB-KKL-FT232RL-experimental.zip') as prior:
         for entry in prior.namelist():
@@ -101,7 +106,7 @@ usb-kkl/ — USB Host / FT232RL KKL, отдельное USB-подключени
 Не объединяйте UART/ARM-жгут с USB-KKL проводкой; используйте инструкции своей конфигурации.
 KKL не является загрузчиком ESP32: сервисная прошивка дисплея идёт через его CH343/J2.
 
-Первое включение: Classic. Настройки → Стиль Reference → «Reference: заводской вид»
+Первое включение: Classic. Настройки → Ещё → Стиль Reference → «Reference: заводской вид»
 даёт новую композицию; отдельные экраны сохраняют свой стиль.
 
 Для обновления работающего прибора сначала экспортируйте JSON и сохраните полный backup Flash.

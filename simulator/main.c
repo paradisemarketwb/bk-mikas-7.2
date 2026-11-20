@@ -1,4 +1,5 @@
 #include "bk_settings.h"
+#include "bk_uaz_fonts.h"
 #include "bk_uaz_layout.h"
 #include "bk_ui.h"
 #include "bk_widgets.h"
@@ -557,6 +558,24 @@ static int run_checks(lv_display_t *display, const char *dir) {
         "3000 RPM renders half of 0..6000 RPM arc");
   lv_obj_delete(probe.root);
 
+  bk_widget_create_style(&probe, lv_screen_active(),
+                         &reference.screens[2].widgets[2], false,
+                         BK_STYLE_REFERENCE);
+  bk_widget_update(&probe, 0, BK_VALUE_REQUIRES_SENSOR, true, "Уровень топлива",
+                   "%");
+  for (unsigned i = 0; i < 6; i++)
+    CHECK(lv_obj_is_hidden(probe.segments[i]),
+          "Missing fuel source cannot look like an empty measured tank");
+  CHECK(strstr(lv_label_get_text(probe.value), "датчика"),
+        "Missing tank sensor shows explicit state");
+  bk_widget_update(&probe, 66, BK_VALUE_VALID, true, "Уровень топлива", "%");
+  for (unsigned i = 0; i < 6; i++)
+    CHECK(!lv_obj_is_hidden(probe.segments[i]),
+          "Fuel segments restore when source returns");
+  lv_obj_delete(probe.root);
+  lv_font_glyph_dsc_t glyph;
+  CHECK(lv_font_get_glyph_dsc(&bk_uaz_font_54, &glyph, 'r', 0),
+        "Custom/raw units retain readable glyphs through text-font fallback");
   fixture_calibrations();
   gps = true;
   connected = true;
